@@ -1,0 +1,151 @@
+﻿@page
+@model GrupoESINuevo.AddServiceToOrderModel
+
+@{
+    ViewData["Title"] = "AddServiceToOrder";
+}
+
+<h2 class="text-info">Agregar servicio a la cotización</h2>
+<div class="container backgroundWhite">
+    <div class="card">
+        <div class="card-header bg-dark text-light ml-0 row container-xl">
+            <div class="col-6">
+                <i class="fa fa-user-o"></i>
+            </div>
+        </div>
+        <div class="card-body container">
+            <div class="row" style="padding-bottom: 40px; padding-top: 20px;">
+                <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@Model._AddServiceVM.orderDetailsId">Regresar a la cotizacion</a>
+
+                <div class="col-md-6 offset-md-3">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="_AddServiceVM.OrderDetailsLocal.Order.Concepto"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="_AddServiceVM.OrderDetailsLocal.Order.Concepto" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="_AddServiceVM.OrderDetailsLocal.Order.Direccion"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="_AddServiceVM.OrderDetailsLocal.Order.Direccion" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="_AddServiceVM.OrderDetailsLocal.Status"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="_AddServiceVM.OrderDetailsLocal.Status" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="_AddServiceVM.OrderDetailsLocal.Cost"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="_AddServiceVM.OrderDetailsLocal.Cost" disabled class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr class="table-secondary">
+                                    <th scope="col">
+                                        @Html.DisplayNameFor(model => model._AddServiceVM.lstServicios[0].Name)
+                                    </th>
+                                    <th scope="col">
+                                        @Html.DisplayNameFor(model => model._AddServiceVM.lstServicios[0].Description)
+                                    </th>
+                                    <th scope="col">
+                                        @Html.DisplayNameFor(model => model._AddServiceVM.lstServicios[0].ApplicationUser)
+                                    </th>
+                                    <th scope="col">
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model._AddServiceVM.lstServicios)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Description)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ApplicationUser.CompanyName)
+                                        </td>
+                                        <td>
+                                            <label class="orderId" hidden>@Model._AddServiceVM.orderDetailsId</label>
+                                            <label class="serviceId" hidden>@item.ID</label>
+                                            <input type="checkbox" class="checkboxService" />
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        </div>
+</div>
+
+
+
+<div>
+    <input type="submit" onclick="addServiceToOrder('@Model._AddServiceVM.orderDetailsId', '@Model._AddServiceVM.OrderId')" value="Agregar servicio" class="btn btn-primary" />
+</div>
+
+@section Scripts {
+    <script>
+        function addServiceToOrder(orderDetailsId, orderId)
+        {
+            var serviceId = document.getElementsByClassName('serviceId');
+            var checkBoxes = document.getElementsByClassName('checkboxService');
+
+            var listaIds = {
+                listaIds: ""
+            };
+            for (var i = 0; i < checkBoxes.length; i++) {
+                if (checkBoxes[i].checked == true) {
+                    listaIds.listaIds += serviceId[i].innerText;
+                    listaIds.listaIds += ",";
+                }
+            }
+            listaIds.listaIds = listaIds.listaIds.substring(0, listaIds.listaIds.length - 1);
+            console.log(orderId);
+            console.log(serviceId[0].innerText);
+            console.log(listaIds.listaIds);
+            var json = {
+                serviceId: listaIds.listaIds,
+                orderDetailsId: orderDetailsId,
+                OrderId: orderId
+            };
+            $.ajax({
+                type: "POST",
+                url: "/api/ManageOrders/PostServiceToOrder",
+                contentType: "application/json",
+                datatype: "json",
+                data: JSON.stringify(json)
+            }).then(() => { window.location.href = "../Quotations/CreateQuotation?orderDetailsId=" + orderDetailsId });
+        }
+        $(function () {
+            $('#submit').on('click', function (evt) {
+                evt.preventDefault();
+               
+            });
+        });
+    </script>
+}

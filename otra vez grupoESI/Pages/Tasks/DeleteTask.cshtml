@@ -1,0 +1,81 @@
+﻿@page
+@model GrupoESINuevo.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+    <div class="container backgroundWhite">
+        <h2 class="text-info">Borrar tarea</h2>
+        <div class="card container">
+            <div class="card-header bg-dark text-light ml-0 row container">
+                <div class="col-6">
+                    <i class="fa fa-user-o"></i>
+                </div>
+            </div>
+            <div class="card-body container">
+                <div class="col-md-6 offset-md-3">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="TaskModel.QuotationModel.OrderDetailsModel.Order.Concepto"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="TaskModel.QuotationModel.OrderDetailsModel.Order.Concepto" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="TaskModel.QuotationModel.OrderDetailsModel.Status"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="TaskModel.QuotationModel.OrderDetailsModel.Status" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="TaskModel.QuotationModel.OrderDetailsModel.Cost"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="TaskModel.QuotationModel.OrderDetailsModel.Cost" disabled class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.TaskModel.Name)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.TaskModel.Name)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.TaskModel.Description)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.TaskModel.Description)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.TaskModel.Duration)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.TaskModel.Duration)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.TaskModel.Cost)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.TaskModel.Cost)
+                        </dd>
+                    </dl>
+
+                    <form method="post">
+                        <input type="hidden" asp-for="TaskModel.Id" />
+                        <input type="submit" value="Borrar" class="btn btn-danger" /> |
+                        <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@Model.TaskModel.QuotationModel.OrderDetailsModel.Id">Regresar a la lista</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+

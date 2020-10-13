@@ -1,0 +1,9 @@
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\obj\Debug\netcoreapp3.1\GrupoESI.Utility.csprojAssemblyReference.cache
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\obj\Debug\netcoreapp3.1\GrupoESI.Utility.AssemblyInfoInputs.cache
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\obj\Debug\netcoreapp3.1\GrupoESI.Utility.AssemblyInfo.cs
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\obj\Debug\netcoreapp3.1\GrupoESI.Utility.csproj.CoreCompileInputs.cache
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\bin\Debug\netcoreapp3.1\GrupoESI.Utility.deps.json
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\bin\Debug\netcoreapp3.1\GrupoESI.Utility.dll
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\bin\Debug\netcoreapp3.1\GrupoESI.Utility.pdb
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\obj\Debug\netcoreapp3.1\GrupoESI.Utility.dll
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\obj\Debug\netcoreapp3.1\GrupoESI.Utility.pdb

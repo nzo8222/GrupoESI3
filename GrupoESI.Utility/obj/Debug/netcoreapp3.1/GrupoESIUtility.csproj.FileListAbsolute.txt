@@ -1,0 +1,12 @@
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\bin\Debug\netcoreapp3.1\GrupoESIUtility.deps.json
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\bin\Debug\netcoreapp3.1\GrupoESIUtility.dll
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\bin\Debug\netcoreapp3.1\GrupoESIUtility.pdb
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\obj\Debug\netcoreapp3.1\GrupoESIUtility.csprojAssemblyReference.cache
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\obj\Debug\netcoreapp3.1\GrupoESIUtility.AssemblyInfoInputs.cache
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\obj\Debug\netcoreapp3.1\GrupoESIUtility.AssemblyInfo.cs
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\obj\Debug\netcoreapp3.1\GrupoESIUtility.csproj.CoreCompileInputs.cache
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\obj\Debug\netcoreapp3.1\GrupoESIUtility.dll
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\obj\Debug\netcoreapp3.1\GrupoESIUtility.pdb
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\bin\Debug\netcoreapp3.1\GrupoESIModels.dll
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\bin\Debug\netcoreapp3.1\GrupoESIModels.pdb
+C:\Users\gonz\Desktop\otras repos\GrupoESI.Utility\obj\Debug\netcoreapp3.1\GrupoESIUtility.csproj.CopyComplete

@@ -1,0 +1,234 @@
+﻿@page
+@model GrupoESINuevo.DetailsTaskModel
+@using GrupoESIModels.Models
+@using GrupoESIModels.Enums
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2 class="text-info">Detalles tarea</h2>
+<div class="container backgroundWhite">
+    <div class="card container">
+        <div class="card-header bg-dark text-light ml-0 row container">
+            <div class="col-6">
+                <i class="fa fa-user-o"></i>
+            </div>
+        </div>
+        <div class="card-body container">
+            <div>
+                <div class="col-md-6 offset-md-3">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="taskPicVM.taskModel.QuotationModel.OrderDetailsModel.Order.Concepto"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="taskPicVM.taskModel.QuotationModel.OrderDetailsModel.Order.Concepto" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="taskPicVM.taskModel.QuotationModel.OrderDetailsModel.Order.Direccion"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="taskPicVM.taskModel.QuotationModel.OrderDetailsModel.Order.Direccion" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="taskPicVM.taskModel.QuotationModel.OrderDetailsModel.Status"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="taskPicVM.taskModel.QuotationModel.OrderDetailsModel.Status" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="taskPicVM.taskModel.QuotationModel.OrderDetailsModel.Cost"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="taskPicVM.taskModel.QuotationModel.OrderDetailsModel.Cost" disabled class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.taskPicVM.taskModel.Name)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.taskPicVM.taskModel.Name)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.taskPicVM.taskModel.Description)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.taskPicVM.taskModel.Description)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.taskPicVM.taskModel.Duration)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.taskPicVM.taskModel.Duration)
+                    </dd>
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.taskPicVM.taskModel.Cost)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.taskPicVM.taskModel.Cost)
+                    </dd>
+                </dl>
+            </div>
+            @if (Model.taskPicVM.taskModel.Pictures != null)
+            {
+                @if (Model.taskPicVM.taskModel.Pictures.Count > 0)
+                {
+                    @for (int i = 0; i < Model.taskPicVM.taskModel.Pictures.Count; i++)
+                    {
+
+                        <div class="row">
+                            <div class="col">
+                                @if (Model.taskPicVM.taskModel.Pictures[i].Tipo == PictureTypeEnum.Quotation)
+                                {
+                                    <button onclick="OnClickViewPic('@Model.taskPicVM.taskModel.Pictures[i].PictureId')" type="button" class="btn btn-primary">
+                                        ver foto
+                                    </button>
+
+                                    <label class="_deletePictureId" hidden>@Model.taskPicVM.taskModel.Pictures[i].PictureId</label>
+                                    <label class="_taskId" hidden>@Model.taskPicVM.taskModel.Id</label>
+                                    <label class="_orderDetailsId" hidden>@Model.taskPicVM.taskModel.QuotationModel.OrderDetailsModel.Id</label>
+                                    @if (Model.taskPicVM.OrderDetailsStatus == "Cotizando" || User.IsInRole("Admin"))
+                                    {
+                                        <label>Borrar foto </label><input type="checkbox" class="_checkbox" />
+                                    }
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            }
+
+            @if (Model.taskPicVM.OrderDetailsStatus == "Cotizando" || User.IsInRole("Admin"))
+            {
+                <div>
+
+                    <form method="post" enctype="multipart/form-data">
+                        <input hidden asp-for="taskPicVM.taskModel.Id" />
+                        <p>Subir foto </p>
+                        <input id="inputPicFile" type="file" asp-for="taskPicVM.Upload" accept="image/*" />
+
+                        <input type="submit" onclick="checkIfPicIsEmpty()" asp-page-handler="Picture" value="Agregar foto" class="btn btn-success" />
+
+
+                    </form>
+                    <button onclick="OnClickDeletePic()" value="Borrar foto" class="btn btn-danger">Borrar fotos</button>
+                </div>
+            }
+            <div>
+                @if (Model.taskPicVM.OrderDetailsStatus == "Cotizando" || User.IsInRole("Admin"))
+                {
+                    <a asp-page="./EditTask" asp-route-taskId="@Model.taskPicVM.taskModel.Id">Edit</a>
+                } |
+
+                <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@Model.taskPicVM.taskModel.QuotationModel.OrderDetailsModel.Id">Regresar a la cotización</a>
+            </div>
+        </div>
+
+
+
+
+        @*Modal*@
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Imagen </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="" id="ItemPreview" style="height:500px; width:500px;" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        function checkIfPicIsEmpty() {
+            if (document.getElementById("inputPicFile").files.length == 0) {
+                swal("Error!", "no files selected", "error");
+                evt.preventDefault();
+            } else {
+
+            }
+
+        }
+        function OnClickDeletePic() {
+            var checkBoxes = document.getElementsByClassName('_checkbox');
+            var pictureIds = document.getElementsByClassName('_deletePictureId');
+            var taskId = document.getElementsByClassName('_taskId');
+            var orderDetailsId = document.getElementsByClassName('_orderDetailsId');
+            var listaIds = {
+                listaIds: ""
+            };
+            for (var i = 0; i < checkBoxes.length; i++) {
+                if (checkBoxes[i].checked == true) {
+                    listaIds.listaIds += pictureIds[i].innerText;
+                    listaIds.listaIds += ",";
+                }
+            }
+            listaIds.listaIds = listaIds.listaIds.substring(0, listaIds.listaIds.length - 1);
+            console.log(listaIds);
+            console.log(checkBoxes);
+            console.log(pictureIds);
+            var json = {
+                deletePicturesId: listaIds.listaIds,
+                taskId: taskId[0].innerText,
+                orderDetailsId: orderDetailsId[0].innerText
+            };
+            console.log(json.deletePicturesId);
+            if (json.deletePicturesId != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "/api/ManageOrders/PostDeletePictures",
+                    contentType: "application/json",
+                    datatype: "json",
+                    data: JSON.stringify(json)
+                }).then(() => { location.href = "/Tasks/DetailsTask?taskId=" + taskId[0].innerText });
+            }
+            else {
+                swal("error!", "seleccione una foto", "error");
+            }
+
+            if (listaIds.count > 0) {
+
+            }
+        }
+        function OnClickViewPic(picId) {
+
+            if (picId != "") {
+                $.get("/api/Pictures/ViewPic?pictureId=" + picId)
+                    .then((result) => {
+                        console.log(result)
+                        $('#exampleModal').modal('show');
+                        document.getElementById("ItemPreview").src = "data:image/png;base64," + result.imgLocal;
+
+
+                    })
+
+            }
+        }
+    </script>
+}

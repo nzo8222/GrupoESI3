@@ -1,0 +1,48 @@
+﻿@page
+@model GrupoESINuevo.CreateServiceTypeModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container backgroundWhite">
+    <h2 class="text-info">Crear tipo de servicio</h2>
+    <div class="card container">
+        <div class="card-header bg-dark text-light ml-0 row container">
+            <div class="col-6">
+                <i class="fa fa-user-o"></i>
+            </div>
+        </div>
+        <div class="card-body container">
+            <div class="row">
+                <div class="col-md-4">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="ServiceType.Category" class="control-label"></label>
+                            <input asp-for="ServiceType.Category" class="form-control" />
+                            <span asp-validation-for="ServiceType.Category" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ServiceType.Descripcion" class="control-label"></label>
+                            <input asp-for="ServiceType.Descripcion" class="form-control" />
+                            <span asp-validation-for="ServiceType.Descripcion" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Crear" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div>
+                <a asp-page="IndexServiceType">Regresar a la lista</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

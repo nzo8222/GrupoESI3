@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "mssql2": {
+      "restored": true,
+      "restoreTime": "2020-09-04T15:37:31.679028Z"
+    },
+    "mssql1": {
+      "restored": true,
+      "restoreTime": "2020-09-04T15:37:54.123352Z"
+    }
+  },
+  "parameters": {
+    "mssql2.subscriptionId": {
+      "Type": "subscription",
+      "Value": "39b28c9c-17ef-493e-949d-6866615b0904"
+    },
+    "mssql2.resourceGroupName": {
+      "Type": "resourceGroup",
+      "Value": "GrupoEsi"
+    },
+    "mssql1.subscriptionId": {
+      "Type": "subscription",
+      "Value": "39b28c9c-17ef-493e-949d-6866615b0904"
+    },
+    "mssql1.resourceGroupName": {
+      "Type": "resourceGroup",
+      "Value": "GrupoEsi"
+    }
+  }
+}

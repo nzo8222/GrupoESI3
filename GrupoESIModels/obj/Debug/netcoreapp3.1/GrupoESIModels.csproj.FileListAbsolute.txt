@@ -1,0 +1,9 @@
+C:\Users\gonz\Desktop\otras repos\GrupoESIModels\obj\Debug\netcoreapp3.1\GrupoESIModels.csprojAssemblyReference.cache
+C:\Users\gonz\Desktop\otras repos\GrupoESIModels\obj\Debug\netcoreapp3.1\GrupoESIModels.AssemblyInfoInputs.cache
+C:\Users\gonz\Desktop\otras repos\GrupoESIModels\obj\Debug\netcoreapp3.1\GrupoESIModels.AssemblyInfo.cs
+C:\Users\gonz\Desktop\otras repos\GrupoESIModels\obj\Debug\netcoreapp3.1\GrupoESIModels.csproj.CoreCompileInputs.cache
+C:\Users\gonz\Desktop\otras repos\GrupoESIModels\bin\Debug\netcoreapp3.1\GrupoESIModels.deps.json
+C:\Users\gonz\Desktop\otras repos\GrupoESIModels\bin\Debug\netcoreapp3.1\GrupoESIModels.dll
+C:\Users\gonz\Desktop\otras repos\GrupoESIModels\bin\Debug\netcoreapp3.1\GrupoESIModels.pdb
+C:\Users\gonz\Desktop\otras repos\GrupoESIModels\obj\Debug\netcoreapp3.1\GrupoESIModels.dll
+C:\Users\gonz\Desktop\otras repos\GrupoESIModels\obj\Debug\netcoreapp3.1\GrupoESIModels.pdb

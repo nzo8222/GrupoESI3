@@ -1,0 +1,63 @@
+﻿@page
+@model GrupoESINuevo.EditQuotationModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+    <div class="container backgroundWhite">
+        <h2>Editar Cotización</h2>
+        <div class="card">
+            <div class="card-header bg-dark text-light ml-0 row container">
+                <div class="col-6">
+                    <i class="fa fa-user-o"></i>
+                </div>
+            </div>
+            <div class="card-body container">
+                <div class="col-md-6 offset-md-3">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="Quotation.OrderDetailsModel.Service.ApplicationUser.Name"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="Quotation.OrderDetailsModel.Service.ApplicationUser.Name" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="Quotation.OrderDetailsModel.Service.ApplicationUser.CompanyName"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="Quotation.OrderDetailsModel.Service.ApplicationUser.CompanyName" disabled class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Quotation.Id" />
+                        <div class="form-group">
+                            <label asp-for="Quotation.Description" class="control-label"></label>
+                            <input asp-for="Quotation.Description" class="form-control" />
+                            <span asp-validation-for="Quotation.Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Guardar" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <a asp-page="./CreateQuotation" asp-route-orderDetailsId="">Regresar a la Cotización</a>
+            </div>
+        </div>
+    </div>
+
+<hr />
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

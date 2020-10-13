@@ -1,0 +1,93 @@
+﻿@page
+@model GrupoESINuevo.EditMaterialModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<h2 class="text-info">Editar Material</h2>
+<hr />
+<div class="container backgroundWhite">
+    <div class="card">
+        <div class="card-header bg-dark text-light ml-0 row container">
+            <div class="col-6">
+                <i class="fa fa-user-o"></i>
+            </div>
+        </div>
+        <div class="card-body container">
+            <div class="col-md-6 offset-md-3">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="Material.Task.Name"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="Material.Task.Name" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="Material.Task.Description"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="Material.Task.Description" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="Material.Task.Cost"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="Material.Task.Cost" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="Material.Task.CostHandLabor"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="Material.Task.CostHandLabor" disabled class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Material.Id" />
+                        <div class="form-group">
+                            <label asp-for="Material.Name" class="control-label"></label>
+                            <input asp-for="Material.Name" class="form-control" />
+                            <span asp-validation-for="Material.Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Material.Description" class="control-label"></label>
+                            <input asp-for="Material.Description" class="form-control" />
+                            <span asp-validation-for="Material.Description" class="text-danger"></span>
+                        </div>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Provider"))
+                        {
+                            <div class="form-group">
+                                <label asp-for="Material.Price" class="control-label"></label>
+                                <input asp-for="Material.Price" class="form-control" />
+                                <span asp-validation-for="Material.Price" class="text-danger"></span>
+                            </div>
+                        }
+
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+
+<div>
+    <a asp-page="./IndexMaterial" asp-route-taskId="@Model.Material.Task.Id">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,85 @@
+﻿@page
+@model GrupoESINuevo.Pages.Employees.AddQuotationToEmployeeModel
+@{
+    ViewData["Title"] = "AddQuotationToEmployee";
+}
+
+<h2 class="text-info">Agregar cotizacion a empleado</h2>
+<div class="container backgroundWhite">
+    <div class="card">
+        <div class="card-header bg-dark text-light ml-0 row container">
+            <div class="card-header bg-dark text-light ml-0 row container">
+                <div class="col-6">
+                    <i class="fa fa-user-o"></i>
+                </div>
+            </div>
+        </div>
+        <div class="card-body container">
+            <div class="row">
+                <div class="col">
+
+
+                    <div class="table-responsive">
+                        <table class="table table-striped border">
+                            <thead>
+                                <tr class="table-secondary">
+                                    <th scope="col">
+                                        @Html.DisplayNameFor(model => model._AddQuotationToEmployeeVM.EmployeeUsrLst[0].Email)
+                                    </th>
+                                    <th scope="col">
+                                        @Html.DisplayNameFor(model => model._AddQuotationToEmployeeVM.EmployeeUsrLst[0].Name)
+                                    </th>
+                                    <th scope="col">
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model._AddQuotationToEmployeeVM.EmployeeUsrLst)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-success" onclick="assignQuotation('@item.Id', '@Model._AddQuotationToEmployeeVM.QuotationIdLocal','@Model._AddQuotationToEmployeeVM.OrderDetailsId')">Asignar Cotizacion</button>
+
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    function assignQuotation(idEmployee ,idQuotation, orderDetailsId) {
+        var json = {
+            idQuotation: idQuotation,
+            idEmployee: idEmployee
+        };
+        //console.log(json.idQuottion);
+        $.ajax({
+            type: "POST",
+            url: "/api/Employee/PostAddQuotationToEmployee",
+            contentType: "application/json",
+            datatype: "json",
+            data: JSON.stringify(json)
+        }).then(() => {
+            window.location.href = "../Quotations/CreateQuotation?orderDetailsId=" + orderDetailsId
+        });
+    };
+</script>
+}

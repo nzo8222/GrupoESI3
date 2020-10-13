@@ -1,0 +1,4 @@
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\obj\Debug\netcoreapp3.1\GrupoESIDataAcces.csprojAssemblyReference.cache
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\obj\Debug\netcoreapp3.1\GrupoESIDataAcces.AssemblyInfoInputs.cache
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\obj\Debug\netcoreapp3.1\GrupoESIDataAcces.AssemblyInfo.cs
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\obj\Debug\netcoreapp3.1\GrupoESIDataAcces.csproj.CoreCompileInputs.cache

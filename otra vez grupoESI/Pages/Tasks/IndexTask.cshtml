@@ -1,0 +1,114 @@
+﻿@page
+@model GrupoESINuevo.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+    <div class="container backgroundWhite">
+        <h2 class="text-info">Índice de tareas</h2>
+        <div class="card container">
+            <div class="card-header bg-dark text-light ml-0 row container">
+                <div class="col-6">
+                    <i class="fa fa-user-o"></i>
+                </div>
+            </div>
+            <div class="card-body container">
+                @if (Model.TaskList.Count > 0)
+                {
+                    <div class="col-md-6 offset-md-3">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label asp-for="TaskList[0].QuotationModel.OrderDetailsModel.Order.Concepto"></label>
+                            </div>
+                            <div class="col-sm-8" style="padding-bottom:5px;">
+                                <input asp-for="TaskList[0].QuotationModel.OrderDetailsModel.Order.Concepto" disabled class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label asp-for="TaskList[0].QuotationModel.OrderDetailsModel.Order.Direccion"></label>
+                            </div>
+                            <div class="col-sm-8" style="padding-bottom:5px;">
+                                <input asp-for="TaskList[0].QuotationModel.OrderDetailsModel.Order.Direccion" disabled class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label asp-for="TaskList[0].QuotationModel.OrderDetailsModel.Status"></label>
+                            </div>
+                            <div class="col-sm-8" style="padding-bottom:5px;">
+                                <input asp-for="TaskList[0].QuotationModel.OrderDetailsModel.Status" disabled class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label asp-for="TaskList[0].QuotationModel.OrderDetailsModel.Cost"></label>
+                            </div>
+                            <div class="col-sm-8" style="padding-bottom:5px;">
+                                <input asp-for="TaskList[0].QuotationModel.OrderDetailsModel.Cost" disabled class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="row">
+                    <div class="col">
+                        <p>
+                            <a asp-page="Create">Crear nueva tarea</a>
+                        </p>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr class="table-secondary">
+                                        <th scope="col">
+                                            @Html.DisplayNameFor(model => model.TaskList[0].Name)
+                                        </th>
+                                        <th scope="col">
+                                            @Html.DisplayNameFor(model => model.TaskList[0].Description)
+                                        </th>
+                                        <th scope="col">
+                                            @Html.DisplayNameFor(model => model.TaskList[0].Duration)
+                                        </th>
+                                        <th scope="col">
+                                            @Html.DisplayNameFor(model => model.TaskList[0].Cost)
+                                        </th>
+                                        <th scope="col">
+
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.TaskList)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Description)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Duration)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Cost)
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-success" asp-page="./Edit" asp-route-id="@item.Id">Editar</a>
+                                                <a class="btn btn-info" asp-page="./Details" asp-route-id="@item.Id">Detalles</a>
+                                                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.Id">Borrar</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

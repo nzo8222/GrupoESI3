@@ -1,0 +1,98 @@
+﻿@page
+@model GrupoESINuevo.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+    <div class="container backgroundWhite">
+        <h2 class="text-info">Crear tarea</h2>
+        <div class="card container">
+            <div class="card-header bg-dark text-light ml-0 row container">
+                <div class="col-6">
+                    <i class="fa fa-user-o"></i>
+                </div>
+            </div>
+            <div class="card-body container">
+
+                <div class="col-md-6 offset-md-3">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="_TaskQuotationVM.TaskInfo.QuotationModel.OrderDetailsModel.Order.Concepto"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="_TaskQuotationVM.TaskInfo.QuotationModel.OrderDetailsModel.Order.Concepto" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="_TaskQuotationVM.TaskInfo.QuotationModel.OrderDetailsModel.Order.Direccion"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="_TaskQuotationVM.TaskInfo.QuotationModel.OrderDetailsModel.Order.Direccion" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="_TaskQuotationVM.TaskInfo.QuotationModel.OrderDetailsModel.Status"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="_TaskQuotationVM.TaskInfo.QuotationModel.OrderDetailsModel.Status" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="_TaskQuotationVM.TaskInfo.QuotationModel.OrderDetailsModel.Cost"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="_TaskQuotationVM.TaskInfo.QuotationModel.OrderDetailsModel.Cost" disabled class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <form method="post">
+                            <input hidden asp-for="_TaskQuotationVM.orderDetailsId" />
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="_TaskQuotationVM.TaskLocal.Name" class="control-label"></label>
+                                <input asp-for="_TaskQuotationVM.TaskLocal.Name" class="form-control" />
+                                <span asp-validation-for="_TaskQuotationVM.TaskLocal.Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_TaskQuotationVM.TaskLocal.Description" class="control-label"></label>
+                                <input asp-for="_TaskQuotationVM.TaskLocal.Description" class="form-control" />
+                                <span asp-validation-for="_TaskQuotationVM.TaskLocal.Description" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="_TaskQuotationVM.TaskLocal.Duration" class="control-label"></label>
+                                <input asp-for="_TaskQuotationVM.TaskLocal.Duration" class="form-control" />
+                                <span asp-validation-for="_TaskQuotationVM.TaskLocal.Duration" class="text-danger"></span>
+                            </div>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Provider"))
+                            {
+                                <div class="form-group">
+                                    <label asp-for="_TaskQuotationVM.TaskLocal.CostHandLabor" class="control-label"></label>
+                                    <input asp-for="_TaskQuotationVM.TaskLocal.CostHandLabor" class="form-control" />
+                                    <span asp-validation-for="_TaskQuotationVM.TaskLocal.CostHandLabor" class="text-danger"></span>
+                                </div>
+                            }
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div>
+                    <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@Model._TaskQuotationVM.orderDetailsId">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

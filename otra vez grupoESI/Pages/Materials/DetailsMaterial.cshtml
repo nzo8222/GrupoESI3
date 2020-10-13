@@ -1,0 +1,80 @@
+﻿@page
+@model GrupoESINuevo.DetailsMaterialModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2 class="text-info">Detalles material</h2>
+<div class="card">
+    <div class="card-header bg-dark text-light ml-0 row container">
+        <div class="col-6">
+            <i class="fa fa-user-o"></i>
+        </div>
+    </div>
+    <div class="card-body container">
+        <div class="col-md-6 offset-md-3">
+            <div class="row">
+                <div class="col-sm-4">
+                    <label asp-for="Material.Task.Name"></label>
+                </div>
+                <div class="col-sm-8" style="padding-bottom:5px;">
+                    <input asp-for="Material.Task.Name" disabled class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label asp-for="Material.Task.Description"></label>
+                </div>
+                <div class="col-sm-8" style="padding-bottom:5px;">
+                    <input asp-for="Material.Task.Description" disabled class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label asp-for="Material.Task.Cost"></label>
+                </div>
+                <div class="col-sm-8" style="padding-bottom:5px;">
+                    <input asp-for="Material.Task.Cost" disabled class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <label asp-for="Material.Task.CostHandLabor"></label>
+                </div>
+                <div class="col-sm-8" style="padding-bottom:5px;">
+                    <input asp-for="Material.Task.CostHandLabor" disabled class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Material.Name)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Material.Name)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Material.Description)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Material.Description)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Material.Price)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Material.Price)
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <a asp-page="./EditMaterial" asp-route-id="@Model.Material.Id">Editar</a> |
+            <a asp-page="./IndexMaterial" asp-route-taskId="@Model.Material.Task.Id">Regresar a la vista</a>
+        </div>
+
+    </div>
+    </div>
+    

@@ -1,0 +1,249 @@
+﻿@page
+@model GrupoESINuevo.ManageOrdersIndexModel
+@Html.AntiForgeryToken()
+@{
+    ViewData["Title"] = "ManageOrdersIndex";
+}
+
+
+
+<div class="container backgroundWhite">
+    <h2 class="text-info">Manejar Cotizaciones</h2>
+    <div class="card">
+        <div class="card-header bg-dark text-light ml-0 row container">
+            <div class="col-6">
+                <i class="fa fa-user-o"></i>
+            </div>
+        </div>
+        <div class="card-body">
+
+            <div class="row" style="padding-bottom:40px; padding-top:20px;">
+
+                <div class="col-md-6 offset-md-3">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="_manageOrdersVM.OrderModel.OrderDate"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="_manageOrdersVM.OrderModel.OrderDate" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="_manageOrdersVM.OrderModel.EstadoDelPedido"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="_manageOrdersVM.OrderModel.EstadoDelPedido" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="_manageOrdersVM.OrderModel.Concepto"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="_manageOrdersVM.OrderModel.Concepto" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="_manageOrdersVM.OrderModel.Direccion"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="_manageOrdersVM.OrderModel.Direccion" disabled class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <label hidden id="labelOrderId">@Model._manageOrdersVM.OrderModel.Id</label>
+            <div class="row">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-striped border">
+                            <thead>
+                                <tr>
+                                    <th scope="col">
+                                        Descripción
+                                    </th>
+                                    <th scope="col">
+                                        Costo
+                                    </th>
+                                    <th scope="col">
+                                        Estado del pedido
+                                    </th>
+
+                                    <th scope="col">
+
+                                    </th>
+                                    <th scope="col">
+
+                                    </th>
+                                    <th scope="col">
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model._manageOrdersVM.ListQuotations)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Description)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.OrderDetailsModel.Cost)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.OrderDetailsModel.Status)
+                                        </td>
+                                        <td>
+                                            <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@item.OrderDetailsModel.Id" class="btn btn-primary">Ver cotizacion</a>
+                                        </td>
+                                        <th>
+                                            <label class="idQuotation" hidden>@item.Id</label>
+                                            <label class="idOrder" hidden></label>
+                                            <label class="idOrderDetails" hidden>@item.OrderDetailsModel.Id</label>
+                                            <button class="btn btn-success" onclick="assignQuotation('@item.Id', '@item.OrderDetailsModel.Id', '@Model._manageOrdersVM.OrderModel.Id')">Asignar Cotizacion</button>
+                                        </th>
+                                        <th>
+                                            <a class="btn btn-danger" href="/Quotations/DeleteQuotation?orderDetailsId=@item.OrderDetailsModel.Id"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        </th>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    @if (Model._manageOrdersVM.ListServices.Count > 0)
+                    {
+                        <table class="table table-striped border">
+                            <thead>
+                                <tr class="table-secondary">
+                                    <th scope="col">
+                                        @Html.DisplayNameFor(model => model._manageOrdersVM.ListServices[0].ServiceModel.Name)
+                                    </th>
+                                    <th scope="col">
+                                        @Html.DisplayNameFor(model => model._manageOrdersVM.ListServices[0].ServiceModel.Description)
+                                    </th>
+                                    <th scope="col">
+                                        @Html.DisplayNameFor(model => model._manageOrdersVM.ListServices[0].ServiceModel.ApplicationUser.CompanyName)
+                                    </th>
+                                    <th scope="col">
+                                        <label class="sendQuotation" asp-for="_manageOrdersVM.ListServices[0].sendQuotation"></label>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @for (int i = 0; i < Model._manageOrdersVM.ListServices.Count; i++)
+                                {
+
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Model._manageOrdersVM.ListServices[i].ServiceModel.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Model._manageOrdersVM.ListServices[i].ServiceModel.Description)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => Model._manageOrdersVM.ListServices[i].ServiceModel.ApplicationUser.CompanyName)
+                                        </td>
+                                        <td>
+
+                                            <label class="IdService" hidden>@Model._manageOrdersVM.ListServices[i].ServiceModel.ID</label>
+                                            <input asp-for="_manageOrdersVM.ListServices[i].sendQuotation" class="form-control _checkbox" />
+
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+
+
+                        </table>
+
+                        <div class="col-sm-7 offset-sm-3">
+                            <button class="btn btn-primary" onclick="SendServiceToAddToOrderDetails()">Mandar Cotizaciones</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <p>No se encontraron servicios</p>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<hr />
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        function assignQuotation(idQuotation, idOrderDetails, orderId) {
+            var json = {
+                idQuotation: idQuotation,
+                idOrderDetails: idOrderDetails
+            };
+            //console.log(json.idQuottion);
+            $.ajax({
+                type: "POST",
+                url: "/api/ManageOrders/PostAssignQuotation",
+                contentType: "application/json",
+                datatype: "json",
+                data: JSON.stringify(json)
+            }).then(() => {
+                window.location.href = "/ManageOrders/ManageOrdersIndex?orderId=" + orderId
+            });
+        };
+        function SendServiceToAddToOrderDetails() {
+            var checkBoxes = document.getElementsByClassName('_checkbox');
+            var result = document.getElementsByClassName('IdService');
+            var listaIds = {
+                listaIds: ""
+            };
+            for (var i = 0; i < checkBoxes.length; i++) {
+                if (checkBoxes[i].checked == true) {
+                    listaIds.listaIds += result[i].innerText;
+                    listaIds.listaIds += ",";
+                }
+            }
+            if (listaIds.listaIds == "") {
+                swal("Error!", "No se selecciono un proveedor para agregar al servicio", "error");
+                return
+            }
+            listaIds.listaIds = listaIds.listaIds.substring(0, listaIds.listaIds.length - 1);
+
+            console.log(listaIds);
+            console.log(checkBoxes);
+            console.log(result);
+            var _orderId = document.getElementById("labelOrderId");
+            console.log(_orderId.innerText);
+            var json = {
+                idService: listaIds.listaIds,
+                orderId: _orderId.innerText
+            };
+            if (json.orderId != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "/api/ManageOrders/PostManageOrders",
+                    contentType: "application/json",
+                    datatype: "json",
+                    data: JSON.stringify(json)
+                }).then(() => {
+                    window.location.href = "/ManageOrders/ManageOrdersIndex?orderId=" + json.orderId
+                });
+            }
+
+        }
+
+    </script>
+}

@@ -1,0 +1,88 @@
+﻿@page
+@model GrupoESINuevo.DeleteMaterialModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+    <div class="container backgroundWhite">
+        <h2 class="text-info">Borrar material</h2>
+        <div class="card">
+            <div class="card-header bg-dark text-light ml-0 row container-xl">
+                <div class="col-6">
+                    <i class="fa fa-user-o"></i>
+                </div>
+            </div>
+            <div class="card-body container">
+                <div class="col-md-6 offset-md-3">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="DeleteMaterialVM.material.Task.Name"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="DeleteMaterialVM.material.Task.Name" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="DeleteMaterialVM.material.Task.Description"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="DeleteMaterialVM.material.Task.Description" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="DeleteMaterialVM.material.Task.Cost"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="DeleteMaterialVM.material.Task.Cost" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="DeleteMaterialVM.material.Task.CostHandLabor"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="DeleteMaterialVM.material.Task.CostHandLabor" disabled class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+
+                    <hr />
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.DeleteMaterialVM.material.Name)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.DeleteMaterialVM.material.Name)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.DeleteMaterialVM.material.Description)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.DeleteMaterialVM.material.Description)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.DeleteMaterialVM.material.Price)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.DeleteMaterialVM.material.Price)
+                        </dd>
+                    </dl>
+
+                    <form method="post">
+                        <input type="hidden" asp-for="DeleteMaterialVM.material.Id" />
+                        <input type="hidden" asp-for="DeleteMaterialVM.taskId" />
+                        <input type="submit" value="Delete" class="btn btn-danger" /> |
+                        <a asp-page="./IndexMaterial" asp-route-taskId="@Model.DeleteMaterialVM.material.TaskModelId">Back to List</a>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+

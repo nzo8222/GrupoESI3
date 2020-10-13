@@ -1,0 +1,14 @@
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\bin\Debug\netcoreapp3.1\GrupoESIDataAccess.deps.json
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\bin\Debug\netcoreapp3.1\GrupoESIDataAccess.dll
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\obj\Debug\netcoreapp3.1\GrupoESIDataAccess.csprojAssemblyReference.cache
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\obj\Debug\netcoreapp3.1\GrupoESIDataAccess.AssemblyInfoInputs.cache
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\obj\Debug\netcoreapp3.1\GrupoESIDataAccess.AssemblyInfo.cs
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\obj\Debug\netcoreapp3.1\GrupoESIDataAccess.csproj.CoreCompileInputs.cache
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\bin\Debug\netcoreapp3.1\GrupoESIModels.dll
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\bin\Debug\netcoreapp3.1\GrupoESIModels.pdb
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\obj\Debug\netcoreapp3.1\GrupoESIDataAccess.csproj.CopyComplete
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\bin\Debug\netcoreapp3.1\GrupoESIDataAccess.pdb
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\bin\Debug\netcoreapp3.1\GrupoESIUtility.dll
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\bin\Debug\netcoreapp3.1\GrupoESIUtility.pdb
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\obj\Debug\netcoreapp3.1\GrupoESIDataAccess.dll
+C:\Users\gonz\Desktop\otras repos\GrupoESIDataAcces\obj\Debug\netcoreapp3.1\GrupoESIDataAccess.pdb

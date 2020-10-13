@@ -1,0 +1,101 @@
+﻿@page
+@model GrupoESINuevo.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+    <div class="container backgroundWhite">
+        <h2 class="text-info">Editar tarea</h2>
+        <div class="card container">
+            <div class="card-header bg-dark text-light ml-0 row container">
+                <div class="col-6">
+                    <i class="fa fa-user-o"></i>
+                </div>
+            </div>
+            <div class="card-body container">
+                <div class="col-md-6 offset-md-3">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="TaskModel.QuotationModel.OrderDetailsModel.Order.Concepto"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="TaskModel.QuotationModel.OrderDetailsModel.Order.Concepto" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="TaskModel.QuotationModel.OrderDetailsModel.Order.Direccion"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="TaskModel.QuotationModel.OrderDetailsModel.Order.Direccion" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="TaskModel.QuotationModel.OrderDetailsModel.Status"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="TaskModel.QuotationModel.OrderDetailsModel.Status" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <label asp-for="TaskModel.QuotationModel.OrderDetailsModel.Cost"></label>
+                        </div>
+                        <div class="col-sm-8" style="padding-bottom:5px;">
+                            <input asp-for="TaskModel.QuotationModel.OrderDetailsModel.Cost" disabled class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="TaskModel.Id" />
+                            <div class="form-group">
+                                <label asp-for="TaskModel.Name" class="control-label"></label>
+                                <input asp-for="TaskModel.Name" class="form-control" />
+                                <span asp-validation-for="TaskModel.Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="TaskModel.Description" class="control-label"></label>
+                                <input asp-for="TaskModel.Description" class="form-control" />
+                                <span asp-validation-for="TaskModel.Description" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="TaskModel.Duration" class="control-label"></label>
+                                <input asp-for="TaskModel.Duration" class="form-control" />
+                                <span asp-validation-for="TaskModel.Duration" class="text-danger"></span>
+                            </div>
+                            @if (User.IsInRole("Admin") || User.IsInRole("Provider"))
+                            {
+                                <div class="form-group">
+                                    <label asp-for="TaskModel.CostHandLabor" class="control-label"></label>
+                                    <input asp-for="TaskModel.CostHandLabor" class="form-control" />
+                                    <span asp-validation-for="TaskModel.CostHandLabor" class="text-danger"></span>
+                                </div>
+                            }
+
+                            <div>
+                                <a asp-page="../Materials/IndexMaterial" asp-route-taskId="@Model.TaskModel.Id" style="text-decoration:none;">
+                                    &nbsp; Ver materiales
+                                </a>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div>
+                    <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@Model.TaskModel.QuotationModel.OrderDetailsModel.Id">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,91 @@
+﻿@page
+@model GrupoESINuevo.Pages.Employees.RegisterEmployeeModel
+@{
+    ViewData["Title"] = "RegisterEmployee";
+}
+
+<h2 class="text-info">Registrar Empleado</h2>
+<div class="rol">
+    <div class="col-md-4">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Input.Email"></label>
+            <input id="inputEmail" asp-for="Input.Email" class="form-control" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.Password"></label>
+            <input id="inputPw"asp-for="Input.Password" class="form-control" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.ConfirmPassword"></label>
+            <input id="inputPwConfirm"asp-for="Input.ConfirmPassword" class="form-control" />
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Input.Name"></label>
+            <input id="inputName" asp-for="Input.Name" class="form-control" />
+            <span asp-validation-for="Input.Name" class="text-danger"></span>
+        </div>
+        @if (Model.Input.serviceLst != null)
+        {
+            @foreach (var item in Model.Input.serviceLst)
+            {
+                <div class="form-group">
+                    <label>@item.Name</label>
+                    <input hidden asp-for="@item.ID" class="_idServicio" />
+                    <input type="checkbox" class="_checkbox" />
+                </div>
+            }
+        }
+        <input asp-for="Input.idEmpleador" id="idEmpleador" hidden>
+        <button class="btn btn-primary" onclick="registrarEmpleado()">Registrar empleado</button>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+    function registrarEmpleado() {
+        var _idEmpleador = document.getElementById('idEmpleador').value;
+        var _email = $('#inputEmail').val();
+        var _pw = $('#inputPw').val();
+        var _pwConfirm = $('#inputPwConfirm').val();
+        var _nombre = $('#inputName').val();
+        var checkBoxes = document.getElementsByClassName('_checkbox');
+        var result = document.getElementsByClassName('_idServicio');
+        var listaIds = {
+            listaIds: ""
+        };
+        for (var i = 0; i < checkBoxes.length; i++) {
+            if (checkBoxes[i].checked == true) {
+                listaIds.listaIds += result[i].value;
+                listaIds.listaIds += ",";
+            }
+        }
+        listaIds.listaIds = listaIds.listaIds.substring(0, listaIds.listaIds.length - 1);
+        if (_pw != _pwConfirm)
+        {
+            console.log("contraseña no coincide")
+            return "Error";
+        }
+        var json = {
+            idEmpleador: _idEmpleador,
+            email: _email,
+            pw: _pw,
+            nombre: _nombre,
+            listaServiciosId: listaIds.listaIds
+        }
+        console.log(json);
+        $.ajax({
+            type: "POST",
+            url: "/api/Employee/PostRegisterEmployee",
+            contentType: "application/json",
+            datatype: "json",
+            data: JSON.stringify(json)
+        }).then(() => {
+            window.location.href = "/Index"
+        });
+    }
+</script>
+}

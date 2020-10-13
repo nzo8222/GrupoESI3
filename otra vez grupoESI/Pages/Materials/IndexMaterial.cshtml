@@ -1,0 +1,110 @@
+﻿@page
+@model GrupoESINuevo.IndexMaterialModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2 class="text-info">Materiales</h2>
+<div class="container backgroundWhite">
+    <h2 class="text-info" py-2>Cotizacion</h2>
+    <div class="card">
+        <div class="card-header bg-dark text-light ml-0 row container">
+            <div class="col-6">
+                <i class="fa fa-user-o"></i>
+            </div>
+        </div>
+        <div class="card-body container">
+            <div class="col-md-6 offset-md-3">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_materialVM.tareaLocal.QuotationModel.OrderDetailsModel.Order.Concepto"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_materialVM.tareaLocal.QuotationModel.OrderDetailsModel.Order.Concepto" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_materialVM.tareaLocal.QuotationModel.OrderDetailsModel.Order.Direccion"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_materialVM.tareaLocal.QuotationModel.OrderDetailsModel.Order.Direccion" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_materialVM.tareaLocal.QuotationModel.OrderDetailsModel.Status"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_materialVM.tareaLocal.QuotationModel.OrderDetailsModel.Status" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_materialVM.tareaLocal.QuotationModel.OrderDetailsModel.Cost"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_materialVM.tareaLocal.QuotationModel.OrderDetailsModel.Cost" disabled class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <p>
+                <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@Model._materialVM.OrderDetailsId">Volver a la cotización</a>
+            </p>
+            <p>
+                <a asp-page="CreateMaterial" asp-route-taskId="@Model._materialVM.taskId">Agregar Material</a>
+            </p>
+            <div class="row">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table-responsive-sm table-striped">
+                            <thead>
+                                <tr class="table-secondary">
+                                    <th scope="col">
+                                        @Html.DisplayNameFor(model => model._materialVM.Material[0].Name)
+                                    </th>
+                                    <th scope="col">
+                                        @Html.DisplayNameFor(model => model._materialVM.Material[0].Description)
+                                    </th>
+                                    <th scope="col">
+                                        @Html.DisplayNameFor(model => model._materialVM.Material[0].Price)
+                                    </th>
+                                    <th scope="col">
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model._materialVM.Material)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Description)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Price)
+                                        </td>
+                                        <td>
+                                            @if (Model._materialVM.OrderDetailsStatus == "Cotizando" || User.IsInRole("Admin"))
+                                            {
+                                                <a class="btn btn-success" asp-page="./EditMaterial" asp-route-materialId="@item.Id">Editar</a> <p></p>
+                                            }
+                                            <a class="btn btn-danger" asp-page="./DeleteMaterial" asp-route-materialId="@item.Id">Borrar</a>
+                                            <a class="btn btn-info" asp-page="./DetailsMaterial" asp-route-materialId="@item.Id">Detalles</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+ </div>
+            

@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "GrupoESI.Utility/1.0.0": {
+        "runtime": {
+          "GrupoESI.Utility.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "GrupoESI.Utility/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

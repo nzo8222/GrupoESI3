@@ -1,0 +1,62 @@
+﻿@page
+@model GrupoESINuevo.Pages.Employees.ManageEmployeeModel
+@{
+    ViewData["Title"] = "ManageEmployee";
+}
+
+<h2 class="text-info">Manejar empleados</h2>
+<div class="container backgroundWhite">
+    <div class="card">
+        <div class="card-header bg-dark text-light ml-0 row container">
+            <div class="card-header bg-dark text-light ml-0 row container">
+                <div class="col-6">
+                    <i class="fa fa-user-o"></i>
+                </div>
+            </div>
+        </div>
+        <div class="card-body container">
+            <div class="row">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-striped border">
+                            <thead>
+                                <tr class="table-secondary">
+                                    <th scope="col">
+                                        @Html.DisplayNameFor(model => model.EmployeeUsrLst[0].Email)
+                                    </th>
+                                    <th scope="col">
+                                        @Html.DisplayNameFor(model => model.EmployeeUsrLst[0].Name)
+                                    </th>
+                                    <th scope="col">
+                                        Servicios
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.EmployeeUsrLst)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            @foreach (var item2 in item.ServiceLst)
+                                            {
+                                                @Html.DisplayFor(modelItem => item2.Name)
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

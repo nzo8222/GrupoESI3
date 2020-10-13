@@ -1,0 +1,94 @@
+﻿@page
+@model GrupoESINuevo.IndexServiceTypeModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+    <div class="container backgroundWhite">
+        <h2 class="text-info">Indice de categorias de servicio</h2>
+        <div class="card container">
+            <div class="card-header bg-dark text-light ml-0 row container">
+                <div class="col-6">
+                    <i class="fa fa-user-o"></i>
+                </div>
+            </div>
+            <div class="card-body container">
+                <p>
+                    <a asp-page="CreateServiceType" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>&nbsp; Crear nueva categoria de servicio
+                    </a>
+                </p>
+
+                <form method="get" asp-page="IndexServiceType">
+                    <br />
+                    <br />
+                    <div class="row">
+                        <div class="col">
+                            <div class="row" style="padding-top:10px">
+                                <div class="col">
+                                    @Html.Editor("searchCategory", new { htmlAttributes = new { @class = "form-control", placeholder = "Category..." } })
+                                </div>
+                                <div class="col">
+                                    @Html.Editor("searchDescription", new { htmlAttributes = new { @class = "form-control", placeholder = "Description..." } })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="row" style="padding-top:10px; padding-right:15px;">
+                                <button type="submit" name="submit" value="Search" class="btn btn-info form-control">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr class="table-secondary">
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ServiceType.ServiceTypeList[0].Category)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.ServiceType.ServiceTypeList[0].Descripcion)
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.ServiceType.ServiceTypeList)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Category)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary" asp-page="./EditServiceType" asp-route-id="@item.Id">Edit</a>
+                                                <a class="btn btn-info" asp-page="./DetailsServiceType" asp-route-id="@item.Id">Details</a>
+                                                <a class="btn btn-danger" asp-page="./DeleteServiceType" asp-route-serviceTypeId="@item.Id">Delete</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td colspan="5" class="text-right">
+                                            <div page-model="@Model.ServiceType.PagingInfo" asp-action="IndexServiceType" page-class="btn border"
+                                                 page-class-normal="btn btn-light" page-class-selected="btn btn-info active" class="btn-group">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </div>
+
+
+

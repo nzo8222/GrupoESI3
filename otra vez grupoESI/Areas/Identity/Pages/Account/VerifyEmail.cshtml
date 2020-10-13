@@ -1,0 +1,15 @@
+﻿@page
+@model GrupoESINuevo.Areas.Identity.Pages.Account.VerifyEmailModel
+
+<h1>Confirm Email Address</h1>
+<div>
+    <p>
+        Confirm your email befor proceding!
+        <br />
+        check spam
+    </p>
+    <form method="post">
+        <input type="hidden" asp-for="Email" />
+        <button type="submit" class="btn btn-info col-5">Send verification email</button>
+    </form>
+</div>
