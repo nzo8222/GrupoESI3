@@ -10552,8 +10552,8 @@
     },
     "GrupoESI/1.0.0": {
       "type": "project",
-      "path": "../otra vez grupoESI/GrupoESI.csproj",
-      "msbuildProject": "../otra vez grupoESI/GrupoESI.csproj"
+      "path": "../GrupoESIMainSolution/GrupoESI.csproj",
+      "msbuildProject": "../GrupoESIMainSolution/GrupoESI.csproj"
     },
     "GrupoESIDataAccess/1.0.0": {
       "type": "project",
@@ -10611,8 +10611,8 @@
             "C:\\GrupoESI\\GrupoESI.Utility\\GrupoESIUtility.csproj": {
               "projectPath": "C:\\GrupoESI\\GrupoESI.Utility\\GrupoESIUtility.csproj"
             },
-            "C:\\GrupoESI\\otra vez grupoESI\\GrupoESI.csproj": {
-              "projectPath": "C:\\GrupoESI\\otra vez grupoESI\\GrupoESI.csproj"
+            "C:\\GrupoESI\\GrupoESIMainSolution\\GrupoESI.csproj": {
+              "projectPath": "C:\\GrupoESI\\GrupoESIMainSolution\\GrupoESI.csproj"
             }
           }
         }

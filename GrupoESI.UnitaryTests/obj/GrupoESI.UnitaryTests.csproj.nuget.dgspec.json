@@ -30,8 +30,8 @@
               "C:\\GrupoESI\\GrupoESI.Utility\\GrupoESIUtility.csproj": {
                 "projectPath": "C:\\GrupoESI\\GrupoESI.Utility\\GrupoESIUtility.csproj"
               },
-              "C:\\GrupoESI\\otra vez grupoESI\\GrupoESI.csproj": {
-                "projectPath": "C:\\GrupoESI\\otra vez grupoESI\\GrupoESI.csproj"
+              "C:\\GrupoESI\\GrupoESIMainSolution\\GrupoESI.csproj": {
+                "projectPath": "C:\\GrupoESI\\GrupoESIMainSolution\\GrupoESI.csproj"
               }
             }
           }
@@ -217,76 +217,14 @@
         }
       }
     },
-    "C:\\GrupoESI\\GrupoESIModels\\GrupoESIModels.csproj": {
+    "C:\\GrupoESI\\GrupoESIMainSolution\\GrupoESI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\GrupoESI\\GrupoESIModels\\GrupoESIModels.csproj",
-        "projectName": "GrupoESIModels",
-        "projectPath": "C:\\GrupoESI\\GrupoESIModels\\GrupoESIModels.csproj",
-        "packagesPath": "C:\\Users\\gonz\\.nuget\\packages\\",
-        "outputPath": "C:\\GrupoESI\\GrupoESIModels\\obj\\",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "C:\\Users\\gonz\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-        ],
-        "originalTargetFrameworks": [
-          "netcoreapp3.1"
-        ],
-        "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "netcoreapp3.1": {
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "netcoreapp3.1": {
-          "dependencies": {
-            "Microsoft.AspNetCore.Http.Features": {
-              "target": "Package",
-              "version": "[3.1.8, )"
-            },
-            "Microsoft.Extensions.Identity.Stores": {
-              "target": "Package",
-              "version": "[3.1.8, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "C:\\GrupoESI\\otra vez grupoESI\\GrupoESI.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\GrupoESI\\otra vez grupoESI\\GrupoESI.csproj",
+        "projectUniqueName": "C:\\GrupoESI\\GrupoESIMainSolution\\GrupoESI.csproj",
         "projectName": "GrupoESI",
-        "projectPath": "C:\\GrupoESI\\otra vez grupoESI\\GrupoESI.csproj",
+        "projectPath": "C:\\GrupoESI\\GrupoESIMainSolution\\GrupoESI.csproj",
         "packagesPath": "C:\\Users\\gonz\\.nuget\\packages\\",
-        "outputPath": "C:\\GrupoESI\\otra vez grupoESI\\obj\\",
+        "outputPath": "C:\\GrupoESI\\GrupoESIMainSolution\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\gonz\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -388,6 +326,68 @@
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
             },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\GrupoESI\\GrupoESIModels\\GrupoESIModels.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\GrupoESI\\GrupoESIModels\\GrupoESIModels.csproj",
+        "projectName": "GrupoESIModels",
+        "projectPath": "C:\\GrupoESI\\GrupoESIModels\\GrupoESIModels.csproj",
+        "packagesPath": "C:\\Users\\gonz\\.nuget\\packages\\",
+        "outputPath": "C:\\GrupoESI\\GrupoESIModels\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\gonz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Microsoft.Extensions.Identity.Stores": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

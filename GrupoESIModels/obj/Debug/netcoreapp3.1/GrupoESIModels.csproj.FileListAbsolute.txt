@@ -7,3 +7,12 @@ C:\Users\gonz\Desktop\otras repos\GrupoESIModels\bin\Debug\netcoreapp3.1\GrupoES
 C:\Users\gonz\Desktop\otras repos\GrupoESIModels\bin\Debug\netcoreapp3.1\GrupoESIModels.pdb
 C:\Users\gonz\Desktop\otras repos\GrupoESIModels\obj\Debug\netcoreapp3.1\GrupoESIModels.dll
 C:\Users\gonz\Desktop\otras repos\GrupoESIModels\obj\Debug\netcoreapp3.1\GrupoESIModels.pdb
+C:\GrupoESI\GrupoESIModels\bin\Debug\netcoreapp3.1\GrupoESIModels.deps.json
+C:\GrupoESI\GrupoESIModels\bin\Debug\netcoreapp3.1\GrupoESIModels.dll
+C:\GrupoESI\GrupoESIModels\bin\Debug\netcoreapp3.1\GrupoESIModels.pdb
+C:\GrupoESI\GrupoESIModels\obj\Debug\netcoreapp3.1\GrupoESIModels.csprojAssemblyReference.cache
+C:\GrupoESI\GrupoESIModels\obj\Debug\netcoreapp3.1\GrupoESIModels.AssemblyInfoInputs.cache
+C:\GrupoESI\GrupoESIModels\obj\Debug\netcoreapp3.1\GrupoESIModels.AssemblyInfo.cs
+C:\GrupoESI\GrupoESIModels\obj\Debug\netcoreapp3.1\GrupoESIModels.csproj.CoreCompileInputs.cache
+C:\GrupoESI\GrupoESIModels\obj\Debug\netcoreapp3.1\GrupoESIModels.dll
+C:\GrupoESI\GrupoESIModels\obj\Debug\netcoreapp3.1\GrupoESIModels.pdb

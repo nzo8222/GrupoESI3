@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GrupoESI.Utility\GrupoESIUtility.csproj" />
-    <ProjectReference Include="..\otra vez grupoESI\GrupoESI.csproj" />
+    <ProjectReference Include="..\GrupoESIMainSolution\GrupoESI.csproj" />
   </ItemGroup>
 
 </Project>
