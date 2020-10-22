@@ -1,54 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using GrupoESINuevo.Data;
-
 using System.IO;
-
-using Microsoft.EntityFrameworkCore;
 using GrupoESIModels.ViewModels;
 using GrupoESIModels.Models;
 using GrupoESIModels.Enums;
-using GrupoESIDataAccess;
+using GrupoESIDataAccess.Queries;
 
 namespace GrupoESINuevo.Pages.Tasks
 {
     public class TaskEvidenceModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IQueries _queries;
 
-        public TaskEvidenceModel(ApplicationDbContext context)
+        public TaskEvidenceModel(IQueries queries)
         {
-            _context = context;
+            _queries = queries;
         }
         [BindProperty]
         public EvidenceTaskVM _taskModelVM { get; set; }
         public IActionResult OnGet(Guid taskId)
         {
             _taskModelVM = new EvidenceTaskVM();
-            _taskModelVM.task = _context.Task
-                                             .Include(t => t.Pictures)
-                                             .Include(t => t.QuotationModel)
-                                                .ThenInclude(q => q.OrderDetailsModel)
-                                                    .ThenInclude(od => od.Order)
-                                             .FirstOrDefault(t => t.Id == taskId);
+            _taskModelVM.task = _queries.GetTaskIncludeLstMaterialPicturesQuotationModelOrderDetailsModelOrderFirstOrDefaultWhereTaskIdEquals(taskId);
+
             if(_taskModelVM.task.Pictures == null)
             {
                 _taskModelVM.task.Pictures = new List<Picture>();
             }
             return Page();
         }
-
-        
-
-        
         public async Task<IActionResult> OnPostPictureAsync()
         {
-            var tasklocal = _context.Task.FirstOrDefault(t => t.Id == _taskModelVM.task.Id);
+            var tasklocal = _queries.GetTaskFirstOrDefaultWhereTaskIdEquals(_taskModelVM.task.Id);
 
             if (_taskModelVM.Upload == null)
             {
@@ -72,9 +58,7 @@ namespace GrupoESINuevo.Pages.Tasks
                     file.FechaDeSubida = DateTime.Now;
                     file.Tipo = PictureTypeEnum.Evidence;
                     tasklocal.Pictures.Add(file);
-                    //_dbContext.File.Add(file);
-
-                    await _context.SaveChangesAsync();
+                    _queries.SaveChanges();
                 }
                 else
                 {

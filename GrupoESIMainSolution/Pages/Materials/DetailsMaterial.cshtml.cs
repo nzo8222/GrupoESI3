@@ -1,36 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using GrupoESINuevo.Data;
 using GrupoESIModels.Models;
-using GrupoESIDataAccess;
+using GrupoESIDataAccess.Queries;
 
 namespace GrupoESINuevo
 {
     public class DetailsMaterialModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
-
-        public DetailsMaterialModel(ApplicationDbContext context)
+        private readonly IQueries _queries;
+        public DetailsMaterialModel(IQueries queries)
         {
-            _context = context;
+            _queries = queries;
         }
 
         public Material Material { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid materialId)
+        public IActionResult OnGetAsync(Guid materialId)
         {
             if (materialId == null)
             {
                 return NotFound();
             }
-            Material = await _context.Material
-                                            .Include(m => m.Task)
-                                            .FirstOrDefaultAsync(m => m.Id == materialId);
+            Material = _queries.GetMaterialIncludeTaskFirstOrDefaultIdEqualsMaterialsId(materialId);
             if (Material == null)
             {
                 return NotFound();

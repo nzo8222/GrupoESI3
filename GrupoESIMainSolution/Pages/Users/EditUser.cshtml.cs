@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GrupoESIDataAccess;
+using GrupoESIDataAccess.Queries;
 using GrupoESIModels.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,21 +8,22 @@ namespace GrupoESINuevo
 {
     public class EditUserModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
 
-        public EditUserModel(ApplicationDbContext context)
+        private readonly IQueries _queries;
+        public EditUserModel(IQueries queries)
         {
-            _context = context;
+            _queries = queries;
         }
         [BindProperty]
         public ApplicationUser _ApplicationUser { get; set; }
-        public async Task<IActionResult> OnGet(string userId)
+        public IActionResult OnGet(string userId)
         {
             if(userId == "")
             {
                 return NotFound();
             }
-            _ApplicationUser = _context.ApplicationUser.FirstOrDefault(a => a.Id == userId);
+            _ApplicationUser = _queries.GetApplicationUserIncludeServiceLst(userId);
+
             if(_ApplicationUser == null)
             {
                 return NotFound();
@@ -33,14 +31,13 @@ namespace GrupoESINuevo
 
             return Page();
         }
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPostAsync()
         {
             if(!ModelState.IsValid)
             {
                 return Page();
             }
-            var ApplicationUserLocal = _context.ApplicationUser.FirstOrDefault(a => a.Id == _ApplicationUser.Id);
-            
+            var ApplicationUserLocal = _queries.GetApplicationUserIncludeServiceLst(_ApplicationUser.Id);            
             if(ApplicationUserLocal == null)
             {
                 return NotFound();
@@ -56,7 +53,7 @@ namespace GrupoESINuevo
             ApplicationUserLocal.State = _ApplicationUser.State;
             try
             {
-                await _context.SaveChangesAsync();
+                _queries.SaveChanges();
             }
             catch(Exception ex)
             {

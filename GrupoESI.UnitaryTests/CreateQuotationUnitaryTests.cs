@@ -31,8 +31,8 @@ namespace GrupoESI.UnitTestsXUnit
             quotationLocal = new Quotation
             {
                 Description = "a",
-                FechaGuardadoCotizacion = new DateTime(),
-                FechaLlegadaProveedor = new DateTime(),
+                QuotationSaveDate = new DateTime(),
+                ProviderArrivalDate = new DateTime(),
                 Id = new Guid(),
                 OrderDetailsModel = new OrderDetails(),
                 Tasks = new System.Collections.Generic.List<TaskModel>()
@@ -72,7 +72,7 @@ namespace GrupoESI.UnitTestsXUnit
                 (q => q.GetOrderDetailsWithOrderServiceApplicationUser(LocalGuid))
                 .Returns(od);
             iqueriesInterface.Setup
-                (q => q.GetQuotationWithOrderDetailsOrdersTasksListMaterialFirstOrDefault(LocalGuid))
+                (q => q.GetQuotationIncludeOrderDetailsOrdersTasksListMaterialPicturesFirstOrDefault(LocalGuid))
                 .Returns(quotationLocal);
             iqueriesInterface.Setup
                 (q => q.GetListOrderDetailsWithOrderServiceApplicationUserFromSameUser(od))

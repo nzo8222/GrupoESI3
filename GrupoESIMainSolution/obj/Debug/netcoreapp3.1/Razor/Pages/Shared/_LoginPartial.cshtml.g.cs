@@ -14,35 +14,56 @@ namespace GrupoESINuevo.Pages.Shared
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
 #nullable restore
 #line 2 "C:\GrupoESI\GrupoESIMainSolution\Pages\_ViewImports.cshtml"
-using GrupoESINuevo;
+using GrupoESINuevo.TagHelpers;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 3 "C:\GrupoESI\GrupoESIMainSolution\Pages\_ViewImports.cshtml"
-using GrupoESINuevo.Data;
+using GrupoESIDataAccess.Migrations;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "C:\GrupoESI\GrupoESIMainSolution\Pages\_ViewImports.cshtml"
-using GrupoESIUtility;
+using GrupoESIDataAccess.Queries;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 5 "C:\GrupoESI\GrupoESIMainSolution\Pages\_ViewImports.cshtml"
-using GrupoESIModels;
+using GrupoESIDataAccess.Repository;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 6 "C:\GrupoESI\GrupoESIMainSolution\Pages\_ViewImports.cshtml"
+using GrupoESIUtility;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 7 "C:\GrupoESI\GrupoESIMainSolution\Pages\_ViewImports.cshtml"
+using GrupoESIModels.Models;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 8 "C:\GrupoESI\GrupoESIMainSolution\Pages\_ViewImports.cshtml"
 using GrupoESIModels.ViewModels;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 9 "C:\GrupoESI\GrupoESIMainSolution\Pages\_ViewImports.cshtml"
+using GrupoESIModels.Enums;
 
 #line default
 #line hidden
@@ -55,7 +76,7 @@ using Microsoft.AspNetCore.Identity;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"3974f0d1495c71fea03c184d6055a0defd072bc1", @"/Pages/Shared/_LoginPartial.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"6f4710ec2dd136ba5217ee90ce3eb4297621b6e5", @"/Pages/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7ac85307ac0ca9f6fd5b6ca8a07cf5194b9ce42e", @"/Pages/_ViewImports.cshtml")]
     public class Pages_Shared__LoginPartial : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("nav-link text-dark"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -103,7 +124,7 @@ using Microsoft.AspNetCore.Identity;
 #line hidden
 #nullable disable
             WriteLiteral("    <li class=\"nav-item\">\r\n        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3974f0d1495c71fea03c184d6055a0defd072bc17226", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3974f0d1495c71fea03c184d6055a0defd072bc17774", async() => {
                 WriteLiteral("Hello ");
 #nullable restore
 #line 9 "C:\GrupoESI\GrupoESIMainSolution\Pages\Shared\_LoginPartial.cshtml"
@@ -131,7 +152,7 @@ using Microsoft.AspNetCore.Identity;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n    </li>\r\n    <li class=\"nav-item\">\r\n        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3974f0d1495c71fea03c184d6055a0defd072bc19116", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3974f0d1495c71fea03c184d6055a0defd072bc19664", async() => {
                 WriteLiteral("\r\n            <button  type=\"submit\" class=\"nav-link btn btn-link text-dark\">Logout</button>\r\n        ");
             }
             );
@@ -179,7 +200,7 @@ else
 #line hidden
 #nullable disable
             WriteLiteral("    <li class=\"nav-item\">\r\n        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3974f0d1495c71fea03c184d6055a0defd072bc112452", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3974f0d1495c71fea03c184d6055a0defd072bc113000", async() => {
                 WriteLiteral("Register");
             }
             );
@@ -198,7 +219,7 @@ else
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n    </li>\r\n    <li class=\"nav-item\">\r\n        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3974f0d1495c71fea03c184d6055a0defd072bc113943", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3974f0d1495c71fea03c184d6055a0defd072bc114491", async() => {
                 WriteLiteral("Login");
             }
             );

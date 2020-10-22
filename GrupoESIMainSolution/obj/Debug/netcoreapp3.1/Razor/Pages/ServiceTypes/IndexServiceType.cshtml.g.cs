@@ -21,41 +21,62 @@ using Microsoft.AspNetCore.Identity;
 #nullable disable
 #nullable restore
 #line 2 "C:\GrupoESI\GrupoESIMainSolution\Pages\_ViewImports.cshtml"
-using GrupoESINuevo;
+using GrupoESINuevo.TagHelpers;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 3 "C:\GrupoESI\GrupoESIMainSolution\Pages\_ViewImports.cshtml"
-using GrupoESINuevo.Data;
+using GrupoESIDataAccess.Migrations;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "C:\GrupoESI\GrupoESIMainSolution\Pages\_ViewImports.cshtml"
-using GrupoESIUtility;
+using GrupoESIDataAccess.Queries;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 5 "C:\GrupoESI\GrupoESIMainSolution\Pages\_ViewImports.cshtml"
-using GrupoESIModels;
+using GrupoESIDataAccess.Repository;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 6 "C:\GrupoESI\GrupoESIMainSolution\Pages\_ViewImports.cshtml"
+using GrupoESIUtility;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 7 "C:\GrupoESI\GrupoESIMainSolution\Pages\_ViewImports.cshtml"
+using GrupoESIModels.Models;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 8 "C:\GrupoESI\GrupoESIMainSolution\Pages\_ViewImports.cshtml"
 using GrupoESIModels.ViewModels;
 
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 9 "C:\GrupoESI\GrupoESIMainSolution\Pages\_ViewImports.cshtml"
+using GrupoESIModels.Enums;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"07ecdae441ace74fd6442cfb7f0a92a65e76f7a0", @"/Pages/ServiceTypes/IndexServiceType.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"6f4710ec2dd136ba5217ee90ce3eb4297621b6e5", @"/Pages/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7ac85307ac0ca9f6fd5b6ca8a07cf5194b9ce42e", @"/Pages/_ViewImports.cshtml")]
     public class Pages_ServiceTypes_IndexServiceType : global::Microsoft.AspNetCore.Mvc.RazorPages.Page
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-page", "CreateServiceType", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -113,7 +134,7 @@ using GrupoESIModels.ViewModels;
             <div class=""card-body container"">
                 <p>
                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "07ecdae441ace74fd6442cfb7f0a92a65e76f7a07692", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "07ecdae441ace74fd6442cfb7f0a92a65e76f7a08240", async() => {
                 WriteLiteral("\r\n                        <i class=\"fas fa-plus\"></i>&nbsp; Crear nueva categoria de servicio\r\n                    ");
             }
             );
@@ -130,7 +151,7 @@ using GrupoESIModels.ViewModels;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                </p>\r\n\r\n                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "07ecdae441ace74fd6442cfb7f0a92a65e76f7a09087", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "07ecdae441ace74fd6442cfb7f0a92a65e76f7a09635", async() => {
                 WriteLiteral(@"
                     <br />
                     <br />
@@ -234,7 +255,7 @@ using GrupoESIModels.ViewModels;
 #line hidden
 #nullable disable
             WriteLiteral("\r\n                                            </td>\r\n                                            <td>\r\n                                                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "07ecdae441ace74fd6442cfb7f0a92a65e76f7a015234", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "07ecdae441ace74fd6442cfb7f0a92a65e76f7a015782", async() => {
                 WriteLiteral("Edit");
             }
             );
@@ -266,7 +287,7 @@ using GrupoESIModels.ViewModels;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                                                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "07ecdae441ace74fd6442cfb7f0a92a65e76f7a017574", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "07ecdae441ace74fd6442cfb7f0a92a65e76f7a018122", async() => {
                 WriteLiteral("Details");
             }
             );
@@ -298,7 +319,7 @@ using GrupoESIModels.ViewModels;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                                                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "07ecdae441ace74fd6442cfb7f0a92a65e76f7a019917", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "07ecdae441ace74fd6442cfb7f0a92a65e76f7a020465", async() => {
                 WriteLiteral("Delete");
             }
             );

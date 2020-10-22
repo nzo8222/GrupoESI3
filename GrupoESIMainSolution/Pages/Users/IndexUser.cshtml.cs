@@ -1,26 +1,24 @@
-﻿
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GrupoESIDataAccess;
+using GrupoESIDataAccess.Queries;
 using GrupoESIModels.Models;
 using GrupoESIModels.ViewModels;
 using GrupoESIUtility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace GrupoESINuevo
 {
     [Authorize(Roles = SD.AdminEndUser)]
     public class IndexUserModel : PageModel
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IQueries _queries;
 
-        public IndexUserModel(ApplicationDbContext db)
+        public IndexUserModel(IQueries queries)
         {
-            _db = db;
+            _queries = queries;
         }
         [BindProperty]
         public UsersListViewModel UsersListVM { get; set; }
@@ -28,7 +26,7 @@ namespace GrupoESINuevo
         {
             UsersListVM = new UsersListViewModel()
             {
-                ApplicationUserList = await _db.ApplicationUser.ToListAsync()
+                ApplicationUserList = _queries.GetAllApplicationUser()
             };
 
             StringBuilder param = new StringBuilder();
@@ -51,19 +49,19 @@ namespace GrupoESINuevo
 
             if (searchName != null)
             {
-                UsersListVM.ApplicationUserList = await _db.ApplicationUser.Where(u => u.Email.ToLower().Contains(searchName.ToLower())).ToListAsync();
+                UsersListVM.ApplicationUserList = UsersListVM.ApplicationUserList.Where(u => u.Email.ToLower().Contains(searchName.ToLower())).ToList();
             }
             else
             {
                 if (searchCompany != null)
                 {
-                    UsersListVM.ApplicationUserList = await _db.ApplicationUser.Where(u => u.CompanyName.ToLower().Contains(searchCompany.ToLower())).ToListAsync();
+                    UsersListVM.ApplicationUserList = UsersListVM.ApplicationUserList.Where(u => u.CompanyName.ToLower().Contains(searchCompany.ToLower())).ToList();
                 }
                 else
                 {
                     if (searchEmail != null)
                     {
-                        UsersListVM.ApplicationUserList = await _db.ApplicationUser.Where(u => u.PhoneNumber.ToLower().Contains(searchEmail.ToLower())).ToListAsync();
+                        UsersListVM.ApplicationUserList = UsersListVM.ApplicationUserList.Where(u => u.PhoneNumber.ToLower().Contains(searchEmail.ToLower())).ToList();
                     }
                 }
             }

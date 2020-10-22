@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -42,7 +41,7 @@ namespace GrupoESINuevo
         {
             _QuotationTaskMaterialVM = new QuotationTaskMaterialVM();
             _QuotationTaskMaterialVM.orderDetailsId = orderDetailsId;
-            _QuotationTaskMaterialVM.QuotationModel = _iqueries.GetQuotationWithOrderDetailsOrdersTasksListMaterialFirstOrDefault(orderDetailsId);
+            _QuotationTaskMaterialVM.QuotationModel = _iqueries.GetQuotationIncludeOrderDetailsOrdersTasksListMaterialPicturesFirstOrDefault(orderDetailsId);
         }
 
         private void LoadSameUserServices(Guid orderDetailsId)
@@ -101,9 +100,9 @@ namespace GrupoESINuevo
         {
             if (_QuotationTaskMaterialVM.QuotationModel.Description == null)
             {
-                return RedirectToPage("CreateQuotation", new { orderDetailsId = _QuotationTaskMaterialVM.QuotationModel });
+                return RedirectToPage("CreateQuotation", new { orderDetailsId = _QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Id });
             }
-            var quotation = _iqueries.GetQuotationWithOrderDetailsOrdersTasksListMaterialFirstOrDefault(_QuotationTaskMaterialVM.QuotationModel.Id);
+            var quotation = _iqueries.GetQuotationIncludeOrderDetailsOrdersTasksListMaterialPicturesFirstOrDefault(_QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Id);
             if (quotation.Tasks.Count == 0)
             {
                 return RedirectToPage("CreateQuotation", new { orderDetailsId = _QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Id });
@@ -126,7 +125,7 @@ namespace GrupoESINuevo
         private void SetQuotationForPosting(Quotation quotation)
         {
             quotation.Description = _QuotationTaskMaterialVM.QuotationModel.Description;
-            quotation.FechaGuardadoCotizacion = DateTime.Now;
+            quotation.QuotationSaveDate = DateTime.Now;
             var order = _iqueries.GetOrderByOrderId(quotation.OrderDetailsModel.Order.Id);
             quotation.OrderDetailsModel.Status = SD.EstadoCotizado;
             order.EstadoDelPedido = SD.EstadoCotizado;
@@ -148,7 +147,7 @@ namespace GrupoESINuevo
 
                     await _emailSender.SendEmailAsync(SD.AdminEmail, "El proveedor llego al domicilio",
                           $"El proveedor '{quotation.OrderDetailsModel.Service.ApplicationUser.CompanyName}' llego al domicilio");
-                    quotation.FechaGuardadoCotizacion = DateTime.Now;
+                    quotation.QuotationSaveDate = DateTime.Now;
                     _iqueries.SaveChanges();
                 }
                 catch (Exception ex)

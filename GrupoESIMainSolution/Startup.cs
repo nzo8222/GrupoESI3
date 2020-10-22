@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using GrupoESINuevo.Data;
 using Microsoft.Extensions.Configuration;
@@ -14,11 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using GrupoESINuevo.Email;
-using Autofac.Extensions.DependencyInjection;
 using Autofac;
 using GrupoESINuevo.DependencyInjection;
 using GrupoESIDataAccess;
-using GrupoESIDataAccess.Repository.IRepository;
 
 namespace GrupoESINuevo
 {
@@ -38,16 +30,6 @@ namespace GrupoESINuevo
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IDbInitializer, DbInitializer>();
-            //services.AddScoped<IServiceTypeRepository, ServiceTypeRepository>();
-            //services.AddScoped<IServiceRepository, ServiceRepository>();
-            //services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
-            //services.AddScoped<IQuotationRepository, QuotationRepository>();
-            //services.AddScoped<ITaskRepository, TaskRepository>();
-            //services.AddScoped<IMaterialRepository, MaterialRepository>();
-            //services.AddScoped<IPictureRepository, PictureRepository>();
-            //services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
-            //services.AddScoped<IOrderRepository, OrderRepository>();
-            //services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();

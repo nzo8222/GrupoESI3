@@ -8,17 +8,27 @@ using Microsoft.AspNetCore.Authorization;
 using GrupoESIModels.Models;
 using GrupoESIDataAccess;
 using GrupoESIUtility;
+using GrupoESIDataAccess.Queries;
+using GrupoESIDataAccess.Repository.IRepository;
 
 namespace GrupoESINuevo
 {
     [Authorize(Roles = SD.AdminEndUser)]
     public class DeleteOrderModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
-
-        public DeleteOrderModel(ApplicationDbContext context)
+        private readonly IQueries _queries;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IQuotationRepository _quotationRepository;
+        private readonly IOrderDetailsRepository _orderDetailsRepository;
+        public DeleteOrderModel(IQueries queries,
+                                IOrderRepository orderRepository,
+                                IQuotationRepository quotationRepository,
+                                IOrderDetailsRepository orderDetailsRepository)
         {
-            _context = context;
+            _queries = queries;
+            _orderRepository = orderRepository;
+            _quotationRepository = quotationRepository;
+            _orderDetailsRepository = orderDetailsRepository;
         }
 
         [BindProperty]
@@ -30,13 +40,7 @@ namespace GrupoESINuevo
             {
                 return NotFound();
             }
-
-            Order = await _context.Order
-                                        .Include(o => o.LstOrderDetails)
-                                            .ThenInclude(od => od.Service)
-                                                .ThenInclude(od => od.ApplicationUser)
-                                        .FirstOrDefaultAsync(m => m.Id == orderId);
-
+            Order = _queries.GetOrderIncludeOrderDetailsServiceApplicationUserFirstOrDefault((Guid)orderId);
             if (Order == null)
             {
                 return NotFound();
@@ -51,34 +55,28 @@ namespace GrupoESINuevo
                 return NotFound();
             }
 
-            Order = await _context.Order
-                                        .FirstOrDefaultAsync(o => o.Id == Order.Id);
+            LoadAndRemoveOrderAndItsDependantModels();
+            return RedirectToPage("../ManageOrders/OrderIndexAdmin");
+        }
 
-            
+        private void LoadAndRemoveOrderAndItsDependantModels()
+        {
+            Order = _queries.GetOrderByOrderId(Order.Id);
             if (Order != null)
             {
-                var orderDetailsLocal = _context.OrderDetails.Include(od => od.Order).Where(od => od.Order.Id == Order.Id).ToList();
-
-                foreach (var item in orderDetailsLocal)
+                var orderDetailsLocal = _queries.GetOrderDetailsFromSameOrder(Order.Id);
+                foreach (var orderDetails in orderDetailsLocal)
                 {
-                    var quotationLocal = _context.Quotation
-                                                            .Include(q => q.OrderDetailsModel)
-                                                            .Include(q => q.Tasks)
-                                                                .ThenInclude(t => t.ListMaterial)
-                                                            .FirstOrDefault(q => q.OrderDetailsModel == item);
-                    
-                    _context.OrderDetails.Remove(item);
-                    if(quotationLocal != null)
+                    var quotationLocal = _queries.GetQuotationIncludeOrderDetailsOrdersTasksListMaterialPicturesFirstOrDefault(orderDetails.Id);
+                    _orderDetailsRepository.Remove(orderDetails);
+                    if (quotationLocal != null)
                     {
-                        _context.Quotation.Remove(quotationLocal);
+                        _quotationRepository.Remove(quotationLocal);
                     }
-                    
                 }
-                _context.Order.Remove(Order);
-                await _context.SaveChangesAsync();
+                _orderRepository.Remove(Order);
+                _queries.SaveChanges();
             }
-
-            return RedirectToPage("../ManageOrders/OrderIndexAdmin");
         }
     }
 }

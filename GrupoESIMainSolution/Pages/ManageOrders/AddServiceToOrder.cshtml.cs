@@ -1,77 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using GrupoESINuevo.Data;
 using GrupoESIModels.ViewModels;
-using GrupoESIDataAccess;
+using GrupoESIDataAccess.Queries;
 
 namespace GrupoESINuevo
 {
     public class AddServiceToOrderModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
-
-        public AddServiceToOrderModel(ApplicationDbContext context)
+        private readonly IQueries _queries;
+        public AddServiceToOrderModel(IQueries queries)
         {
-            _context = context;
+            _queries = queries;
         }
         [BindProperty]
         public AddServiceVM _AddServiceVM { get;set; }
 
         public async Task OnGetAsync(Guid orderDetailsId)
         {
-            //se inicializa el modelo y se le asigna el atributo orderDetailsID
-            _AddServiceVM = new AddServiceVM(orderDetailsId);
-            //se buscan todas las detalles de orden que tengan el mismo id de la orden que el recibido en el parametro y sean del mismo usuario
-            _AddServiceVM.OrderDetailsLocal = _context.OrderDetails
-                                                                  .Include(od => od.Order)
-                                                                  .Include(od => od.Service)
-                                                                       .ThenInclude(s => s.ApplicationUser)
-                                                                  .FirstOrDefault(od => od.Id == orderDetailsId);
-            _AddServiceVM.OrderDetailsList = _context.OrderDetails
-                                                                  .Include(od => od.Order)
-                                                                  .Include(od => od.Service)
-                                                                       .ThenInclude(s => s.ApplicationUser)
-                                                                  .Where(orderDtls => orderDtls.Order.Id == _AddServiceVM.OrderDetailsLocal.Order.Id && orderDtls.Service.ApplicationUser == _AddServiceVM.OrderDetailsLocal.Service.ApplicationUser)
-                                                                  .ToList();
-            //si hay mas de 0 servicios en la cuenta se inicializa el atributo orderId con el id de la orden del primer
-            //registro de la lista de orderDetails
+            LoadServiceToOrderVM(orderDetailsId);
             if (_AddServiceVM.OrderDetailsList.Count > 0)
             {
                 _AddServiceVM.OrderId = _AddServiceVM.OrderDetailsList[0].Order.Id;
             }
-           
-            // lista de ID de servicios del mismo usuario
-            List<Guid> lstServiceDelmismoUsuario = _context.ServiceModel
-                                                                    .Include(c => c.ApplicationUser)
-                                                                    .Where(c => c.ApplicationUser == _AddServiceVM.OrderDetailsList[0].Service.ApplicationUser)
-                                                                    .Select(c => c.ID)
-                                                                    .ToList();
+            FilterServicesListFromServicesThatHadAlreadyBeenRegisteredOnThisOrder();
+        }
+
+        private void FilterServicesListFromServicesThatHadAlreadyBeenRegisteredOnThisOrder()
+        {
+            List<Guid> lstGuidServicesFromSameUser = _queries.GetLstServiceFromSameUserWhereUserIdEqualsUserIdSelectId(_AddServiceVM.OrderDetailsList[0].Service.UserId);
             //lista de servicios con cotizacion
-            List<Guid> lstServiciosConCotizacion = new List<Guid>();
+            List<Guid> lstGuidServicesWithQuotation = new List<Guid>();
 
             //por cada orderDetails se agrega el id del servicio a la lista de servicios con cotizacion
-            foreach (var item in _AddServiceVM.OrderDetailsList)
+            foreach (var orderDetail in _AddServiceVM.OrderDetailsList)
             {
-                lstServiciosConCotizacion.Add(item.Service.ID);
+                lstGuidServicesWithQuotation.Add(orderDetail.Service.ID);
             }
             //de la lista de servicios del mismo usuario se excluyen aquellos registros que ya tengan un OrderDetails 
-            lstServiceDelmismoUsuario = lstServiceDelmismoUsuario.FindAll(x => !lstServiciosConCotizacion.Contains(x));
+            lstGuidServicesFromSameUser = lstGuidServicesFromSameUser.FindAll(x => !lstGuidServicesWithQuotation.Contains(x));
 
             //por cada servicio del mismo usuario que sobre despues de excluir los que ya tienen un orderDetails 
             //se agrega un modelo de servicio a una lista del viewModel
-            foreach(var item in lstServiceDelmismoUsuario)
+            foreach (var item in lstGuidServicesFromSameUser)
             {
-                var serviceModel = _context.ServiceModel
-                                                        .Include(s => s.ApplicationUser)
-                                                        .FirstOrDefault(s => s.ID == item);
+                var serviceModel = _queries.GetServiceIncludeApplicationUserFirstOrDefault(item);
                 _AddServiceVM.lstServicios.Add(serviceModel);
             }
         }
 
+        private void LoadServiceToOrderVM(Guid orderDetailsId)
+        {
+            _AddServiceVM = new AddServiceVM(orderDetailsId);
+
+            _AddServiceVM.OrderDetailsLocal = _queries.GetOrderDetailsIncludeOrderServiceApplicationUserFirstOrDefaultOrderDetailsIdEqualsOrderDetailsId(orderDetailsId);
+
+            _AddServiceVM.OrderDetailsList = _queries.GetLstOrderDetailsIncludeOrderServiceApplicationUserWhereOrderIdAndApplicationUserId(_AddServiceVM.OrderDetailsLocal.OrderId, _AddServiceVM.OrderDetailsLocal.Service.UserId);
+        }
     }
 }

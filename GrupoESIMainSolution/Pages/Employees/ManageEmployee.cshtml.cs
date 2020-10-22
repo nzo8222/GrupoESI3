@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using GrupoESIDataAccess;
+using GrupoESIDataAccess.Queries;
 using GrupoESIModels.Models;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -13,33 +12,36 @@ namespace GrupoESINuevo.Pages.Employees
 {
     public class ManageEmployeeModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
 
-        public ManageEmployeeModel(ApplicationDbContext context)
+        private readonly IQueries _queries;
+        public ManageEmployeeModel(IQueries queries)
         {
-            _context = context;
+            _queries = queries;
         }
         [BindProperty]
         public IList<EmployeeUser> EmployeeUsrLst { get; set; }
-        public async Task<IActionResult> OnGetAsync(Guid? employersId = null)
+        public async Task<IActionResult> OnGetAsync(string employersId = null)
         {
             if (employersId == null)
             {
-                
                 return Page();
             }
-            var localEmployeeUserLst = await _context.Employee.Include(e => e.ServiceLst).ToListAsync();
+            LoadEmployeeLst(employersId);
+            return Page();
+        }
+
+        private void LoadEmployeeLst(string employersId)
+        {
+            var localEmployeeUserLst = _queries.GetLstEmployeesIncludeServiceList();
             EmployeeUsrLst = new List<EmployeeUser>();
-            var employer = await _context.ApplicationUser.FirstOrDefaultAsync(a => a.Id == employersId.ToString());
+            var employer = _queries.GetApplicationUserIncludeServiceLst(employersId.ToString());
             foreach (var item in localEmployeeUserLst)
             {
-                if(item.EmployedBy == employer)
+                if (item.EmployedBy == employer)
                 {
                     EmployeeUsrLst.Add(item);
                 }
             }
-            
-            return Page();
         }
     }
 }

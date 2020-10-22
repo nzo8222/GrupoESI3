@@ -1,40 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using GrupoESINuevo.Data;
 using GrupoESIModels.ViewModels;
-using GrupoESIDataAccess;
+using GrupoESIDataAccess.Queries;
+using GrupoESIDataAccess.Repository.IRepository;
 
 namespace GrupoESINuevo
 {
     public class DeleteMaterialModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
-
-        public DeleteMaterialModel(ApplicationDbContext context)
+        private readonly IMaterialRepository _materialRepository;
+        private readonly IQueries _queries;
+        public DeleteMaterialModel(IQueries queries,
+                                   IMaterialRepository material)
         {
-            _context = context;
+            _queries = queries;
+            _materialRepository = material;
         }
 
         [BindProperty]
         public DeleteMaterialVM DeleteMaterialVM { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? materialId)
+        public IActionResult OnGetAsync(Guid? materialId)
         {
             if (materialId == null)
             {
                 return NotFound();
             }
             DeleteMaterialVM = new DeleteMaterialVM();
-            DeleteMaterialVM.material = await _context.Material
-                                                                .Include(m => m.Task)
-                                                                .FirstOrDefaultAsync(m => m.Id == materialId);
-
-
+            DeleteMaterialVM.material = _queries.GetMaterialIncludeTaskFirstOrDefaultIdEqualsMaterialsId((Guid)materialId);
             if (DeleteMaterialVM == null)
             {
                 return NotFound();
@@ -42,31 +37,28 @@ namespace GrupoESINuevo
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPostAsync()
         {
 
             if (DeleteMaterialVM.material.Id == null)
             {
                 return NotFound();
             }
-            DeleteMaterialVM.material =  _context.Material
-                                                            .Include(m => m.Task)
-                                                            .FirstOrDefault(m => m.Id == DeleteMaterialVM.material.Id);
+            UpdateOrderDetailsCostAndDeleteMaterial();
+            return RedirectToPage("./IndexMaterial", new { taskId = DeleteMaterialVM.material.Task.Id });
+        }
 
+        private void UpdateOrderDetailsCostAndDeleteMaterial()
+        {
+            DeleteMaterialVM.material = _queries.GetMaterialIncludeTaskFirstOrDefaultIdEqualsMaterialsId(DeleteMaterialVM.material.Id);
             if (DeleteMaterialVM.material.Task != null)
             {
-                var tarea = _context.Task
-                                        .Include(t => t.QuotationModel)
-                                            .ThenInclude(q => q.OrderDetailsModel)
-                                        .Include(t => t.ListMaterial)
-                                        .FirstOrDefault(t => t.Id == DeleteMaterialVM.material.Task.Id);
+                var tarea = _queries.GetTaskModelIncludeLstMaterialQuotationOrderDetailsOrderFirstOrDefaultTaskIdEqualsTaskId(DeleteMaterialVM.material.Task.Id);
                 tarea.QuotationModel.OrderDetailsModel.Cost = tarea.QuotationModel.OrderDetailsModel.Cost - DeleteMaterialVM.material.Price;
                 tarea.Cost = tarea.Cost - DeleteMaterialVM.material.Price;
-                _context.Material.Remove(DeleteMaterialVM.material);
-                await _context.SaveChangesAsync();
+                _materialRepository.Remove(DeleteMaterialVM.material);
+                _queries.SaveChanges();
             }
-
-            return RedirectToPage("./IndexMaterial", new { taskId = DeleteMaterialVM.material.Task.Id });
         }
     }
 }

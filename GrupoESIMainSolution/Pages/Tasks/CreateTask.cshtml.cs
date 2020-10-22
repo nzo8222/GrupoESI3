@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using GrupoESIModels.ViewModels;
-using GrupoESIModels.Models;
-using GrupoESIDataAccess;
+using GrupoESIDataAccess.Queries;
 
 namespace GrupoESINuevo
 {
     public class CreateModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IQueries _queries;
 
-        public CreateModel(ApplicationDbContext context)
+        public CreateModel(IQueries queries)
         {
-            _context = context;
+            _queries = queries;
         }
 
         
@@ -25,19 +20,14 @@ namespace GrupoESINuevo
         public TaskQuotationVM _TaskQuotationVM { get; set; }
         public IActionResult OnGet(Guid orderDetailsId)
         {
-
             _TaskQuotationVM = new TaskQuotationVM(orderDetailsId);
-            _TaskQuotationVM.TaskInfo = _context.Task.Include(t => t.QuotationModel)
-                                                        .ThenInclude(q => q.OrderDetailsModel)
-                                                            .ThenInclude(od => od.Order)
-                                                      .FirstOrDefault(od => od.QuotationModel.OrderDetailsModel.Id == orderDetailsId);
-            //_TaskQuotationVM.orderDetailsId = orderDetailsId;
+            _TaskQuotationVM.TaskInfo = _queries.GetTaskIncludeQuotationOrderDetailsOrderFirstOrDefaultWhereOrderDetailsIdEquals(orderDetailsId);
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPostAsync()
         {
             if (_TaskQuotationVM.TaskLocal.Name == null)
             {
@@ -48,26 +38,10 @@ namespace GrupoESINuevo
                 return Page();
             }
             _TaskQuotationVM.TaskLocal.Cost = _TaskQuotationVM.TaskLocal.CostHandLabor;
-            var quotation = _context.Quotation
-                                            .Include(q => q.Tasks)
-                                                .Include(q => q.OrderDetailsModel)
-                                            .FirstOrDefault(q => q.OrderDetailsModel.Id == _TaskQuotationVM.orderDetailsId);
-            if (quotation == null)
-            {
-                quotation = new Quotation();
-                quotation.OrderDetailsModel = _context.OrderDetails.FirstOrDefault(od => od.Id == _TaskQuotationVM.orderDetailsId);
-                quotation.Tasks = new List<TaskModel>();
+            var quotation = _queries.GetQuotationIncludeTaskOrderDetailsFirstOrDefaultWhereOrderDetailsEquals(_TaskQuotationVM.orderDetailsId);
                 quotation.OrderDetailsModel.Cost = quotation.OrderDetailsModel.Cost + _TaskQuotationVM.TaskLocal.CostHandLabor;
                 quotation.Tasks.Add(_TaskQuotationVM.TaskLocal);
-                _context.Quotation.Add(quotation);
-            }
-            else
-            {
-                quotation.OrderDetailsModel.Cost = quotation.OrderDetailsModel.Cost + _TaskQuotationVM.TaskLocal.CostHandLabor;
-                quotation.Tasks.Add(_TaskQuotationVM.TaskLocal);
-                _context.Quotation.Update(quotation);
-            }
-            await _context.SaveChangesAsync();
+             _queries.SaveChanges();
             return RedirectToPage("../Quotations/CreateQuotation", new { orderDetailsId = _TaskQuotationVM.orderDetailsId });
         }
     }

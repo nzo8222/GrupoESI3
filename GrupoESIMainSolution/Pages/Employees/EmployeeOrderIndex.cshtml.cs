@@ -1,27 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using GrupoESIDataAccess;
+using GrupoESIDataAccess.Queries;
 using GrupoESIModels.Models;
 using GrupoESIModels.ViewModels;
-using GrupoESINuevo.Data;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace GrupoESINuevo.Pages.Employees
 {
     [Authorize]
     public class EmployeeOrderIndexModel : PageModel
     {
-        private readonly ApplicationDbContext _db;
-        public EmployeeOrderIndexModel(ApplicationDbContext db)
+        private readonly IQueries _queries;
+        public EmployeeOrderIndexModel(IQueries queries)
         {
-            _db = db;
+            _queries = queries;
         }
         [BindProperty]
         public EmployeeIndexVM _employeeIndexVM { get; set; }
@@ -32,16 +27,13 @@ namespace GrupoESINuevo.Pages.Employees
             var userId = claim.Value;
             _employeeIndexVM = new EmployeeIndexVM()
             {
-                EmployeeLocal = await _db.Employee
-                                                    .Include(e => e.QuotationLst)
-                                                    .Include(e => e.EmployedBy)
-                                                    .FirstOrDefaultAsync(e => e.Id == userId),
+                EmployeeLocal = _queries.GetEmployeeIncludeQuotationLstEmployedByFirstOrDefaultEmployeeIdEqualsEmployeeId(userId),
                 orderDetailsList = new List<OrderDetails>()
             };
-            foreach (var item in _employeeIndexVM.EmployeeLocal.QuotationLst)
+            foreach (var quotation in _employeeIndexVM.EmployeeLocal.QuotationLst)
             {
-                var orderDetailsLocal = _db.Quotation.Include(q => q.OrderDetailsModel).FirstOrDefault(q => q == item);
-                _employeeIndexVM.orderDetailsList.Add(orderDetailsLocal.OrderDetailsModel);
+                var quotationLocal = _queries.GetQuotationIncludeOrderDetailsOrdersTasksListMaterialPicturesFirstOrDefault(quotation.OrderDetailsId);
+                _employeeIndexVM.orderDetailsList.Add(quotationLocal.OrderDetailsModel);
             }
             
             return Page();

@@ -1,12 +1,9 @@
-﻿
-using GrupoESIModels.Models;
+﻿using GrupoESIModels.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-
-
 namespace GrupoESINuevo.TagHelpers
 {
     [HtmlTargetElement("div", Attributes = "page-model")]

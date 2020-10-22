@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using GrupoESIDataAccess;
+using GrupoESIDataAccess.Queries;
+using GrupoESIDataAccess.Repository.IRepository;
 using GrupoESIModels.Models;
 using GrupoESIModels.ViewModels;
-
-
 using GrupoESIUtility;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace GrupoESINuevo.Controllers
 {
@@ -16,43 +15,33 @@ namespace GrupoESINuevo.Controllers
     [ApiController]
     public class ManageOrdersController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-            public ManageOrdersController(ApplicationDbContext context)
+        private readonly IQuotationRepository _quoationRepository;
+        private readonly IOrderDetailsRepository _orderDetailsRepository;
+        private readonly IQueries _queries;
+            public ManageOrdersController(IQueries queries,
+                                          IQuotationRepository quotationRepository,
+                                          IOrderDetailsRepository orderDetailsRepository)
         {
-            _context = context;
+            _orderDetailsRepository = orderDetailsRepository;
+            _quoationRepository = quotationRepository;
+            _queries = queries;
         }
-        
-
         [HttpPost]
         [Route("PostManageOrders")]
         public IActionResult PostNewOrders([FromBody] PostManageOrdersVM _pmovm)
         {
-            List<string> result = _pmovm.idService.Split(',').ToList();
+            List<string> serviceIdList = _pmovm.idService.Split(',').ToList();
             
-            foreach (var item in result)
+            foreach (var serviceId in serviceIdList)
             {
                 OrderDetails _OrderDetailsNueva = new OrderDetails();
                 var quotationLocal = new Quotation();
                 quotationLocal.Tasks = new List<TaskModel>();
-                _OrderDetailsNueva.Order = _context.Order.FirstOrDefault(o => o.Id == _pmovm.orderId);
-                _OrderDetailsNueva.Service = _context.ServiceModel.FirstOrDefault(s => s.ID.ToString() == item);
-                var quotation = _context.Quotation
-                                                 .AsNoTracking()
-                                                 .Include(q => q.OrderDetailsModel)
-                                                    .ThenInclude(q => q.Order)
-                                                 .Include(q => q.Tasks)
-                                                    .ThenInclude(t => t.ListMaterial)
-                                                 .FirstOrDefault(q => q.OrderDetailsModel.Order.Id == _pmovm.orderId);
-                
-                var pics = _context.Quotation
-                                                .AsNoTracking()
-                                                .Include(q => q.OrderDetailsModel)
-                                                    .ThenInclude(q => q.Order)
-                                                 .Include(q => q.Tasks)
-                                                    .ThenInclude(t => t.Pictures)
-                                                 .FirstOrDefault(q => q.OrderDetailsModel.Order.Id == _pmovm.orderId);
-                
-                var piclist = new List<Picture>();
+                _OrderDetailsNueva.Order = _queries.GetOrderByOrderId(_pmovm.orderId);
+                Guid id = Guid.Parse(serviceId);
+                _OrderDetailsNueva.Service = _queries.GetServiceFirstOrDefault(id);
+                var quotation = _queries.GetQuotationIncludeOrderTaskListMaterialWhereOrderIdEqualsOrderId(_pmovm.orderId);
+                var pics = _queries.GetQuotationIncludeOrderDetailsOrderTaskPicturesFirstOrDefaultWhereOrderIdEquals(_pmovm.orderId);
 
                 for (int i = 0; i < quotation.Tasks.Count; i++)
                 {
@@ -91,15 +80,14 @@ namespace GrupoESINuevo.Controllers
                 quotationLocal.Description = quotation.Description;
 
                 quotationLocal.OrderDetailsModel = _OrderDetailsNueva;
-                quotationLocal.FechaLlegadaProveedor = DateTime.Now;
+                quotationLocal.ProviderArrivalDate = DateTime.Now;
                 _OrderDetailsNueva.Status = SD.EstadoCotizando;
-               
-                _context.OrderDetails.Add(_OrderDetailsNueva);
-                _context.Quotation.Add(quotationLocal);
+                _quoationRepository.Add(quotationLocal);
+                _orderDetailsRepository.Add(_OrderDetailsNueva);
             }
             try
             {
-                _context.SaveChanges();
+                _queries.SaveChanges();
             }
             catch(Exception ex)
             {
@@ -113,23 +101,23 @@ namespace GrupoESINuevo.Controllers
         public IActionResult PostServiceToOrder([FromBody] PostServiceToOrderVM serviceToOrderVM)
         {
             //separar los id de los servicios en diferentes elementos dentro de una lista
-            List<string> result = serviceToOrderVM.serviceId.Split(',').ToList();
+            List<string> serviceIdList = serviceToOrderVM.serviceId.Split(',').ToList();
 
             //iterar la lista de ids de servicios
-            foreach (var item in result)
+            foreach (var serviceId in serviceIdList)
             {
                 //declarar un nuevo OrderDetails
                 var od = new OrderDetails();
                 od.Order = new Order();
                 //declarar una orden local igual a la orden con el id que biene desde la peticion
-                var orderLocal = _context.Order
-                                               .FirstOrDefault(od => od.Id == serviceToOrderVM.OrderId);
+                var orderLocal = _queries.GetOrderByOrderId(serviceToOrderVM.OrderId);
 
                 //se asigna al nuevo orderDetails la orden 
                 //orderLocal.LstOrderDetails.Add(od);
                 od.Order = orderLocal;
                 //se asigna el servicio con el id del servicio que se esta iterando actualmente
-                od.Service = _context.ServiceModel.FirstOrDefault(s => s.ID.ToString() == item);
+                Guid id = Guid.Parse(serviceId);
+                od.Service = _queries.GetServiceFirstOrDefault(id);
                 //se le signa un costo en  0
                 od.Cost = 0;
                 //se declara una cotizacion
@@ -141,12 +129,11 @@ namespace GrupoESINuevo.Controllers
                 //Se le asigna el estado sin cotizar al detalle de orden
                 od.Status = SD.EstadoSinCotizar;
                 //Se agrega la entidad al contexto
-                _context.OrderDetails.Add(od);
-                //_context.Order.Update(orderLocal);
-                _context.Quotation.Add(quotationLocal);
+                _orderDetailsRepository.Add(od);
+                _quoationRepository.Add(quotationLocal);
                 try
                 {
-                    _context.SaveChanges();
+                    _queries.SaveChanges();
                 }
                 catch (Exception ex)
                 {
@@ -160,9 +147,8 @@ namespace GrupoESINuevo.Controllers
         public IActionResult PostDeletePictures([FromBody] DeletePictureVM deletePictureVM)
         {
             List<string> result = deletePictureVM.deletePicturesId.Split(',').ToList();
-            var task = _context.Task
-                                    .Include(t => t.Pictures)
-                                    .FirstOrDefault(q => q.Id == deletePictureVM.taskId);
+            var task = _queries.GetTaskIncludePicturesFirstOrDefaultWhereTaskIdEquals(deletePictureVM.taskId);
+
             foreach (var item in result)
             {
                 var pic = task.Pictures.Find(p => p.PictureId.ToString() == item);
@@ -170,7 +156,7 @@ namespace GrupoESINuevo.Controllers
             }
             try
             {
-                _context.SaveChanges();
+                _queries.SaveChanges();
             }catch(Exception ex)
             {
 
@@ -183,12 +169,13 @@ namespace GrupoESINuevo.Controllers
         [Route("PostAssignQuotation")]
         public IActionResult PostAssignQuotation([FromBody] PostAssignQuotationVM _PostAssignQuotationVM)
         {
-            var quotation = _context.Quotation.FirstOrDefault(q => q.Id == _PostAssignQuotationVM.idQuotation);
-            //quotation.Status = 1;
-            var orderDetails = _context.OrderDetails.Include(od => od.Order).FirstOrDefault(od => od.Id == _PostAssignQuotationVM.idOrderDetails);
-            var orders = _context.OrderDetails
-                                              .Include(od => od.Order)
-                                              .Where(od => od.Order.Id == orderDetails.Order.Id).ToList();
+            var quotation = _queries.GetQuotationByQuotationId(_PostAssignQuotationVM.idQuotation);
+            var orderDetails = _queries.GetOrderDetailsIncludeOrderServiceApplicationUserFirstOrDefaultOrderDetailsIdEqualsOrderDetailsId(_PostAssignQuotationVM.idOrderDetails);
+            var orders = _queries.GetLstOrderDetailsIncludeOrderServiceServiceTypeWhereOrderIdEqualsOrderId(orderDetails.Order.Id);
+                
+                //_context.OrderDetails
+                //                              .Include(od => od.Order)
+                //                              .Where(od => od.Order.Id == orderDetails.Order.Id).ToList();
             foreach (var item in orders)
             {
                 if(item != orderDetails)
@@ -203,7 +190,7 @@ namespace GrupoESINuevo.Controllers
             }
             try
             {
-                _context.SaveChanges();
+                _queries.SaveChanges();
             }
             catch(Exception ex)
             {

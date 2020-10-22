@@ -4,17 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using GrupoESIDataAccess;
+using GrupoESIDataAccess.Queries;
 using GrupoESIModels.Models;
 using GrupoESIModels.ViewModels;
-using GrupoESINuevo.Data;
 using GrupoESIUtility;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace GrupoESINuevo.Controllers
@@ -23,7 +20,7 @@ namespace GrupoESINuevo.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IQueries _queries;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<EmployeeController> _logger;
         private readonly IEmailSender _emailSender;
@@ -32,13 +29,13 @@ namespace GrupoESINuevo.Controllers
                                                 ILogger<EmployeeController> logger,
                                                 IEmailSender emailSender,
                                                 RoleManager<IdentityRole> roleManager,
-                                                ApplicationDbContext context)
+                                                IQueries queries)
         {
             _userManager = userManager;
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
-            _context = context;
+            _queries = queries;
         }
         [HttpPost]
         [Route("PostAddQuotationToEmployee")]
@@ -52,27 +49,33 @@ namespace GrupoESINuevo.Controllers
             {
                 return NotFound();
             }
-            var employee = await _context.Employee.FirstOrDefaultAsync(e => e.Id == _AddQuotationToEmployeeControllerVM.idEmployee);
-            var quotation = await _context.Quotation.FirstOrDefaultAsync(q => q.Id == _AddQuotationToEmployeeControllerVM.idQuotation);
-            employee.QuotationLst.Add(quotation);
-            await _emailSender.SendEmailAsync(employee.UserName, "Se te asigno una orden",
-                   $"Revisa tu cuenta de la aplicacion Grupo ESI se te asigno una orden");
+            await AddQuotationToEmployeesList(_AddQuotationToEmployeeControllerVM);
 
             try
             {
-                await _context.SaveChangesAsync();
+                _queries.SaveChanges();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
             return Ok();
         }
+
+        private async Task AddQuotationToEmployeesList(AddQuotationToEmployeeControllerVM _AddQuotationToEmployeeControllerVM)
+        {
+            var employee = _queries.GetEmployeeIncludeQuotationLstEmployedByFirstOrDefaultEmployeeIdEqualsEmployeeId(_AddQuotationToEmployeeControllerVM.idEmployee);
+            var quotation = _queries.GetQuotationByQuotationId(_AddQuotationToEmployeeControllerVM.idQuotation);
+            employee.QuotationLst.Add(quotation);
+            await _emailSender.SendEmailAsync(employee.UserName, "Se te asigno una orden",
+                   $"Revisa tu cuenta de la aplicacion Grupo ESI se te asigno una orden");
+        }
+
         [HttpPost]
         [Route("PostRegisterEmployee")]
         public async  Task<IActionResult> PostRegisterEmployee([FromBody] RegisterEmployeeVM _RegisterEmployee)
         {
-            if(_RegisterEmployee.email == "")
+            if (_RegisterEmployee.email == "")
             {
                 return NotFound();
             }
@@ -88,18 +91,8 @@ namespace GrupoESINuevo.Controllers
             {
                 return NotFound();
             }
-            var _userEmployee = new EmployeeUser();
-            _userEmployee.UserName = _RegisterEmployee.email;
-            _userEmployee.Email = _RegisterEmployee.email;
-            _userEmployee.Name = _RegisterEmployee.Nombre;
-            var Employer = _context.ApplicationUser.FirstOrDefault(a => a.Id == _RegisterEmployee.idEmpleador);
-            _userEmployee.EmployedBy = Employer;
-            List<string> result = _RegisterEmployee.listaServiciosId.Split(',').ToList();
-            foreach(var item in result)
-            {
-                var service = _context.ServiceModel.FirstOrDefault(s => s.ID.ToString() == item);
-                _userEmployee.ServiceLst.Add(service);
-            }
+            EmployeeUser _userEmployee = setEmployeesAttributes(_RegisterEmployee);
+            addServicesToEmployee(_RegisterEmployee, _userEmployee);
             var result2 = await _userManager.CreateAsync(_userEmployee, _RegisterEmployee.pw);
             if (result2.Succeeded)
             {
@@ -107,18 +100,7 @@ namespace GrupoESINuevo.Controllers
                 {
                     await _roleManager.CreateAsync(new IdentityRole(SD.EmployeeEndUser));
                 }
-                _logger.LogInformation("EmployedUser created a new account with password.");
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(_userEmployee);
-                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                var callbackUrl = Url.Page(
-                    "/Account/ConfirmEmail",
-                    pageHandler: null,
-                    values: new { area = "Identity", userId = _userEmployee.Id, code = code },
-                    protocol: Request.Scheme);
-
-                await _emailSender.SendEmailAsync(_RegisterEmployee.email, "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-                await _userManager.AddToRoleAsync(_userEmployee, SD.EmployeeEndUser);
+                await sendRegistrationCodeToEmployee(_RegisterEmployee, _userEmployee);
 
                 return Ok();
             }
@@ -127,6 +109,44 @@ namespace GrupoESINuevo.Controllers
                 ModelState.AddModelError(string.Empty, error.Description);
             }
             return NotFound();
+        }
+
+        private async Task sendRegistrationCodeToEmployee(RegisterEmployeeVM _RegisterEmployee, EmployeeUser _userEmployee)
+        {
+            _logger.LogInformation("EmployedUser created a new account with password.");
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(_userEmployee);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            var callbackUrl = Url.Page(
+                "/Account/ConfirmEmail",
+                pageHandler: null,
+                values: new { area = "Identity", userId = _userEmployee.Id, code = code },
+                protocol: Request.Scheme);
+
+            await _emailSender.SendEmailAsync(_RegisterEmployee.email, "Confirm your email",
+                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+            await _userManager.AddToRoleAsync(_userEmployee, SD.EmployeeEndUser);
+        }
+
+        private void addServicesToEmployee(RegisterEmployeeVM _RegisterEmployee, EmployeeUser _userEmployee)
+        {
+            List<string> serviceList = _RegisterEmployee.listaServiciosId.Split(',').ToList();
+            foreach (var serviceId in serviceList)
+            {
+                Guid id = Guid.Parse(serviceId);
+                var service = _queries.GetServiceIncludeApplicationUserFirstOrDefault(id);
+                _userEmployee.ServiceLst.Add(service);
+            }
+        }
+
+        private EmployeeUser setEmployeesAttributes(RegisterEmployeeVM _RegisterEmployee)
+        {
+            var _userEmployee = new EmployeeUser();
+            _userEmployee.UserName = _RegisterEmployee.email;
+            _userEmployee.Email = _RegisterEmployee.email;
+            _userEmployee.Name = _RegisterEmployee.Nombre;
+            var Employer = _queries.GetApplicationUserIncludeServiceLst(_RegisterEmployee.idEmpleador);
+            _userEmployee.EmployedBy = Employer;
+            return _userEmployee;
         }
     }
 }

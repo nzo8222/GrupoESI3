@@ -1,32 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GrupoESIDataAccess;
+﻿using GrupoESIDataAccess.Queries;
+using GrupoESIDataAccess.Repository.IRepository;
 using GrupoESIModels.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace GrupoESINuevo
 {
     public class DeleteUserModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IQueries _queries;
+        private readonly IQuotationRepository _quotationRepository;
+        private readonly IOrderDetailsRepository _orderDetailsRepository;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IServiceRepository _serviceRepository;
+        private readonly IApplicationUserRepository _applicationUserRepository;
 
-        public DeleteUserModel(ApplicationDbContext context)
+        public DeleteUserModel(IQueries queries,
+                               IQuotationRepository quotationRepository,
+                               IOrderDetailsRepository orderDetailsRepository,
+                               IOrderRepository orderRepository,
+                               IServiceRepository serviceRepository,
+                               IApplicationUserRepository applicationUserRepository)
         {
-            _context = context;
+            _quotationRepository = quotationRepository;
+            _orderDetailsRepository = orderDetailsRepository;
+            _orderRepository = orderRepository;
+            _queries = queries;
+            _serviceRepository = serviceRepository;
+            _applicationUserRepository = applicationUserRepository;
         }
         [BindProperty]
         public ApplicationUser _ApplicationUser { get; set; }
-        public async Task<IActionResult> OnGet(string userId)
+        public IActionResult OnGet(string userId)
         {
             if (userId == "")
             {
                 return NotFound();
             }
-            _ApplicationUser = _context.ApplicationUser.FirstOrDefault(a => a.Id == userId);
+            _ApplicationUser = _queries.GetAppicationUserFirstOrDefault(userId);
+                
+                
             if (_ApplicationUser == null)
             {
                 return NotFound();
@@ -35,74 +48,51 @@ namespace GrupoESINuevo
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPostAsync()
         {
             if (_ApplicationUser.Id == "")
             {
                 return NotFound();
             }
 
-            _ApplicationUser =  _context.ApplicationUser
-                                        .FirstOrDefault(o => o.Id == _ApplicationUser.Id);
-
-
+            _ApplicationUser = _queries.GetAppicationUserFirstOrDefault(_ApplicationUser.Id);
             if (_ApplicationUser != null)
             {
-                //lista de servicios del mismo usuario
-                var serviciosListLocal = _context.ServiceModel
-                                                              .Include(s => s.ApplicationUser)
-                                                              .Where(s => s.ApplicationUser.Id == _ApplicationUser.Id)
-                                                              .ToList();
-                //iterar la lista de servicios
-                foreach (var item in serviciosListLocal)
+
+                var serviciosListLocal = _queries.GetServiceLstIncludeApplicationUserWhereUserIdEquals(_ApplicationUser.Id);
+
+                foreach (var service in serviciosListLocal)
                 {
-                    //buscar todas las ordenes de cada servicio
-                    var orderDetailsLocal = _context.OrderDetails
-                                                            .Include(od => od.Order)
-                                                            .Include(od => od.Service)
-                                                                .ThenInclude(s => s.ApplicationUser)
-                                                            .Where(od => od.Service.ID == item.ID).ToList();
-                    //por cada orderDetails buscar las quotation tareas y materiales
-                    foreach (var item2 in orderDetailsLocal)
+
+                    var orderDetailsLocal = _queries.GetAllOrderDetailsIncludeOrderServiceApplicationUserWhereServiceIdEquals(service.ID);
+ 
+                    foreach (var orderDetails in orderDetailsLocal)
                     {
-                        
-                        var quotationLocal = _context.Quotation
-                                                                .Include(q => q.OrderDetailsModel)
-                                                                .Include(q => q.Tasks)
-                                                                    .ThenInclude(t => t.ListMaterial)
-                                                                .FirstOrDefault(q => q.OrderDetailsModel == item2);
-                        //remover el order details actual
-                        _context.OrderDetails.Remove(item2);
+
+                        var quotationLocal = _queries.GetQuotationIncludeOrderDetailsTaskListMaterialPicturesFirstOrDefaultWhereOrderDetailsIdEquals(orderDetails.Id);
+
+                        _orderDetailsRepository.Remove(orderDetails);
                         if (quotationLocal != null)
                         {
-                            //remover el quotation actual
-                            _context.Quotation.Remove(quotationLocal);
+
+                            _quotationRepository.Remove(quotationLocal);
                         }
-                        //buscar si la orden tiene otros orderDetails 
-                        var _order = _context.Order.FirstOrDefault(o => o.Id == item2.Order.Id);
-                        var orderDetailsConEstaOrden = _context.OrderDetails
-                                                                            .Include(o => o.Order)
-                                                                            .Where(o => o.Order == _order).ToList();
-                        //si no hay ninguna otra cotizacion en esta orden se borra
+                        var _order = _queries.GetOrderFirstOrDefaultWhereOrderIdEquals(orderDetails.Order.Id);
+                        var orderDetailsConEstaOrden = _queries.GetOrderDetailsIncludeOrderWhereOrderIdEquals(_order.Id);
                         if(orderDetailsConEstaOrden.Count > 0)
                         {
 
                         }
                         else
                         {
-                            //remover la orden
-                            _context.Order.Remove(_order);
+                            _orderRepository.Remove(_order);
                         }
                     }
-                    //borrar el servicio
-                    var servicioLocal = _context.ServiceModel.FirstOrDefault(s => s == item);
-                    _context.ServiceModel.Remove(servicioLocal);
+                    _serviceRepository.Remove(service);
                 }
-
-                _context.ApplicationUser.Remove(_ApplicationUser);
-                await _context.SaveChangesAsync();
+                _applicationUserRepository.Remove(_ApplicationUser);
+                _queries.SaveChanges();
             }
-
             return RedirectToPage("./IndexUser");
         }
     }

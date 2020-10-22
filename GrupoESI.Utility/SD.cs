@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 
 namespace GrupoESIUtility
 {
     public class SD
     {
-        public const string AdminEmail = "grupoesi.mex@gmail.com";
+        public const string AdminEmail = "elgonzo292@gmail.com";
         public const string AdminEndUser = "Admin";
         public const string ProviderEndUser = "Provider";
         public const string EmployeeEndUser = "Employee";

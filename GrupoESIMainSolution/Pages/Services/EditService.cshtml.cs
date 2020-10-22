@@ -16,7 +16,6 @@ namespace GrupoESINuevo
     public class EditeServiceModel : PageModel
     {
         private readonly IServiceRepository _serviceRepository;
-        private readonly ApplicationDbContext _context;
 
         public EditeServiceModel(IServiceRepository serviceRepository)
         {

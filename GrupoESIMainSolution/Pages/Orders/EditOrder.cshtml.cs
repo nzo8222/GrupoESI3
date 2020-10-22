@@ -1,24 +1,23 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using GrupoESIModels.Models;
-using GrupoESIDataAccess;
 using GrupoESIUtility;
+using GrupoESIDataAccess.Queries;
 
 namespace GrupoESINuevo
 {
     [Authorize(Roles = SD.AdminEndUser)]
     public class EditOrderModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IQueries _queries;
 
-        public EditOrderModel(ApplicationDbContext context)
+        public EditOrderModel(IQueries queries)
         {
-            _context = context;
+            _queries = queries;
         }
 
         [BindProperty]
@@ -30,18 +29,11 @@ namespace GrupoESINuevo
             {
                 return NotFound();
             }
-
-            Order = await _context.Order
-                                    .Include(o => o.LstOrderDetails)
-                                        .ThenInclude(od => od.Service)
-                                            .ThenInclude(s => s.ApplicationUser)
-                                    .FirstOrDefaultAsync(m => m.Id == orderId);
-
+            Order = _queries.GetOrderIncludeOrderDetailsServiceApplicationUserFirstOrDefault((Guid)orderId);
             if (Order == null)
             {
                 return NotFound();
             }
-       
             return Page();
         }
 
@@ -53,26 +45,30 @@ namespace GrupoESINuevo
             {
                 return Page();
             }
-            var orderLocal = _context.Order.FirstOrDefault(o => o.Id == Order.Id);
-            orderLocal.Concepto = Order.Concepto;
-            orderLocal.Direccion = Order.Direccion;
-            orderLocal.OrderDate = Order.OrderDate;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                
-            }
+            LoadAndSetModel();
+            SaveChanges();
 
             return RedirectToPage("../ManageOrders/OrderIndexAdmin");
         }
 
-        private bool OrderExists(Guid id)
+        private void SaveChanges()
         {
-            return _context.Order.Any(e => e.Id == id);
+            try
+            {
+                _queries.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+
+            }
+        }
+
+        private void LoadAndSetModel()
+        {
+            var orderLocal = _queries.GetOrderByOrderId(Order.Id);
+            orderLocal.Concepto = Order.Concepto;
+            orderLocal.Direccion = Order.Direccion;
+            orderLocal.OrderDate = Order.OrderDate;
         }
     }
 }

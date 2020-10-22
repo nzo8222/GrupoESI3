@@ -61,7 +61,7 @@ namespace GrupoESINuevo
         private void LoadRelatedEntities()
         {
             OrderDetails = _queries.GetOrderDetailsWithOrderServiceApplicationUser(OrderDetails.Id);
-            var quotationLocal = _queries.GetQuotationWithOrderDetailsOrdersTasksListMaterialFirstOrDefault(OrderDetails.Id);
+            var quotationLocal = _queries.GetQuotationIncludeOrderDetailsOrdersTasksListMaterialPicturesFirstOrDefault(OrderDetails.Id);
             if (OrderDetails != null && quotationLocal != null)
             {
                 checkIfThereAreMoreThanOneOrderDetails();

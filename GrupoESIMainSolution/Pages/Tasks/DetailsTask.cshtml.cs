@@ -12,33 +12,30 @@ using GrupoESIModels.ViewModels;
 using GrupoESIModels.Models;
 using GrupoESIModels.Enums;
 using GrupoESIDataAccess;
+using GrupoESIDataAccess.Queries;
 
 namespace GrupoESINuevo
 {
     public class DetailsTaskModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IQueries _queries;
 
-        public DetailsTaskModel(ApplicationDbContext context)
+        public DetailsTaskModel(IQueries queries)
         {
-            _context = context;
+            _queries = queries;
         }
         [BindProperty]
         public TaskPictureVM taskPicVM { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? taskId)
+        public IActionResult OnGetAsync(Guid? taskId)
         {
             if (taskId == null)
             {
                 return NotFound();
             }
             taskPicVM = new TaskPictureVM();
-            taskPicVM.taskModel = await _context.Task
-                                                    .Include(t => t.Pictures)
-                                                    .Include(t => t.QuotationModel)
-                                                        .ThenInclude(q => q.OrderDetailsModel)
-                                                            .ThenInclude(od => od.Order)
-                                                    .FirstOrDefaultAsync(m => m.Id == taskId);
+            taskPicVM.taskModel = _queries.GetTaskIncludeLstMaterialPicturesQuotationModelOrderDetailsModelOrderFirstOrDefaultWhereTaskIdEquals((Guid)taskId);
+
             if (taskPicVM == null)
             {
                 return NotFound();
@@ -48,7 +45,8 @@ namespace GrupoESINuevo
         }
         public async Task<IActionResult> OnPostPicture()
         {
-            var tasklocal = _context.Task.FirstOrDefault(t => t.Id == taskPicVM.taskModel.Id);
+            var tasklocal = _queries.GetTaskFirstOrDefaultWhereTaskIdEquals(taskPicVM.taskModel.Id);
+                
 
             if (taskPicVM.Upload == null)
             {
@@ -72,9 +70,7 @@ namespace GrupoESINuevo
                     file.FechaDeSubida = DateTime.Now;
                     file.Tipo = PictureTypeEnum.Quotation;
                     tasklocal.Pictures.Add(file);
-                    //_dbContext.File.Add(file);
-
-                    await _context.SaveChangesAsync();
+                    _queries.SaveChanges();
                 }
                 else
                 {

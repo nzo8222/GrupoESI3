@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using GrupoESIDataAccess;
-using GrupoESINuevo.Data;
-
-using Microsoft.AspNetCore.Http;
+using GrupoESIDataAccess.Queries;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GrupoESINuevo.Controllers
@@ -19,9 +10,11 @@ namespace GrupoESINuevo.Controllers
     [ApiController]
     public class PicturesController : ControllerBaseLocal
     {
-        public PicturesController(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
+        private readonly IQueries _queries;
+        public PicturesController(ApplicationDbContext applicationDbContext,
+                                  IQueries queries) : base(applicationDbContext)
         {
-            
+            _queries = queries;
         }
         [HttpGet]
         [Route("ViewPic")]
@@ -31,7 +24,9 @@ namespace GrupoESINuevo.Controllers
             {
                 return NotFound();
             }
-            var picture = _context.Pictures.FirstOrDefault(p => p.PictureId.ToString() == pictureId);
+            Guid id = Guid.Parse(pictureId);
+            var picture = _queries.GetPictureFirstOrDefaultWherePictureIdEquals(id);
+                //_context.Pictures.FirstOrDefault(p => p.PictureId.ToString() == pictureId);
             
             return Ok(new { imgLocal = picture.PictureBytes });
             

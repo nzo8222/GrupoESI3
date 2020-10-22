@@ -8,16 +8,17 @@ using Microsoft.EntityFrameworkCore;
 using GrupoESINuevo.Data;
 using GrupoESIModels.Models;
 using GrupoESIDataAccess;
+using GrupoESIDataAccess.Queries;
 
 namespace GrupoESINuevo
 {
     public class DetailsOrderModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IQueries _queries;
 
-        public DetailsOrderModel(ApplicationDbContext context)
+        public DetailsOrderModel(IQueries queries)
         {
-            _context = context;
+            _queries = queries;
         }
 
         public Order Order { get; set; }
@@ -29,11 +30,7 @@ namespace GrupoESINuevo
                 return NotFound();
             }
 
-            Order = await _context.Order
-                                        .Include(o => o.LstOrderDetails)
-                                            .ThenInclude(o => o.Service)
-                                                .ThenInclude(s => s.ApplicationUser)
-                                        .FirstOrDefaultAsync(m => m.Id == orderId);
+            Order = _queries.GetOrderIncludeOrderDetailsServiceApplicationUserFirstOrDefault((Guid)orderId);
 
             if (Order == null)
             {

@@ -1,40 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using GrupoESINuevo.Data;
 using GrupoESIModels.Models;
-using GrupoESIDataAccess;
+using GrupoESIDataAccess.Queries;
+using GrupoESIDataAccess.Repository.IRepository;
 
 namespace GrupoESINuevo
 {
     public class DeleteModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
-
-        public DeleteModel(ApplicationDbContext context)
+        private readonly ITaskRepository _taskRepository;
+        private readonly IQueries _queries;
+        public DeleteModel(IQueries queries,
+                           ITaskRepository taskRepository)
         {
-            _context = context;
+            _taskRepository = taskRepository;
+            _queries = queries;
         }
 
         [BindProperty]
         public TaskModel TaskModel { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid? taskId)
+        public IActionResult OnGetAsync(Guid? taskId)
         {
             if (taskId == null)
             {
                 return NotFound();
             }
 
-            TaskModel = await _context.Task
-                                           .Include(t => t.QuotationModel)
-                                                .ThenInclude(q => q.OrderDetailsModel)
-                                                    .ThenInclude(q => q.Order)
-                                           .FirstOrDefaultAsync(m => m.Id == taskId);
+            TaskModel = _queries.GetTaskIncludeQuotationOrderDetailsOrderFirstOrDefaultWhereTaskIdEquals((Guid)taskId);
 
             if (TaskModel == null)
             {
@@ -43,23 +37,20 @@ namespace GrupoESINuevo
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(Guid? taskId)
+        public IActionResult OnPostAsync(Guid? taskId)
         {
             if (taskId == null)
             {
                 return NotFound();
             }
 
-            TaskModel = await _context.Task
-                                            .Include(t => t.ListMaterial)
-                                            .Include(t => t.QuotationModel)
-                                                .ThenInclude(q => q.OrderDetailsModel)
-                                                .FirstOrDefaultAsync(t => t.Id == taskId);
+            TaskModel = _queries.GetTaskIncludeLstMaterialPicturesQuotationModelOrderDetailsModelOrderFirstOrDefaultWhereTaskIdEquals((Guid)taskId);
+                
             TaskModel.QuotationModel.OrderDetailsModel.Cost = TaskModel.QuotationModel.OrderDetailsModel.Cost - TaskModel.Cost;
             if (TaskModel != null)
             {
-                _context.Task.Remove(TaskModel);
-                await _context.SaveChangesAsync();
+                _taskRepository.Remove(TaskModel);
+                _queries.SaveChanges();
             }
 
             return RedirectToPage("../Quotations/CreateQuotation", new { orderDetailsId = TaskModel.QuotationModel.OrderDetailsModel.Id });

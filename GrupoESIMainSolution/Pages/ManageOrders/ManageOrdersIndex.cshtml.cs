@@ -8,90 +8,67 @@ using Microsoft.AspNetCore.Authorization;
 using GrupoESIModels.ViewModels;
 using GrupoESIDataAccess;
 using GrupoESIUtility;
+using GrupoESIDataAccess.Queries;
 
 namespace GrupoESINuevo
 {
     [Authorize(Roles = SD.AdminEndUser)]
     public class ManageOrdersIndexModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
-
-        public ManageOrdersIndexModel(ApplicationDbContext context)
+        private readonly IQueries _queries;
+        public ManageOrdersIndexModel(IQueries queries)
         {
-            _context = context;
+            _queries = queries;
         }
-
-        
-
         [BindProperty]
         public ManageOrdersVM _manageOrdersVM { get; set; }
 
         public IActionResult OnGet(Guid orderId)
         {
-            if(orderId == null)
+            if (orderId == null)
             {
                 return Page();
             }
-
-            _manageOrdersVM = new ManageOrdersVM()
-            {
-                OrderModel = _context.Order.FirstOrDefault(o => o.Id == orderId),
-
-                OrderDetailsList = _context.OrderDetails.Include(od => od.Order)
-                                                       .Include(od => od.Service)
-                                                           .ThenInclude(s => s.serviceType)
-                                                           .Where(od => od.Order.Id == orderId).ToList(),
-
-                ListQuotations = _context.Quotation.Include(q => q.OrderDetailsModel)
-                                                       .ThenInclude(od => od.Order)
-                                                     .Include(q => q.Tasks)
-                                                        .ThenInclude(t => t.ListMaterial)
-                                                     .Where(q => q.OrderDetailsModel.Order.Id == orderId).ToList(),
-
-                ListServices = new List<ManageServiceQuotationVM>(),
-
-                ServiceModelIdList = new List<Guid>(),
-
-                stringIds = ""
-            };
-
-           
-
-            if(_manageOrdersVM.OrderDetailsList.Count == 0 )
+            loadManageOrderIndexVM(orderId);
+            if (_manageOrdersVM.OrderDetailsList.Count == 0)
             {
                 return Page();
             }
+            filterServiceListWithSameServiceTypeIdOfThatOrder();
+            return Page();
+        }
 
-            // lista de ID de servicios con el mismo tipo de servicio
-            List<Guid> lstServiceDelmismoTipoDeLaOrden =    _context.ServiceModel
-                                                                    .Include(c => c.serviceType)
-                                                                    .Where(c => c.serviceType == _manageOrdersVM.OrderDetailsList[0].Service.serviceType)
-                                                                    .Select(c => c.ID)
-                                                                    .ToList();
-
-            List<Guid> lstServiciosConCotizacion = new List<Guid>();
-
+        private void filterServiceListWithSameServiceTypeIdOfThatOrder()
+        {
+            List<Guid> lstServiceWithSameServiceTypeIdFromOrder = _queries.GetLstServiceFromTheSameServiceTypeFromOrderServiceType(_manageOrdersVM.OrderDetailsList[0].Service.ServiceTypeId);
+            List<Guid> lstServiceWithQuotation = new List<Guid>();
             foreach (var item in _manageOrdersVM.OrderDetailsList)
             {
-                lstServiciosConCotizacion.Add(item.Service.ID);
+                lstServiceWithQuotation.Add(item.Service.ID);
             }
-
-            lstServiceDelmismoTipoDeLaOrden = lstServiceDelmismoTipoDeLaOrden.FindAll(x => !lstServiciosConCotizacion.Contains(x));
-
-            foreach (var item in lstServiceDelmismoTipoDeLaOrden)
+            lstServiceWithSameServiceTypeIdFromOrder = lstServiceWithSameServiceTypeIdFromOrder.FindAll(x => !lstServiceWithQuotation.Contains(x));
+            foreach (var serviceGuid in lstServiceWithSameServiceTypeIdFromOrder)
             {
                 var localVM = new ManageServiceQuotationVM()
                 {
                     sendQuotation = false,
-                    ServiceModel = _context.ServiceModel
-                                                        .Include(s => s.ApplicationUser)
-                                                        .FirstOrDefault(s => s.ID == item)
+                    ServiceModel = _queries.GetServiceIncludeApplicationUserFirstOrDefault(serviceGuid)
                 };
                 _manageOrdersVM.ListServices.Add(localVM);
             }
-            
-            return Page();
         }
-      
+
+        private void loadManageOrderIndexVM(Guid orderId)
+        {
+            _manageOrdersVM = new ManageOrdersVM()
+            {
+                OrderModel = _queries.GetOrderByOrderId(orderId),
+                OrderDetailsList = _queries.GetLstOrderDetailsIncludeOrderServiceServiceTypeWhereOrderIdEqualsOrderId(orderId),
+                ListQuotations = _queries.GetLstQuotationIncludeOrderDetailsOrderTaskListMaterialWhereOrderIdEqualsOrderId(orderId),
+                ListServices = new List<ManageServiceQuotationVM>(),
+                ServiceModelIdList = new List<Guid>(),
+                stringIds = ""
+            };
+        }
     }
 }

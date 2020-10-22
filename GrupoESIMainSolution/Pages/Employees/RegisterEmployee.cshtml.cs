@@ -1,40 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
-using GrupoESIDataAccess;
+using GrupoESIDataAccess.Queries;
 using GrupoESIModels.Models;
-using GrupoESINuevo.Data;
-
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace GrupoESINuevo.Pages.Employees
 {
     public class RegisterEmployeeModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly ILogger<RegisterEmployeeModel> _logger;
-        private readonly IEmailSender _emailSender;
 
-        RoleManager<IdentityRole> _roleManager;
-        ApplicationDbContext _db;
-        public RegisterEmployeeModel(UserManager<IdentityUser> userManager,
-                                      ILogger<RegisterEmployeeModel> logger,
-                                      IEmailSender emailSender,
-                                      RoleManager<IdentityRole> roleManager,
-                                      ApplicationDbContext db)
+        private readonly IQueries _queries;
+        public RegisterEmployeeModel(IQueries queries)
         {
-            _userManager = userManager;
-            _logger = logger;
-            _emailSender = emailSender;
-            _roleManager = roleManager;
-            _db = db;
+            _queries = queries;
         }
         [BindProperty]
         public InputModel Input { get; set; }
@@ -68,13 +48,7 @@ namespace GrupoESINuevo.Pages.Employees
                 {
                     serviceLst = new List<Service>()
                 };
-
-                //lista de servicios del proveedor
-                //agregar esos servicios
-                var Employer = _db.ApplicationUser
-                                                  .Include(a => a.ServiceLst)
-                                                  .FirstOrDefault(a => a.Id == EmployersId);
-
+                var Employer = _queries.GetApplicationUserIncludeServiceLst(EmployersId);
                 Input.serviceLst = Employer.ServiceLst;
                 Input.idEmpleador = Employer.Id;
                 return Page();

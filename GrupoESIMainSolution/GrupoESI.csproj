@@ -34,9 +34,4 @@
     <ProjectReference Include="..\GrupoESIModels\GrupoESIModels.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Uitility\" />
-  </ItemGroup>
-
 </Project>
