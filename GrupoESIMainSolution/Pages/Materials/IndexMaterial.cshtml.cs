@@ -30,7 +30,7 @@ namespace GrupoESINuevo
             {
                 _materialVM.Material = _materialVM.tareaLocal.ListMaterial;
             }
-            _materialVM.OrderDetailsStatus = _materialVM.tareaLocal.QuotationModel.OrderDetailsModel.Status;
+            _materialVM.OrderDetailsStatus = _materialVM.tareaLocal.QuotationModel.OrderDetails.Status;
         }
 
         private void LoadLstMaterialModel(Guid taskId)
@@ -38,7 +38,7 @@ namespace GrupoESINuevo
             _materialVM = new MaterialVM();
             _materialVM.taskId = taskId;
             _materialVM.tareaLocal = _queries.GetTaskModelIncludeLstMaterialQuotationOrderDetailsOrderFirstOrDefaultTaskIdEqualsTaskId(taskId);
-            _materialVM.OrderDetailsId = _materialVM.tareaLocal.QuotationModel.OrderDetailsModel.Id;
+            _materialVM.OrderDetailsId = _materialVM.tareaLocal.QuotationModel.OrderDetails.Id;
         }
     }
 }

@@ -18,26 +18,26 @@
                 <div class="col-md-6 offset-md-3">
                     <div class="row">
                         <div class="col-sm-4">
-                            <label asp-for="TaskModel.QuotationModel.OrderDetailsModel.Order.Concepto"></label>
+                            <label asp-for="TaskModel.QuotationModel.OrderDetails.Order.Concepto"></label>
                         </div>
                         <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="TaskModel.QuotationModel.OrderDetailsModel.Order.Concepto" disabled class="form-control" />
+                            <input asp-for="TaskModel.QuotationModel.OrderDetails.Order.Concepto" disabled class="form-control" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
-                            <label asp-for="TaskModel.QuotationModel.OrderDetailsModel.Status"></label>
+                            <label asp-for="TaskModel.QuotationModel.OrderDetails.Status"></label>
                         </div>
                         <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="TaskModel.QuotationModel.OrderDetailsModel.Status" disabled class="form-control" />
+                            <input asp-for="TaskModel.QuotationModel.OrderDetails.Status" disabled class="form-control" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
-                            <label asp-for="TaskModel.QuotationModel.OrderDetailsModel.Cost"></label>
+                            <label asp-for="TaskModel.QuotationModel.OrderDetails.Cost"></label>
                         </div>
                         <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="TaskModel.QuotationModel.OrderDetailsModel.Cost" disabled class="form-control" />
+                            <input asp-for="TaskModel.QuotationModel.OrderDetails.Cost" disabled class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                     <form method="post">
                         <input type="hidden" asp-for="TaskModel.Id" />
                         <input type="submit" value="Borrar" class="btn btn-danger" /> |
-                        <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@Model.TaskModel.QuotationModel.OrderDetailsModel.Id">Regresar a la lista</a>
+                        <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@Model.TaskModel.QuotationModel.OrderDetails.Id">Regresar a la lista</a>
                     </form>
                 </div>
             </div>

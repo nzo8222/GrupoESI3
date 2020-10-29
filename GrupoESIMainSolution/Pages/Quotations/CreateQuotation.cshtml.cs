@@ -33,7 +33,7 @@ namespace GrupoESINuevo
             }
             LoadQuotation(orderDetailsId);
             LoadSameUserServices(orderDetailsId);
-            GetEmployees();
+            GetEmployee();
             return Page();
         }
 
@@ -41,7 +41,7 @@ namespace GrupoESINuevo
         {
             _QuotationTaskMaterialVM = new QuotationTaskMaterialVM();
             _QuotationTaskMaterialVM.orderDetailsId = orderDetailsId;
-            _QuotationTaskMaterialVM.QuotationModel = _iqueries.GetQuotationIncludeOrderDetailsOrdersTasksListMaterialPicturesFirstOrDefault(orderDetailsId);
+            _QuotationTaskMaterialVM.QuotationModel = _iqueries.GetQuotationIncludeOrderDetailsOrdersEmployeeTasksListMaterialPicturesFirstOrDefault(orderDetailsId);
         }
 
         private void LoadSameUserServices(Guid orderDetailsId)
@@ -58,19 +58,11 @@ namespace GrupoESINuevo
             }
         }
 
-        private void GetEmployees()
+        private void GetEmployee()
         {
-            List<EmployeeUser> employeeLst = _iqueries.GetEmployeesAssosiatedToThisQuotation();
-            foreach (var item in employeeLst)
-            {
-                foreach (var item2 in item.QuotationLst)
-                {
-                    if (item2 == _QuotationTaskMaterialVM.QuotationModel)
-                    {
-                        _QuotationTaskMaterialVM.lstEmployees.Add(item);
-                    }
-                }
-            }
+           
+                _QuotationTaskMaterialVM.lstEmployees.Add(_QuotationTaskMaterialVM.QuotationModel.Employee);
+                
         }
 
 
@@ -78,12 +70,12 @@ namespace GrupoESINuevo
         {
             if (_QuotationTaskMaterialVM.QuotationModel.Description == null)
             {
-                return RedirectToPage("CreateQuotation", new { orderDetailsId = _QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Id });
+                return RedirectToPage("CreateQuotation", new { orderDetailsId = _QuotationTaskMaterialVM.QuotationModel.OrderDetails.Id });
             }
             var quotation = _iqueries.GetQuotationByQuotationId(_QuotationTaskMaterialVM.QuotationModel.Id);
             if (quotation.Tasks.Count == 0)
             {
-                return RedirectToPage("CreateQuotation", new { orderDetailsId = _QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Id });
+                return RedirectToPage("CreateQuotation", new { orderDetailsId = _QuotationTaskMaterialVM.QuotationModel.OrderDetails.Id });
             }
             quotation.Description = _QuotationTaskMaterialVM.QuotationModel.Description;
             try
@@ -94,24 +86,24 @@ namespace GrupoESINuevo
             {
 
             }
-            return RedirectToPage("CreateQuotation", new { orderDetailsId = _QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Id });
+            return RedirectToPage("CreateQuotation", new { orderDetailsId = _QuotationTaskMaterialVM.QuotationModel.OrderDetails.Id });
         }
         public async Task<IActionResult> OnPostAsync()
         {
             if (_QuotationTaskMaterialVM.QuotationModel.Description == null)
             {
-                return RedirectToPage("CreateQuotation", new { orderDetailsId = _QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Id });
+                return RedirectToPage("CreateQuotation", new { orderDetailsId = _QuotationTaskMaterialVM.QuotationModel.OrderDetails.Id });
             }
-            var quotation = _iqueries.GetQuotationIncludeOrderDetailsOrdersTasksListMaterialPicturesFirstOrDefault(_QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Id);
+            var quotation = _iqueries.GetQuotationIncludeOrderDetailsOrdersEmployeeTasksListMaterialPicturesFirstOrDefault(_QuotationTaskMaterialVM.QuotationModel.OrderDetails.Id);
             if (quotation.Tasks.Count == 0)
             {
-                return RedirectToPage("CreateQuotation", new { orderDetailsId = _QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Id });
+                return RedirectToPage("CreateQuotation", new { orderDetailsId = _QuotationTaskMaterialVM.QuotationModel.OrderDetails.Id });
             }
             SetQuotationForPosting(quotation);
             try
             {
                 await _emailSender.SendEmailAsync(SD.AdminEmail, "El proveedor terminó la cotizacion",
-               $"La cotizacion en el domicilio '{quotation.OrderDetailsModel.Order.Direccion}' fue terminada");
+               $"La cotizacion en el domicilio '{quotation.OrderDetails.Order.Direccion}' fue terminada");
                 _iqueries.SaveChanges();
             }
             catch (Exception ex)
@@ -126,8 +118,8 @@ namespace GrupoESINuevo
         {
             quotation.Description = _QuotationTaskMaterialVM.QuotationModel.Description;
             quotation.QuotationSaveDate = DateTime.Now;
-            var order = _iqueries.GetOrderByOrderId(quotation.OrderDetailsModel.Order.Id);
-            quotation.OrderDetailsModel.Status = SD.EstadoCotizado;
+            var order = _iqueries.GetOrderByOrderId(quotation.OrderDetails.Order.Id);
+            quotation.OrderDetails.Status = SD.EstadoCotizado;
             order.EstadoDelPedido = SD.EstadoCotizado;
         }
 
@@ -143,10 +135,10 @@ namespace GrupoESINuevo
                 try
                 {
 
-                    quotation.OrderDetailsModel.Status = SD.EstadoCotizando;
+                    quotation.OrderDetails.Status = SD.EstadoCotizando;
 
                     await _emailSender.SendEmailAsync(SD.AdminEmail, "El proveedor llego al domicilio",
-                          $"El proveedor '{quotation.OrderDetailsModel.Service.ApplicationUser.CompanyName}' llego al domicilio");
+                          $"El proveedor '{quotation.OrderDetails.Service.ApplicationUser.CompanyName}' llego al domicilio");
                     quotation.QuotationSaveDate = DateTime.Now;
                     _iqueries.SaveChanges();
                 }
@@ -156,7 +148,7 @@ namespace GrupoESINuevo
                 }
 
             }
-            return RedirectToPage("CreateQuotation", new { orderDetailsId = quotation.OrderDetailsModel.Id });
+            return RedirectToPage("CreateQuotation", new { orderDetailsId = quotation.OrderDetails.Id });
         }
     }
 }

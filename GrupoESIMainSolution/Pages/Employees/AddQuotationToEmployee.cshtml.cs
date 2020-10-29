@@ -27,13 +27,13 @@ namespace GrupoESINuevo.Pages.Employees
             _AddQuotationToEmployeeVM.QuotationIdLocal = (Guid)quotationId;
             var quotationLocal = _queries.GetQuoationIncludeOrderDetailsServiceApplicationUserFirstOrDefaultWhereQuotationIdEquals((Guid)quotationId);
 
-            var employer = _queries.GetApplicationUserIncludeServiceLst(quotationLocal.OrderDetailsModel.Service.ApplicationUser.Id);
+            var employer = _queries.GetApplicationUserIncludeServiceLst(quotationLocal.OrderDetails.Service.ApplicationUser.Id);
                 
             var localEmployeeUserLst = _queries.GetAllEmployeesIncludeServiceLstEmployedByWhereEmployedByIdEquals(employer.Id);
                 
                  
 
-            _AddQuotationToEmployeeVM.OrderDetailsId = quotationLocal.OrderDetailsModel.Id;
+            _AddQuotationToEmployeeVM.OrderDetailsId = quotationLocal.OrderDetails.Id;
 
 
             foreach (var item in localEmployeeUserLst)

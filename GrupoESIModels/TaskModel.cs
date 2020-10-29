@@ -18,7 +18,7 @@ namespace GrupoESIModels.Models
         public double CostHandLabor { get; set; }
         public virtual List<Material> ListMaterial { get; set; }
         [ForeignKey("QuotationId")]
-        public  Quotation QuotationModel { get; set; }
+        public Quotation QuotationModel { get; set; }
         public virtual List<Picture> Pictures { get; set; }
         public Guid QuotationId { get; set; }
 

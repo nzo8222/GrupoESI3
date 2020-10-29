@@ -21,7 +21,7 @@ namespace GrupoESINuevo
         public IActionResult OnGet(Guid orderDetailsId)
         {
             _TaskQuotationVM = new TaskQuotationVM(orderDetailsId);
-            _TaskQuotationVM.TaskInfo = _queries.GetTaskIncludeQuotationOrderDetailsOrderFirstOrDefaultWhereOrderDetailsIdEquals(orderDetailsId);
+            _TaskQuotationVM.OrderDetailsInfo = _queries.GetOrderDetailsIncludeOrderFirstOrDefaultWhereOrderDetailsIdEquals(orderDetailsId);
             return Page();
         }
 
@@ -39,7 +39,7 @@ namespace GrupoESINuevo
             }
             _TaskQuotationVM.TaskLocal.Cost = _TaskQuotationVM.TaskLocal.CostHandLabor;
             var quotation = _queries.GetQuotationIncludeTaskOrderDetailsFirstOrDefaultWhereOrderDetailsEquals(_TaskQuotationVM.orderDetailsId);
-                quotation.OrderDetailsModel.Cost = quotation.OrderDetailsModel.Cost + _TaskQuotationVM.TaskLocal.CostHandLabor;
+                quotation.OrderDetails.Cost = quotation.OrderDetails.Cost + _TaskQuotationVM.TaskLocal.CostHandLabor;
                 quotation.Tasks.Add(_TaskQuotationVM.TaskLocal);
              _queries.SaveChanges();
             return RedirectToPage("../Quotations/CreateQuotation", new { orderDetailsId = _TaskQuotationVM.orderDetailsId });

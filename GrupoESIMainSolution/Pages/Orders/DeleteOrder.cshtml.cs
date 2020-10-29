@@ -67,7 +67,7 @@ namespace GrupoESINuevo
                 var orderDetailsLocal = _queries.GetOrderDetailsFromSameOrder(Order.Id);
                 foreach (var orderDetails in orderDetailsLocal)
                 {
-                    var quotationLocal = _queries.GetQuotationIncludeOrderDetailsOrdersTasksListMaterialPicturesFirstOrDefault(orderDetails.Id);
+                    var quotationLocal = _queries.GetQuotationIncludeOrderDetailsOrdersEmployeeTasksListMaterialPicturesFirstOrDefault(orderDetails.Id);
                     _orderDetailsRepository.Remove(orderDetails);
                     if (quotationLocal != null)
                     {

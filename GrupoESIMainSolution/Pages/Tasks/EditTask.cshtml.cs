@@ -51,7 +51,7 @@ namespace GrupoESINuevo
 
             }
 
-            return RedirectToPage("../Quotations/CreateQuotation", new { orderDetailsId = task.QuotationModel.OrderDetailsModel.Id });
+            return RedirectToPage("../Quotations/CreateQuotation", new { orderDetailsId = task.QuotationModel.OrderDetails.Id });
         }
 
         private TaskModel setAttributes()
@@ -61,7 +61,7 @@ namespace GrupoESINuevo
             task.Description = TaskModel.Description;
             task.Duration = TaskModel.Duration;
             task.Cost = task.Cost - task.CostHandLabor + TaskModel.CostHandLabor;
-            task.QuotationModel.OrderDetailsModel.Cost = task.QuotationModel.OrderDetailsModel.Cost - task.CostHandLabor + TaskModel.CostHandLabor;
+            task.QuotationModel.OrderDetails.Cost = task.QuotationModel.OrderDetails.Cost - task.CostHandLabor + TaskModel.CostHandLabor;
             task.CostHandLabor = TaskModel.CostHandLabor;
             return task;
         }

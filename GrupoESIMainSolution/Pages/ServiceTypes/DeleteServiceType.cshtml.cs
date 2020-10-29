@@ -106,7 +106,7 @@ namespace GrupoESINuevo
 
         private void LoadAndRemoveAllQuotationsRelatedToThisOrderDetails(OrderDetails orderDetails)
         {
-            var quotationLocal = _QuotationRepository.FirstOrDefault(s => s.OrderDetailsModel.Id == orderDetails.Id, includeProperties: "OrderDetailsModel,Tasks");
+            var quotationLocal = _QuotationRepository.FirstOrDefault(s => s.OrderDetails.Id == orderDetails.Id, includeProperties: "OrderDetailsModel,Tasks");
 
             foreach (var task in quotationLocal.Tasks)
             {

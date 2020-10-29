@@ -10,5 +10,6 @@ namespace GrupoESIModels.ViewModels
     {
         public EmployeeUser EmployeeLocal { get; set; }
         public List<OrderDetails> orderDetailsList { get; set; }
+        public string EmployeeId { get; set; }
     }
 }

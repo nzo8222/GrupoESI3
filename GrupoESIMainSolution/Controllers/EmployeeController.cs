@@ -18,7 +18,7 @@ namespace GrupoESINuevo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class EmployeeController : Controller
     {
         private readonly IQueries _queries;
         private readonly UserManager<IdentityUser> _userManager;
@@ -37,6 +37,46 @@ namespace GrupoESINuevo.Controllers
             _roleManager = roleManager;
             _queries = queries;
         }
+        [HttpGet]
+        [Route("GetEmployeeOrderList")]
+        public IActionResult GetOrderList(string employeeId)
+        {
+            var orderDetailsList = _queries.GetAllOrderDetailsIncludeOrderServiceQuotationWhereEmployeeIdEquals(employeeId);
+            var orderVM = new List<OrderAdminIndexVM>();
+            for (int i = 0; i < orderDetailsList.Count; i++)
+            {
+                var orderLocal = new OrderAdminIndexVM();
+                orderLocal.orderId = orderDetailsList[i].Id.ToString();
+                orderLocal.Concept = orderDetailsList[i].Order.Concepto;
+                orderLocal.Address = orderDetailsList[i].Order.Direccion;
+                orderLocal.Date = orderDetailsList[i].Order.OrderDate.ToString();
+                orderLocal.StateOfTheOrder = orderDetailsList[i].Status;
+                orderVM.Add(orderLocal);
+            }
+            return Json(new { data = orderVM });
+        }
+        [HttpGet]
+        [Route("GetInquiryList")]
+        public IActionResult GetInquiryList(string EmployerId)
+        {
+            if(EmployerId == null)
+            {
+                return NotFound();
+            }
+            var employeeLst = _queries.GetAllEmployeesWhereEmployedByIdEquals(EmployerId);
+            var justEmployees = new List<EmployeeVM>();
+            foreach (var employee in employeeLst)
+            {
+                var employeeLocal = new EmployeeVM();
+                employeeLocal.Name = employee.Name;
+                employeeLocal.Email = employee.Email;
+                justEmployees.Add(employeeLocal);
+            }
+            return Json(new { data = justEmployees });
+                //;
+        }
+        
+        
         [HttpPost]
         [Route("PostAddQuotationToEmployee")]
         public async Task<IActionResult> PostAddQuotationToEmployee([FromBody] AddQuotationToEmployeeControllerVM _AddQuotationToEmployeeControllerVM)
@@ -64,9 +104,11 @@ namespace GrupoESINuevo.Controllers
 
         private async Task AddQuotationToEmployeesList(AddQuotationToEmployeeControllerVM _AddQuotationToEmployeeControllerVM)
         {
-            var employee = _queries.GetEmployeeIncludeQuotationLstEmployedByFirstOrDefaultEmployeeIdEqualsEmployeeId(_AddQuotationToEmployeeControllerVM.idEmployee);
+            var employee = _queries.GetEmployeeIncludeLstEmployedByFirstOrDefaultEmployeeIdEqualsEmployeeId(_AddQuotationToEmployeeControllerVM.idEmployee);
             var quotation = _queries.GetQuotationByQuotationId(_AddQuotationToEmployeeControllerVM.idQuotation);
-            employee.QuotationLst.Add(quotation);
+            quotation.Employee = employee;
+            _queries.SaveChanges();
+            //employee.QuotationLst.Add(quotation);
             await _emailSender.SendEmailAsync(employee.UserName, "Se te asigno una orden",
                    $"Revisa tu cuenta de la aplicacion Grupo ESI se te asigno una orden");
         }

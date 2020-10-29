@@ -10,6 +10,7 @@ namespace GrupoESIDataAccess
             : base(options)
         {
         }
+        
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
         public DbSet<Service> ServiceModel { get; set; }
         public DbSet<ServiceType> ServiceType { get; set; }
@@ -20,5 +21,7 @@ namespace GrupoESIDataAccess
         public DbSet<Material> Material { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<EmployeeUser> Employee { get; set; }
+
+        
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+
 using GrupoESIDataAccess;
 using GrupoESIDataAccess.Queries;
 using Microsoft.AspNetCore.Mvc;

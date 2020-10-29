@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 using GrupoESIDataAccess.Queries;
+using GrupoESIModels.GrupoESIModels;
 using GrupoESIModels.Models;
 using GrupoESIModels.ViewModels;
 using GrupoESIUtility;

@@ -89,7 +89,7 @@ namespace GrupoESINuevo
 
         private Quotation LoadQuotation(OrderDetails item)
         {
-            var quotationLocal = _quotationRepository.FirstOrDefault(q => q.OrderDetailsModel.Id == item.Id, includeProperties: "OrderDetailsModel,Tasks");
+            var quotationLocal = _quotationRepository.FirstOrDefault(q => q.OrderDetails.Id == item.Id, includeProperties: "OrderDetailsModel,Tasks");
 
             LoadTask(quotationLocal);
 

@@ -16,34 +16,34 @@
                 <div class="col-md-6 offset-md-3">
                     <div class="row">
                         <div class="col-sm-4">
-                            <label asp-for="TaskModel.QuotationModel.OrderDetailsModel.Order.Concepto"></label>
+                            <label asp-for="TaskModel.QuotationModel.OrderDetails.Order.Concepto"></label>
                         </div>
                         <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="TaskModel.QuotationModel.OrderDetailsModel.Order.Concepto" disabled class="form-control" />
+                            <input asp-for="TaskModel.QuotationModel.OrderDetails.Order.Concepto" disabled class="form-control" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
-                            <label asp-for="TaskModel.QuotationModel.OrderDetailsModel.Order.Direccion"></label>
+                            <label asp-for="TaskModel.QuotationModel.OrderDetails.Order.Direccion"></label>
                         </div>
                         <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="TaskModel.QuotationModel.OrderDetailsModel.Order.Direccion" disabled class="form-control" />
+                            <input asp-for="TaskModel.QuotationModel.OrderDetails.Order.Direccion" disabled class="form-control" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
-                            <label asp-for="TaskModel.QuotationModel.OrderDetailsModel.Status"></label>
+                            <label asp-for="TaskModel.QuotationModel.OrderDetails.Status"></label>
                         </div>
                         <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="TaskModel.QuotationModel.OrderDetailsModel.Status" disabled class="form-control" />
+                            <input asp-for="TaskModel.QuotationModel.OrderDetails.Status" disabled class="form-control" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
-                            <label asp-for="TaskModel.QuotationModel.OrderDetailsModel.Cost"></label>
+                            <label asp-for="TaskModel.QuotationModel.OrderDetails.Cost"></label>
                         </div>
                         <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="TaskModel.QuotationModel.OrderDetailsModel.Cost" disabled class="form-control" />
+                            <input asp-for="TaskModel.QuotationModel.OrderDetails.Cost" disabled class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                 </div>
 
                 <div>
-                    <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@Model.TaskModel.QuotationModel.OrderDetailsModel.Id">Back to List</a>
+                    <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@Model.TaskModel.QuotationModel.OrderDetails.Id">Back to List</a>
                 </div>
             </div>
         </div>

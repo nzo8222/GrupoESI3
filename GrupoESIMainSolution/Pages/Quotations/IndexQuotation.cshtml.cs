@@ -6,9 +6,10 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using GrupoESIModels.ViewModels;
-using GrupoESIModels.Models;
+
 using GrupoESIUtility;
 using GrupoESIDataAccess.Queries;
+using GrupoESIModels.GrupoESIModels;
 
 namespace GrupoESINuevo
 {
@@ -68,7 +69,7 @@ namespace GrupoESINuevo
                 {
                     if (searchDescripcion != null)
                     {
-                        _indexQuotationVM.OrderDetails = _indexQuotationVM.OrderDetails.Where(od => od.Quotation.Description.ToLower().Contains(searchDescripcion.ToLower())).ToList();
+                        //_indexQuotationVM.OrderDetails = _indexQuotationVM.OrderDetails.Where(od => od.Quotation.Description.ToLower().Contains(searchDescripcion.ToLower())).ToList();
                     }
                 }
             }

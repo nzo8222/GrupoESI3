@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using GrupoESIDataAccess;
+﻿using System.Collections.Generic;
 using GrupoESIDataAccess.Queries;
 using GrupoESIModels.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-
+using GrupoESIModels.ViewModels;
 namespace GrupoESINuevo.Pages.Employees
 {
     public class ManageEmployeeModel : PageModel
@@ -19,13 +15,15 @@ namespace GrupoESINuevo.Pages.Employees
             _queries = queries;
         }
         [BindProperty]
-        public IList<EmployeeUser> EmployeeUsrLst { get; set; }
-        public async Task<IActionResult> OnGetAsync(string employersId = null)
+        public ManageEmployeesVM _ManageEmployeesVM { get; set; }
+        public IActionResult OnGetAsync(string employersId = null)
         {
             if (employersId == null)
             {
                 return Page();
             }
+            _ManageEmployeesVM = new ManageEmployeesVM();
+            _ManageEmployeesVM.EmployerId = employersId;
             LoadEmployeeLst(employersId);
             return Page();
         }
@@ -33,13 +31,13 @@ namespace GrupoESINuevo.Pages.Employees
         private void LoadEmployeeLst(string employersId)
         {
             var localEmployeeUserLst = _queries.GetLstEmployeesIncludeServiceList();
-            EmployeeUsrLst = new List<EmployeeUser>();
+            _ManageEmployeesVM.EmployeeUsrLst = new List<EmployeeUser>();
             var employer = _queries.GetApplicationUserIncludeServiceLst(employersId.ToString());
             foreach (var item in localEmployeeUserLst)
             {
                 if (item.EmployedBy == employer)
                 {
-                    EmployeeUsrLst.Add(item);
+                    _ManageEmployeesVM.EmployeeUsrLst.Add(item);
                 }
             }
         }

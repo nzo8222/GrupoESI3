@@ -459,9 +459,6 @@ C:\GrupoESI\GrupoESIMainSolution\bin\Debug\netcoreapp3.1\GrupoESIModels.pdb
 C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.csprojAssemblyReference.cache
 C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.AssemblyInfoInputs.cache
 C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.AssemblyInfo.cs
-C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.csproj.CoreCompileInputs.cache
-C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.MvcApplicationPartsAssemblyInfo.cs
-C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.MvcApplicationPartsAssemblyInfo.cache
 C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.RazorAssemblyInfo.cache
 C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.RazorAssemblyInfo.cs
 C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.TagHelpers.input.cache
@@ -566,3 +563,6 @@ C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\staticwebassets\GrupoES
 C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.dll
 C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.pdb
 C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.genruntimeconfig.cache
+C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.csproj.CoreCompileInputs.cache
+C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.MvcApplicationPartsAssemblyInfo.cs
+C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.MvcApplicationPartsAssemblyInfo.cache

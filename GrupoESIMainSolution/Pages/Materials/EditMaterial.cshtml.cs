@@ -64,7 +64,7 @@ namespace GrupoESINuevo
             var mat = _queries.GetMaterialIncludeTaskFirstOrDefaultIdEqualsMaterialsId(Material.Id);
             var task = _queries.GetTaskIncludeQuotationOrderDetailsFirstOrDefault(mat.TaskModelId);
             task.Cost = task.Cost - (int)mat.Price + (int)Material.Price;
-            task.QuotationModel.OrderDetailsModel.Cost = task.QuotationModel.OrderDetailsModel.Cost - (int)mat.Price + (int)Material.Price;
+            task.QuotationModel.OrderDetails.Cost = task.QuotationModel.OrderDetails.Cost - (int)mat.Price + (int)Material.Price;
             mat.Name = Material.Name;
             mat.Price = Material.Price;
             mat.Description = Material.Description;

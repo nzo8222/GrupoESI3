@@ -43,7 +43,7 @@ namespace GrupoESINuevo
                 taskId = taskId
 
             };
-            _TaskMaterialVM.orderDetailsId = _TaskMaterialVM.TareaModel.QuotationModel.OrderDetailsModel.Id;
+            _TaskMaterialVM.orderDetailsId = _TaskMaterialVM.TareaModel.QuotationModel.OrderDetails.Id;
         }
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -60,7 +60,7 @@ namespace GrupoESINuevo
             }
             TaskModel tareaModel = SetAttributes();
             saveChanges();
-            return RedirectToPage("../Quotations/CreateQuotation", new { orderDetailsId = tareaModel.QuotationModel.OrderDetailsModel.Id });
+            return RedirectToPage("../Quotations/CreateQuotation", new { orderDetailsId = tareaModel.QuotationModel.OrderDetails.Id });
         }
         private void saveChanges()
         {
@@ -83,7 +83,7 @@ namespace GrupoESINuevo
             _TaskMaterialVM.MaterialModel.TaskModelId = tareaModel.Id;
             tareaModel.ListMaterial.Add(_TaskMaterialVM.MaterialModel);
             tareaModel.Cost = tareaModel.Cost + _TaskMaterialVM.MaterialModel.Price;
-            tareaModel.QuotationModel.OrderDetailsModel.Cost = tareaModel.QuotationModel.OrderDetailsModel.Cost + _TaskMaterialVM.MaterialModel.Price;
+            tareaModel.QuotationModel.OrderDetails.Cost = tareaModel.QuotationModel.OrderDetails.Cost + _TaskMaterialVM.MaterialModel.Price;
             return tareaModel;
         }
     }

@@ -3,73 +3,158 @@
 @{
     ViewData["Title"] = "EmployeeOrderIndex";
 }
-    <div class="container backgroundWhite">
-        <h2 class="text-info">EmployeeOrderIndex</h2>
-        <div class="card">
-            <div class="card-header bg-dark text-light ml-0 row container">
-                <div class="col-6">
-                    <i class="fa fa-user-o"></i>
-                </div>
-            </div>
-            <div class="card-body container">
-                <div class="row">
-                    <div class="col">
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr class="table-secondary">
-                                        <th scope="col">
-                                            Concepto
-                                        </th>
-                                        <th scope="col">
-                                            Nombre
-                                        </th>
-                                        <th scope="col">
-                                            Costo
-                                        </th>
-                                        <th scope="col">
-                                            Descripción
-                                        </th>
-                                        <th scope="col">
-                                            Estado del pedido
-                                        </th>
-                                        <th scope="col">
+<div class="container backgroundWhite">
+    <h2 class="text-info">EmployeeOrderIndex</h2>
+    <label id="_employeeId" hidden >@Model._employeeIndexVM.EmployeeId</label>
 
-                                        </th>
+    <div class="card">
+        <div class="card-header bg-dark text-light ml-0 row container">
+            <div class="col-6">
+                <i class="fa fa-user-o"></i>
+            </div>
+        </div>
+        <div class="card-body container">
+            <div class="row">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr class="table-secondary">
+                                    <th scope="col">
+                                        Concepto
+                                    </th>
+                                    <th scope="col">
+                                        Nombre
+                                    </th>
+                                    <th scope="col">
+                                        Costo
+                                    </th>
+                                    <th scope="col">
+                                        Descripción
+                                    </th>
+                                    <th scope="col">
+                                        Estado del pedido
+                                    </th>
+                                    <th scope="col">
+
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model._employeeIndexVM.orderDetailsList)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Order.Concepto)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Service.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Cost)
+                                        </td>
+                                        <td>
+                                            @*@Html.DisplayFor(modelItem => item.Quotation.Description)*@
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Status)
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-primary" asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@item.Id">Ver cotizacion</a>
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model._employeeIndexVM.orderDetailsList)
-                                    {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Order.Concepto)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Service.Name)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Cost)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Quotation.Description)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Status)
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-primary" asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@item.Id">Ver cotizacion</a>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                        
+                                }
+                            </tbody>
+                        </table>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
+</div>
+<div>
+    <table id="tblData" class="display">
+        </table>
+</div>
 
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            employeeId = document.getElementById('_employeeId');
+            console.log(employeeId.innerText)
+
+            loadDataTable(employeeId.innerText);
+        });
+        function loadDataTable(employeeId) {
+            $("#tblData").DataTable(
+                {
+                    "ajax":
+                    {
+                        "type": "GET",
+                        "url": "/api/Employee/GetEmployeeOrderList?employeeId=" + employeeId
+                    },
+                    "columns": [
+                        { "data": "date", "width": "10%" },
+                        { "data": "concept", "width": "10%" },
+                        { "data": "address", "width": "10%" },
+                        { "data": "stateOfTheOrder", "width": "10%" },
+                        {
+                            "data": "orderId",
+                            "render": function (data) {
+                                return `
+                                    <div class="text-center">
+                                        <a href="/ManageOrders/ManageOrdersIndex?orderId=${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                           Manejar Cotizaciones
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        },
+                        {
+                            "data": "orderId",
+                            "render": function (data) {
+                                return `
+                                    <div class="text-center">
+                                        <a href="/Orders/EditOrder?orderId=${data}" class="btn btn-primary text-white" style="cursor:pointer">
+                                          <i class="fas fa-edit"></i> Editar
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        },
+                        {
+                            "data": "orderId",
+                            "render": function (data) {
+                                return `
+                                    <div class="text-center">
+                                        <a href="/Orders/DetailsOrder?orderId=${data}" class="btn btn-info text-white" style="cursor:pointer">
+                                          <i class="fas fa-info-circle"></i> Detalles
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        },
+                         {
+                            "data": "orderId",
+                            "render": function (data) {
+                                return `
+                                    <div class="text-center">
+                                        <a href="/Orders/DeleteOrder?orderId=${data}" class="btn btn-danger text-white" style="cursor:pointer">
+                                          <i class="fas fa-trash"></i> Borrar
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        }
+
+                    ]
+                })
+        }
+    </script>
+}
 

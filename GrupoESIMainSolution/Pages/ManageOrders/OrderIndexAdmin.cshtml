@@ -1,122 +1,141 @@
 ﻿@page
 @model GrupoESINuevo.Pages.ManageOrders.OrderIndexAdminModel
+@using GrupoESIModels.Models
+@addTagHelper GrupoESINuevo.TagHelpers.*,GrupoESINuevo
 @{
     ViewData["Title"] = "OrderIndexAdmin";
 }
-    <div class="container backgroundWhite">
-        <h2 class="text-info">Indice de ordenes</h2>
-        <div class="card container">
-            <div class="card-header bg-dark text-light ml-0 row container-xl">
-                <div class="col-6">
-                    <i class="fa fa-user-o"></i>
-                </div>
+<div class="container backgroundWhite">
+    <h2 class="text-info">Indice de ordenes</h2>
+    <div class="card container">
+        <div class="card-header bg-dark text-light ml-0 row container-xl">
+            <div class="col-6">
+                <i class="fa fa-user-o"></i>
             </div>
-            <div class="card-body container">
-                <form method="get" asp-page="OrderIndexAdmin">
-                    <div style="height:60px;" class="container border border-secondary">
-                        <div class="row">
-                            <div class="col">
-                                <div class="row" style="padding-top:10px">
-                                    <div class="col">
-                                        @Html.Editor("searchConcepto", new { htmlAttributes = new { @class = "form-control", placeholder = "Concepto..." } })
-                                    </div>
-                                    <div class="col">
-                                        @Html.Editor("searchDireccion", new { htmlAttributes = new { @class = "form-control", placeholder = "Direccion..." } })
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col-1">
-                                <div class="row" style="padding-top:10px; padding-right:15px;">
-                                    <button type="submit" name="submit" value="Search" class="btn btn-info form-control">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <div class="row">
-                    <div class="col">
-                        <div class="table-responsive">
-                            <table class="table table-striped border">
-                                <thead>
-                                    <tr class="table-secondary">
-                                        <th scope="col">
-
-                                            Fecha
-                                        </th>
-                                        <th scope="col">
-                                            Dirección
-
-                                        </th>
-                                        <th scope="col">
-
-                                            Concepto
-                                        </th>
-                                        <th scope="col">
-                                            Estado del pedido
-
-                                        </th>
-                                        <th scope="col">
-
-                                        </th>
-                                        <th scope="col">
-
-                                        </th>
-                                        <th scope="col">
-
-                                        </th>
-                                        <th scope="col">
-
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model._OrderIndexAdminVM.OrderList)
-                                    {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.OrderDate)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Direccion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Concepto)
-                                            </td>
-
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.EstadoDelPedido)
-                                            </td>
-                                            <td>
-                                                <a asp-page="../ManageOrders/ManageOrdersIndex" asp-route-orderId="@item.Id" class="btn btn-success">Manejar Cotizaciones</a>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-primary" asp-page="../Orders/EditOrder" asp-route-orderId="@item.Id">Editar</a>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-info" asp-page="../Orders/DetailsOrder" asp-route-orderId="@item.Id">Detalles</a>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-danger" asp-page="../Orders/DeleteOrder" asp-route-orderId="@item.Id">Borrar</a>
-                                            </td>
-                                        </tr>
-                                    }
-                                    <tr>
-                                        <td colspan="5" class="text-right">
-                                            <div page-model="@Model._OrderIndexAdminVM.PagingInfo" asp-action="OrderIndexAdmin" page-class="btn border"
-                                                 page-class-normal="btn btn-light" page-class-selected="btn btn-info active" class="btn-group">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-                
         </div>
+        <div class="card-body container">
+            <form method="get" asp-page="OrderIndexAdmin">
+                
+            </form>
+            <div class="row">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table id="tblData" class="display">
+                            <thead>
+                                <tr>
+                                    <th>
+
+                                        Fecha
+                                    </th>
+                                    <th>
+                                        Concepto
+                                    </th>
+                                    <th>
+                                        Dirección
+                                    </th>
+                                    <th>
+                                        Estado del pedido
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
+
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            //employerId = document.getElementById('');
+            //console.log(employerId.innerText);employerId.innerTextemployerId + employerId
+
+            loadDataTable();
+        });
+        function loadDataTable() {
+            $("#tblData").DataTable(
+                {
+                    "ajax":
+                    {
+                        "type": "GET",
+                        "url": "/api/ManageOrders/GetOrderList"
+                    },
+                    "columns": [
+                        { "data": "date", "width": "10%" },
+                        { "data": "concept", "width": "10%" },
+                        { "data": "address", "width": "10%" },
+                        { "data": "stateOfTheOrder", "width": "10%" },
+                        {
+                            "data": "orderId",
+                            "render": function (data) {
+                                return `
+                                    <div class="text-center">
+                                        <a href="/ManageOrders/ManageOrdersIndex?orderId=${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                           Manejar Cotizaciones 
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        },
+                        {
+                            "data": "orderId",
+                            "render": function (data) {
+                                return `
+                                    <div class="text-center">
+                                        <a href="/Orders/EditOrder?orderId=${data}" class="btn btn-primary text-white" style="cursor:pointer">
+                                          <i class="fas fa-edit"></i> Editar
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        },
+                        {
+                            "data": "orderId",
+                            "render": function (data) {
+                                return `
+                                    <div class="text-center">
+                                        <a href="/Orders/DetailsOrder?orderId=${data}" class="btn btn-info text-white" style="cursor:pointer">
+                                          <i class="fas fa-info-circle"></i> Detalles
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        },
+                         {
+                            "data": "orderId",
+                            "render": function (data) {
+                                return `
+                                    <div class="text-center">
+                                        <a href="/Orders/DeleteOrder?orderId=${data}" class="btn btn-danger text-white" style="cursor:pointer">
+                                          <i class="fas fa-trash"></i> Borrar
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        }
+
+                    ]
+                })
+        }
+    </script>
+}

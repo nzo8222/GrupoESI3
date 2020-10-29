@@ -71,26 +71,24 @@ namespace GrupoESIDataAccess.Queries
         public Quotation GetQuotationWithOrderDetailsServiceApplicationUserWhereQuotationIdEqualsId(Guid QuotationId)
         {
             Quotation q = new Quotation();
-            q = _quotationRepository.FirstOrDefault(q => q.Id == QuotationId, includeProperties: "OrderDetailsModel");
-            q.OrderDetailsModel.Service = _serviceRepository.FirstOrDefault(s => s.ID == q.OrderDetailsModel.ServiceId);
-            q.OrderDetailsModel.Service.ApplicationUser = _applicationUserRepository.FirstOrDefault(a => a.Id == q.OrderDetailsModel.Service.UserId);
+            q = _quotationRepository.FirstOrDefault(q => q.Id == QuotationId, includeProperties: "OrderDetails");
+            q.OrderDetails.Service = _serviceRepository.FirstOrDefault(s => s.ID == q.OrderDetails.ServiceId);
+            q.OrderDetails.Service.ApplicationUser = _applicationUserRepository.FirstOrDefault(a => a.Id == q.OrderDetails.Service.UserId);
             return q;
         }
-        public Quotation GetQuotationIncludeOrderDetailsOrdersTasksListMaterialPicturesFirstOrDefault(Guid orderDetailsId)
+        public Quotation GetQuotationIncludeOrderDetailsOrdersEmployeeTasksListMaterialPicturesFirstOrDefault(Guid orderDetailsId)
         {
-            //Quotation q = _quotationRepository.FirstOrDefault(q => q.OrderDetailsId == orderDetailsId, includeProperties: "OrderDetailsModel");
 
-            //q.OrderDetailsModel.Order = _orderRepository.FirstOrDefault(s => s.Id == q.OrderDetailsModel.OrderId);
-            //q.Tasks = (List<TaskModel>)_taskRepository.GetAll(t => t.QuotationId == q.Id, includeProperties: "ListMaterial,Pictures");
             var orderDetails = _context.OrderDetails
                                                     .Include(o => o.Quotation)
                                                     .Include(o => o.Order)
                                                     .FirstOrDefault(o => o.Id == orderDetailsId);
             var quotation = _context.Quotation
-                                     .Include(q => q.Tasks)
-                                        .ThenInclude(t => t.ListMaterial)
+                                        .Include(q => q.Employee)
+                                        .Include(q => q.Tasks)
+                                             .ThenInclude(t => t.ListMaterial)
                                         .FirstOrDefault(q => q.Id == orderDetails.Quotation.Id);
-            quotation.OrderDetailsModel = orderDetails;
+            quotation.OrderDetails = orderDetails;
             foreach (var task in quotation.Tasks)
             {
                 task.Pictures = _context.Pictures.Where(p => p.TaskModelId == task.Id).ToList();
@@ -183,16 +181,21 @@ namespace GrupoESIDataAccess.Queries
 
         public TaskModel GetTaskIncludeQuotationOrderDetailsFirstOrDefault(Guid taskId)
         {
-            TaskModel task = _taskRepository.FirstOrDefault(t => t.Id == taskId, includeProperties: "QuotationModel");
-            task.QuotationModel.OrderDetailsModel = _orderDetailsRepository.FirstOrDefault(od => od.Id == task.QuotationModel.OrderDetailsId);
-            return task;
+
+            return _context.Task
+                                .Include(t => t.QuotationModel)
+                                    .ThenInclude(q => q.OrderDetails)
+                                    .FirstOrDefault(t => t.Id == taskId);
         }
 
         public TaskModel GetTaskModelIncludeLstMaterialQuotationOrderDetailsOrderFirstOrDefaultTaskIdEqualsTaskId(Guid taskId)
         {
-            TaskModel task = _taskRepository.FirstOrDefault(t => t.Id == taskId, includeProperties: "ListMaterial,QuotationModel");
-            task.QuotationModel.OrderDetailsModel = _orderDetailsRepository.FirstOrDefault(od => od.Id == task.QuotationModel.OrderDetailsId, includeProperties:"Order");
-            return task;
+            return _context.Task
+                                .Include(t => t.ListMaterial)
+                                .Include(t => t.QuotationModel)
+                                    .ThenInclude(q => q.OrderDetails)
+                                        .ThenInclude(od => od.Order)
+                                        .FirstOrDefault(t => t.Id == taskId);
         }
 
         public Material GetMaterialIncludeTaskFirstOrDefaultIdEqualsMaterialsId(Guid materialId)
@@ -203,15 +206,26 @@ namespace GrupoESIDataAccess.Queries
 
         public List<Order> GetAllLstOrderIncludeLstOrderDetailsServiceServiceTypeToList()
         {
-            List<Order> lstOrder = (List<Order>)_orderRepository.GetAll(includeProperties: "LstOrderDetails");
-            foreach (var order in lstOrder)
+            //List<Order> lstOrder = (List<Order>)_orderRepository.GetAll(includeProperties: "LstOrderDetails");
+            //foreach (var order in lstOrder)
+            //{
+            //    foreach (var orderDetails in order.LstOrderDetails)
+            //    {
+            //        orderDetails.Service = _serviceRepository.FirstOrDefault(s => s.ID == orderDetails.ServiceId, includeProperties:"serviceType");
+            //    }
+            //}
+            //return lstOrder;
+            var orderLstLocal = _context.Order
+                                        .ToList();
+            foreach (var order in orderLstLocal)
             {
-                foreach (var orderDetails in order.LstOrderDetails)
-                {
-                    orderDetails.Service = _serviceRepository.FirstOrDefault(s => s.ID == orderDetails.ServiceId, includeProperties:"serviceType");
-                }
+                order.LstOrderDetails = _context.OrderDetails
+                                                            .Include(od => od.Service)
+                                                                .ThenInclude(s => s.serviceType)
+                                                            .Where(od => od.OrderId == order.Id)
+                                                            .ToList();
             }
-            return lstOrder;
+            return orderLstLocal;           
         }
 
         public List<OrderDetails> GetLstOrderDetailsIncludeOrderServiceServiceTypeWhereOrderIdEqualsOrderId(Guid orderId)
@@ -226,10 +240,10 @@ namespace GrupoESIDataAccess.Queries
 
         public List<Quotation> GetLstQuotationIncludeOrderDetailsOrderTaskListMaterialWhereOrderIdEqualsOrderId(Guid orderId)
         {
-            List<Quotation> lstQuotation = (List<Quotation>)_quotationRepository.GetAll(q => q.OrderDetailsModel.OrderId == orderId, includeProperties: "OrderDetailsModel,Tasks");
+            List<Quotation> lstQuotation = (List<Quotation>)_quotationRepository.GetAll(q => q.OrderDetails.OrderId == orderId, includeProperties: "OrderDetails,Tasks");
             foreach (var quotation in lstQuotation)
             {
-                quotation.OrderDetailsModel.Order = _orderRepository.FirstOrDefault(o => o.Id == orderId);
+                quotation.OrderDetails.Order = _orderRepository.FirstOrDefault(o => o.Id == orderId);
                 quotation.Tasks = (List<TaskModel>)_taskRepository.GetAll(t => t.QuotationId == quotation.Id, includeProperties: "ListMaterial");
             }
             return lstQuotation;
@@ -282,9 +296,9 @@ namespace GrupoESIDataAccess.Queries
             return lstEmployee;
         }
 
-        public EmployeeUser GetEmployeeIncludeQuotationLstEmployedByFirstOrDefaultEmployeeIdEqualsEmployeeId(string employeeId)
+        public EmployeeUser GetEmployeeIncludeLstEmployedByFirstOrDefaultEmployeeIdEqualsEmployeeId(string employeeId)
         {
-            return _employeeRepository.FirstOrDefault(e => e.Id == employeeId, includeProperties: "QuotationLst,EmployedBy");
+            return _employeeRepository.FirstOrDefault(e => e.Id == employeeId, includeProperties: "EmployedBy");
         }
 
         public Service GetServiceFirstOrDefault(Guid serviceId)
@@ -295,21 +309,21 @@ namespace GrupoESIDataAccess.Queries
         public Quotation GetQuotationIncludeOrderTaskListMaterialWhereOrderIdEqualsOrderId(Guid orderId)
         {
             return _context.Quotation
-                                                 .Include(q => q.OrderDetailsModel)
+                                                 .Include(q => q.OrderDetails)
                                                     .ThenInclude(q => q.Order)
                                                  .Include(q => q.Tasks)
                                                     .ThenInclude(t => t.ListMaterial)
-                                                 .FirstOrDefault(q => q.OrderDetailsModel.Order.Id == orderId);
+                                                 .FirstOrDefault(q => q.OrderDetails.Order.Id == orderId);
         }
 
         public Quotation GetQuotationIncludeOrderDetailsOrderTaskPicturesFirstOrDefaultWhereOrderIdEquals(Guid orderId)
         {
             return _context.Quotation
-                                                .Include(q => q.OrderDetailsModel)
+                                                .Include(q => q.OrderDetails)
                                                     .ThenInclude(q => q.Order)
                                                  .Include(q => q.Tasks)
                                                     .ThenInclude(t => t.Pictures)
-                                                 .FirstOrDefault(q => q.OrderDetailsModel.Order.Id == orderId);
+                                                 .FirstOrDefault(q => q.OrderDetails.Order.Id == orderId);
         }
 
         public TaskModel GetTaskIncludePicturesFirstOrDefaultWhereTaskIdEquals(Guid taskId)
@@ -324,32 +338,42 @@ namespace GrupoESIDataAccess.Queries
 
         public Quotation GetQuoationIncludeOrderDetailsServiceApplicationUserFirstOrDefaultWhereQuotationIdEquals(Guid quotationId)
         {
-            Quotation quotation = _quotationRepository.FirstOrDefault(q => q.Id == quotationId, includeProperties: "OrderDetailsModel");
-            quotation.OrderDetailsModel.Service = _serviceRepository.FirstOrDefault(s => s.ID == quotation.OrderDetailsModel.ServiceId, includeProperties: "ApplicationUser");
+            Quotation quotation = _quotationRepository.FirstOrDefault(q => q.Id == quotationId, includeProperties: "OrderDetails");
+            quotation.OrderDetails.Service = _serviceRepository.FirstOrDefault(s => s.ID == quotation.OrderDetails.ServiceId, includeProperties: "ApplicationUser");
             return quotation;
         }
 
         public TaskModel GetTaskIncludeQuotationOrderDetailsOrderFirstOrDefaultWhereOrderDetailsIdEquals(Guid orderDetailsId)
         {
-            return _context.Task.Include(t => t.QuotationModel)
-                                                        .ThenInclude(q => q.OrderDetailsModel)
-                                                            .ThenInclude(od => od.Order)
-                                                      .FirstOrDefault(od => od.QuotationModel.OrderDetailsModel.Id == orderDetailsId);
+            var quotation = _context.Quotation
+                                              .Include(q => q.Tasks)
+                                              .FirstOrDefault(q => q.OrderDetailsId == orderDetailsId);
+            var task = new TaskModel();
+                if (quotation.Tasks.Count>0)
+            {
+                task = quotation.Tasks[0];
+            }
+                //_context.Task
+                //                                .Include(t => t.QuotationModel)
+                //                                        .ThenInclude(q => q.OrderDetails)
+                //                                            .ThenInclude(od => od.Order)
+                //                                      .FirstOrDefault(od => od.QuotationModel.OrderDetails.Id == orderDetailsId);
+            return task;
         }
 
         public Quotation GetQuotationIncludeTaskOrderDetailsFirstOrDefaultWhereOrderDetailsEquals(Guid orderDetailsId)
         {
             return _context.Quotation
                                             .Include(q => q.Tasks)
-                                                .Include(q => q.OrderDetailsModel)
-                                            .FirstOrDefault(q => q.OrderDetailsModel.Id == orderDetailsId);
+                                                .Include(q => q.OrderDetails)
+                                            .FirstOrDefault(q => q.OrderDetails.Id == orderDetailsId);
         }
 
         public TaskModel GetTaskIncludeQuotationOrderDetailsOrderFirstOrDefaultWhereTaskIdEquals(Guid taskId)
         {
             return _context.Task
                                            .Include(t => t.QuotationModel)
-                                                .ThenInclude(q => q.OrderDetailsModel)
+                                                .ThenInclude(q => q.OrderDetails)
                                                     .ThenInclude(q => q.Order)
                                            .FirstOrDefault(m => m.Id == taskId);
         }
@@ -360,7 +384,7 @@ namespace GrupoESIDataAccess.Queries
                                     .Include(t => t.Pictures)
                                     .Include(t => t.ListMaterial)
                                     .Include(t => t.QuotationModel)
-                                        .ThenInclude(q => q.OrderDetailsModel)
+                                        .ThenInclude(q => q.OrderDetails)
                                             .ThenInclude(od => od.Order)
                                     .FirstOrDefault(t => t.Id == taskId);
             return task;
@@ -375,7 +399,7 @@ namespace GrupoESIDataAccess.Queries
         {
             return _context.Task
                                             .Include(t => t.QuotationModel)
-                                                .ThenInclude(q => q.OrderDetailsModel)
+                                                .ThenInclude(q => q.OrderDetails)
                                                     .ThenInclude(od => od.Order)
                                             .FirstOrDefault(m => m.Id == taskId);
         }
@@ -384,7 +408,7 @@ namespace GrupoESIDataAccess.Queries
         {
             return _context.Task
                                           .Include(t => t.QuotationModel)
-                                            .ThenInclude(q => q.OrderDetailsModel)
+                                            .ThenInclude(q => q.OrderDetails)
                                                 .ThenInclude(od => od.Order)
                                           .ToList(); 
         }
@@ -414,10 +438,10 @@ namespace GrupoESIDataAccess.Queries
         public Quotation GetQuotationIncludeOrderDetailsTaskListMaterialPicturesFirstOrDefaultWhereOrderDetailsIdEquals(Guid orderDetailsId)
         {
             return _context.Quotation
-                                                                .Include(q => q.OrderDetailsModel)
+                                                                .Include(q => q.OrderDetails)
                                                                 .Include(q => q.Tasks)
                                                                     .ThenInclude(t => t.ListMaterial)
-                                                                .FirstOrDefault(q => q.OrderDetailsModel.Id == orderDetailsId);
+                                                                .FirstOrDefault(q => q.OrderDetails.Id == orderDetailsId);
         }
 
         public Order GetOrderFirstOrDefaultWhereOrderIdEquals(Guid orderId)
@@ -444,6 +468,27 @@ namespace GrupoESIDataAccess.Queries
                                                               .Include(e => e.EmployedBy)
                                                               .Where(e => e.EmployedBy.Id == EmployerId)
                                                               .ToList();
+        }
+
+        public List<OrderDetails> GetAllOrderDetailsIncludeOrderServiceQuotationWhereEmployeeIdEquals(string employeeId)
+        {
+            return _context.OrderDetails
+                                        .Include(od => od.Order)
+                                        .Include(od => od.Service)
+                                        .Include(od => od.Quotation)
+                                            .ThenInclude(q => q.Employee)
+                                            .Where(od => od.Quotation.Employee.Id == employeeId)
+                                            .ToList();
+        }
+
+        public List<EmployeeUser> GetAllEmployeesWhereEmployedByIdEquals(string employerId)
+        {
+            return _context.Employee.Include(e => e.EmployedBy).Where(e => e.EmployedBy.Id == employerId).ToList();
+        }
+
+        public OrderDetails GetOrderDetailsIncludeOrderFirstOrDefaultWhereOrderDetailsIdEquals(Guid orderDetailsId)
+        {
+            return _context.OrderDetails.Include(od => od.Order).FirstOrDefault(od => od.Id == orderDetailsId);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace GrupoESINuevo
             if (DeleteMaterialVM.material.Task != null)
             {
                 var tarea = _queries.GetTaskModelIncludeLstMaterialQuotationOrderDetailsOrderFirstOrDefaultTaskIdEqualsTaskId(DeleteMaterialVM.material.Task.Id);
-                tarea.QuotationModel.OrderDetailsModel.Cost = tarea.QuotationModel.OrderDetailsModel.Cost - DeleteMaterialVM.material.Price;
+                tarea.QuotationModel.OrderDetails.Cost = tarea.QuotationModel.OrderDetails.Cost - DeleteMaterialVM.material.Price;
                 tarea.Cost = tarea.Cost - DeleteMaterialVM.material.Price;
                 _materialRepository.Remove(DeleteMaterialVM.material);
                 _queries.SaveChanges();

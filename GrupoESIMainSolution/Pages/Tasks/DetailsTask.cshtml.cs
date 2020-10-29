@@ -40,7 +40,7 @@ namespace GrupoESINuevo
             {
                 return NotFound();
             }
-            taskPicVM.OrderDetailsStatus = taskPicVM.taskModel.QuotationModel.OrderDetailsModel.Status;
+            taskPicVM.OrderDetailsStatus = taskPicVM.taskModel.QuotationModel.OrderDetails.Status;
             return Page();
         }
         public async Task<IActionResult> OnPostPicture()

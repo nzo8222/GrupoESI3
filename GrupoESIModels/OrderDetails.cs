@@ -11,13 +11,12 @@ namespace GrupoESIModels.Models
     {
         [Key]
         public Guid Id { get; set; }
-        public virtual Guid ServiceId { get; set; }
+        public Guid ServiceId { get; set; }
         [ForeignKey("ServiceId")]
         public Service Service { get; set; }
-        public virtual Guid OrderId { get; set; }
+        public Guid OrderId { get; set; }
         [ForeignKey("OrderId")]
         public Order Order { get; set; }
-        
         public virtual Quotation Quotation { get; set; }
         public string Status { get; set; }
         public double Cost { get; set; }

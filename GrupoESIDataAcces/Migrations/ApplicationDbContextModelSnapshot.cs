@@ -130,21 +130,21 @@ namespace GrupoESIDataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EmployeeUserId")
+                    b.Property<string>("EmployeeId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("FechaGuardadoCotizacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FechaLlegadaProveedor")
-                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("OrderDetailsId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("ProviderArrivalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("QuotationSaveDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeUserId");
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("OrderDetailsId")
                         .IsUnique();
@@ -514,11 +514,11 @@ namespace GrupoESIDataAccess.Migrations
 
             modelBuilder.Entity("GrupoESIModels.Models.Quotation", b =>
                 {
-                    b.HasOne("GrupoESIModels.Models.EmployeeUser", null)
-                        .WithMany("QuotationLst")
-                        .HasForeignKey("EmployeeUserId");
+                    b.HasOne("GrupoESIModels.Models.EmployeeUser", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
 
-                    b.HasOne("GrupoESIModels.Models.OrderDetails", "OrderDetailsModel")
+                    b.HasOne("GrupoESIModels.Models.OrderDetails", "OrderDetails")
                         .WithOne("Quotation")
                         .HasForeignKey("GrupoESIModels.Models.Quotation", "OrderDetailsId")
                         .OnDelete(DeleteBehavior.Cascade)

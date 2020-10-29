@@ -10,12 +10,14 @@ namespace GrupoESIModels.Models
         [Key]
         public Guid Id { get; set; }
         public string Description { get; set; }
-        public OrderDetails OrderDetailsModel { get; set; }
-        [ForeignKey("OrderDetails")]
+        [ForeignKey("OrderDetailsId")]
+        public OrderDetails OrderDetails { get; set; }
         public Guid OrderDetailsId { get; set; }
         public virtual List<TaskModel> Tasks { get; set; }
         public DateTime ProviderArrivalDate { get; set; }
         public DateTime QuotationSaveDate { get; set; }
-
+        [ForeignKey("EmployeeId")]
+        public virtual EmployeeUser Employee { get; set; }
+        public string EmployeeId { get; set; }
     }
 }

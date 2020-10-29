@@ -12,7 +12,7 @@ namespace GrupoESIModels.ViewModels
         public Guid orderDetailsId { get; set; }
         public TaskModel TaskLocal { get; set; }
 
-        public TaskModel TaskInfo { get; set; }
+        public OrderDetails OrderDetailsInfo { get; set; }
 
         public TaskQuotationVM()
         {

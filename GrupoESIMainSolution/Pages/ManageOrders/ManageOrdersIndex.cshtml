@@ -91,22 +91,22 @@
                                             @Html.DisplayFor(modelItem => item.Description)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.OrderDetailsModel.Cost)
+                                            @Html.DisplayFor(modelItem => item.OrderDetails.Cost)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.OrderDetailsModel.Status)
+                                            @Html.DisplayFor(modelItem => item.OrderDetails.Status)
                                         </td>
                                         <td>
-                                            <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@item.OrderDetailsModel.Id" class="btn btn-primary">Ver cotizacion</a>
+                                            <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@item.OrderDetails.Id" class="btn btn-primary">Ver cotizacion</a>
                                         </td>
                                         <th>
                                             <label class="idQuotation" hidden>@item.Id</label>
                                             <label class="idOrder" hidden></label>
-                                            <label class="idOrderDetails" hidden>@item.OrderDetailsModel.Id</label>
-                                            <button class="btn btn-success" onclick="assignQuotation('@item.Id', '@item.OrderDetailsModel.Id', '@Model._manageOrdersVM.OrderModel.Id')">Asignar Cotizacion</button>
+                                            <label class="idOrderDetails" hidden>@item.OrderDetails.Id</label>
+                                            <button class="btn btn-success" onclick="assignQuotation('@item.Id', '@item.OrderDetails.Id', '@Model._manageOrdersVM.OrderModel.Id')">Asignar Cotizacion</button>
                                         </th>
                                         <th>
-                                            <a class="btn btn-danger" href="/Quotations/DeleteQuotation?orderDetailsId=@item.OrderDetailsModel.Id"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                            <a class="btn btn-danger" href="/Quotations/DeleteQuotation?orderDetailsId=@item.OrderDetails.Id"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                         </th>
                                     </tr>
                                 }

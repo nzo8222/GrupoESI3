@@ -101,7 +101,7 @@ namespace GrupoESINuevo
         {
             var quotationLocal = new Quotation();
             quotationLocal.Tasks = new List<TaskModel>();
-            quotationLocal.OrderDetailsModel = _OrderAndOrderDetailsVM.OrderDetailsModel;
+            quotationLocal.OrderDetails = _OrderAndOrderDetailsVM.OrderDetailsModel;
             return quotationLocal;
         }
 

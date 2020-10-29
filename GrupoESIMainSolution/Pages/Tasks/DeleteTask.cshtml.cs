@@ -46,14 +46,14 @@ namespace GrupoESINuevo
 
             TaskModel = _queries.GetTaskIncludeLstMaterialPicturesQuotationModelOrderDetailsModelOrderFirstOrDefaultWhereTaskIdEquals((Guid)taskId);
                 
-            TaskModel.QuotationModel.OrderDetailsModel.Cost = TaskModel.QuotationModel.OrderDetailsModel.Cost - TaskModel.Cost;
+            TaskModel.QuotationModel.OrderDetails.Cost = TaskModel.QuotationModel.OrderDetails.Cost - TaskModel.Cost;
             if (TaskModel != null)
             {
                 _taskRepository.Remove(TaskModel);
                 _queries.SaveChanges();
             }
 
-            return RedirectToPage("../Quotations/CreateQuotation", new { orderDetailsId = TaskModel.QuotationModel.OrderDetailsModel.Id });
+            return RedirectToPage("../Quotations/CreateQuotation", new { orderDetailsId = TaskModel.QuotationModel.OrderDetails.Id });
         }
     }
 }

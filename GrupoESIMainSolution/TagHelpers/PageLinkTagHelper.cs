@@ -1,9 +1,12 @@
-﻿using GrupoESIModels.Models;
+﻿//using GrupoESIModels.Models;
+using GrupoESIModels.GrupoESIModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
+using System;
+
 namespace GrupoESINuevo.TagHelpers
 {
     [HtmlTargetElement("div", Attributes = "page-model")]
@@ -19,6 +22,7 @@ namespace GrupoESINuevo.TagHelpers
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext ViewContext { get; set; }
+
 
         public PagingInfo PageModel { get; set; }
         public string PageAction { get; set; }
@@ -43,5 +47,6 @@ namespace GrupoESINuevo.TagHelpers
             }
             output.Content.AppendHtml(result.InnerHtml);
         }
+        
     }
 }

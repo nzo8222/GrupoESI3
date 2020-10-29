@@ -2,15 +2,16 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GrupoESIDataAccess;
+
 using GrupoESIDataAccess.Queries;
+using GrupoESIModels.GrupoESIModels;
 using GrupoESIModels.Models;
 using GrupoESIModels.ViewModels;
 using GrupoESIUtility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace GrupoESINuevo.Pages.ManageOrders
 {

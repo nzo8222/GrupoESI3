@@ -19,34 +19,34 @@
             <div class="col-md-6 offset-md-3">
                 <div class="row">
                     <div class="col-sm-4">
-                        <label asp-for="_taskModelVM.task.QuotationModel.OrderDetailsModel.Order.Concepto"></label>
+                        <label asp-for="_taskModelVM.task.QuotationModel.OrderDetails.Order.Concepto"></label>
                     </div>
                     <div class="col-sm-8" style="padding-bottom:5px;">
-                        <input asp-for="_taskModelVM.task.QuotationModel.OrderDetailsModel.Order.Concepto" disabled class="form-control" />
+                        <input asp-for="_taskModelVM.task.QuotationModel.OrderDetails.Order.Concepto" disabled class="form-control" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-4">
-                        <label asp-for="_taskModelVM.task.QuotationModel.OrderDetailsModel.Order.Direccion"></label>
+                        <label asp-for="_taskModelVM.task.QuotationModel.OrderDetails.Order.Direccion"></label>
                     </div>
                     <div class="col-sm-8" style="padding-bottom:5px;">
-                        <input asp-for="_taskModelVM.task.QuotationModel.OrderDetailsModel.Order.Direccion" disabled class="form-control" />
+                        <input asp-for="_taskModelVM.task.QuotationModel.OrderDetails.Order.Direccion" disabled class="form-control" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-4">
-                        <label asp-for="_taskModelVM.task.QuotationModel.OrderDetailsModel.Status"></label>
+                        <label asp-for="_taskModelVM.task.QuotationModel.OrderDetails.Status"></label>
                     </div>
                     <div class="col-sm-8" style="padding-bottom:5px;">
-                        <input asp-for="_taskModelVM.task.QuotationModel.OrderDetailsModel.Status" disabled class="form-control" />
+                        <input asp-for="_taskModelVM.task.QuotationModel.OrderDetails.Status" disabled class="form-control" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-4">
-                        <label asp-for="_taskModelVM.task.QuotationModel.OrderDetailsModel.Cost"></label>
+                        <label asp-for="_taskModelVM.task.QuotationModel.OrderDetails.Cost"></label>
                     </div>
                     <div class="col-sm-8" style="padding-bottom:5px;">
-                        <input asp-for="_taskModelVM.task.QuotationModel.OrderDetailsModel.Cost" disabled class="form-control" />
+                        <input asp-for="_taskModelVM.task.QuotationModel.OrderDetails.Cost" disabled class="form-control" />
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@
 
                                     <label class="_deletePictureId" hidden>@Model._taskModelVM.task.Pictures[i].PictureId</label>
                                     <label class="_taskId" hidden>@Model._taskModelVM.task.Id</label>
-                                    <label class="_orderDetailsId" hidden>@Model._taskModelVM.task.QuotationModel.OrderDetailsModel.Id</label>
+                                    <label class="_orderDetailsId" hidden>@Model._taskModelVM.task.QuotationModel.OrderDetails.Id</label>
                                     <label>Borrar foto </label><input type="checkbox" class="_checkbox" />
                                 }
                             </div>
@@ -120,7 +120,7 @@
     @if (@Model._taskModelVM.task.QuotationModel != null)
     {
         <div>
-            <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@Model._taskModelVM.task.QuotationModel.OrderDetailsModel.Id">Regresar a la cotización</a>
+            <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@Model._taskModelVM.task.QuotationModel.OrderDetails.Id">Regresar a la cotización</a>
         </div>
     }
 

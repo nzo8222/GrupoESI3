@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "4UOrXmDofNK9PZJ4+mbYyqH2ZGrBpNZ/H8bQT9f25YRc8fSzNOVuI0R0+bdpyo8bGqUGK8kWqPP77F2H2L2y6Q==",
+  "dgSpecHash": "de6FRptqKObE9LonSgF6ckHEHhwjUBzP79KvDvQT44niqc9/PH9EyD4ENTt8a22gMfZ3TP5/5NVPrCStLKABHQ==",
   "success": true,
   "projectFilePath": "C:\\GrupoESI\\GrupoESIMainSolution\\GrupoESI.csproj",
   "expectedPackageFiles": [
@@ -73,7 +73,7 @@
     "C:\\Users\\gonz\\.nuget\\packages\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
     "C:\\Users\\gonz\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\gonz\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
-    "C:\\Users\\gonz\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\gonz\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Users\\gonz\\.nuget\\packages\\nuget.frameworks\\4.7.0\\nuget.frameworks.4.7.0.nupkg.sha512",
     "C:\\Users\\gonz\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\gonz\\.nuget\\packages\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",

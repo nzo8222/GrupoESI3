@@ -10,6 +10,7 @@ using GrupoESIModels.ViewModels;
 using GrupoESIModels.Models;
 using GrupoESIUtility;
 using GrupoESIDataAccess.Repository.IRepository;
+using GrupoESIModels.GrupoESIModels;
 
 namespace GrupoESINuevo
 {

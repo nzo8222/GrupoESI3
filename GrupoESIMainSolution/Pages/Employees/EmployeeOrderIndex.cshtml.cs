@@ -20,21 +20,24 @@ namespace GrupoESINuevo.Pages.Employees
         }
         [BindProperty]
         public EmployeeIndexVM _employeeIndexVM { get; set; }
-        public async Task<IActionResult> OnGetAsync()
+        public IActionResult OnGetAsync()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
             var userId = claim.Value;
+            
             _employeeIndexVM = new EmployeeIndexVM()
             {
-                EmployeeLocal = _queries.GetEmployeeIncludeQuotationLstEmployedByFirstOrDefaultEmployeeIdEqualsEmployeeId(userId),
+                EmployeeLocal = _queries.GetEmployeeIncludeLstEmployedByFirstOrDefaultEmployeeIdEqualsEmployeeId(userId),
                 orderDetailsList = new List<OrderDetails>()
             };
-            foreach (var quotation in _employeeIndexVM.EmployeeLocal.QuotationLst)
-            {
-                var quotationLocal = _queries.GetQuotationIncludeOrderDetailsOrdersTasksListMaterialPicturesFirstOrDefault(quotation.OrderDetailsId);
-                _employeeIndexVM.orderDetailsList.Add(quotationLocal.OrderDetailsModel);
-            }
+            _employeeIndexVM.EmployeeId = userId;
+            _employeeIndexVM.orderDetailsList = _queries.GetAllOrderDetailsIncludeOrderServiceQuotationWhereEmployeeIdEquals(_employeeIndexVM.EmployeeLocal.Id);
+            //foreach (var quotation in _employeeIndexVM.EmployeeLocal.QuotationLst)
+            //{
+            //    var quotationLocal = _queries.GetQuotationIncludeOrderDetailsOrdersTasksListMaterialPicturesFirstOrDefault(quotation.OrderDetailsId);
+            //    _employeeIndexVM.orderDetailsList.Add(quotationLocal.OrderDetailsModel);
+            //}
             
             return Page();
         }

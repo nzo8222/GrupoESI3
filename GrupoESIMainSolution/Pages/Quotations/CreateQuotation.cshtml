@@ -18,7 +18,7 @@
             <div class="row" style="padding-bottom: 40px; padding-top: 20px;">
                 <div class="col-md-3">
                     <p>
-                        <a asp-page="../ManageOrders/AddServiceToOrder" asp-route-orderDetailsId="@Model._QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Id">
+                        <a asp-page="../ManageOrders/AddServiceToOrder" asp-route-orderDetailsId="@Model._QuotationTaskMaterialVM.QuotationModel.OrderDetails.Id">
                             <i class="fas fa-plus"></i> &nbsp;Agregar servicio a la orden
                         </a>
                         <a asp-page="../Employees/AddQuotationToEmployee" asp-route-quotationId="@Model._QuotationTaskMaterialVM.QuotationModel.Id">
@@ -29,34 +29,34 @@
                 <div class="col-md-6 offset-md-3">
                     <div class="row">
                         <div class="col-sm-4">
-                            <label asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Order.Concepto"></label>
+                            <label asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetails.Order.Concepto"></label>
                         </div>
                         <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Order.Concepto" disabled class="form-control" />
+                            <input asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetails.Order.Concepto" disabled class="form-control" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
-                            <label asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Order.Direccion"></label>
+                            <label asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetails.Order.Direccion"></label>
                         </div>
                         <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Order.Direccion" disabled class="form-control" />
+                            <input asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetails.Order.Direccion" disabled class="form-control" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
-                            <label asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Status"></label>
+                            <label asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetails.Status"></label>
                         </div>
                         <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Status" disabled class="form-control" />
+                            <input asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetails.Status" disabled class="form-control" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-4">
-                            <label asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Cost"></label>
+                            <label asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetails.Cost"></label>
                         </div>
                         <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Cost" disabled class="form-control" />
+                            <input asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetails.Cost" disabled class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                     </div>
                 </div>
             }
-            @if (Model._QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Status == "Sin Cotizar")
+            @if (Model._QuotationTaskMaterialVM.QuotationModel.OrderDetails.Status == "Sin Cotizar")
             {
                 <div>
                     <form method="post">
@@ -143,7 +143,7 @@
 
 
 
-            @if (Model._QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Status == "Cotizando" || User.IsInRole("Admin"))
+            @if (Model._QuotationTaskMaterialVM.QuotationModel.OrderDetails.Status == "Cotizando" || User.IsInRole("Admin"))
             {
                 <p>
                     <a asp-page="../Tasks/CreateTask" asp-route-orderDetailsId="@Model._QuotationTaskMaterialVM.orderDetailsId">Crear nueva tarea</a>
@@ -192,7 +192,7 @@
                                             <a asp-page="../Materials/IndexMaterial" asp-route-taskId="@item.Id" style="text-decoration:none;">
                                                 &nbsp; Ver materiales
                                             </a>
-                                            @if (Model._QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Status == "Cotizando" || User.IsInRole("Admin"))
+                                            @if (Model._QuotationTaskMaterialVM.QuotationModel.OrderDetails.Status == "Cotizando" || User.IsInRole("Admin"))
                                             {
                                                 <a class="btn btn-success" asp-page="../Materials/CreateMaterial" asp-route-taskId="@item.Id">
                                                     <i class="fas fa-plus"></i> &nbsp;
@@ -202,7 +202,7 @@
                                         </td>
                                         <td>
 
-                                            @if (Model._QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Status == "Cotizando" || User.IsInRole("Admin"))
+                                            @if (Model._QuotationTaskMaterialVM.QuotationModel.OrderDetails.Status == "Cotizando" || User.IsInRole("Admin"))
                                             {
 
                                                 <a class="btn btn-primary" asp-page="../Tasks/EditTask" asp-route-taskId="@item.Id">
@@ -212,7 +212,7 @@
                                                     <i class="far fa-trash-alt"></i>
                                                 </a>
                                             }
-                                            @if (Model._QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Status == "Asignado")
+                                            @if (Model._QuotationTaskMaterialVM.QuotationModel.OrderDetails.Status == "Asignado")
                                             {
                                                 <a class="btn btn-success" asp-page="../Tasks/TaskEvidence" asp-route-taskId="@item.Id">
                                                     <i class="fas fa-plus"></i> &nbsp;
@@ -237,7 +237,7 @@
                 <form asp-page-handler="EmployeeFinishedQuotation">
 
 
-                    <input hidden asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Id" />
+                    <input hidden asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetails.Id" />
                     <input hidden asp-for="_QuotationTaskMaterialVM.QuotationModel.Id" />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
@@ -248,7 +248,7 @@
                         <span asp-validation-for="_QuotationTaskMaterialVM.QuotationModel.Description" class="text-danger"></span>
 
                     </div>
-                    @if (Model._QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Status == "Cotizando")
+                    @if (Model._QuotationTaskMaterialVM.QuotationModel.OrderDetails.Status == "Cotizando")
                     {
                         <div class="form-group">
                             <input type="submit" value="Crear Cotizacion" class="btn btn-primary" />
@@ -262,7 +262,7 @@
                 <form method="post">
 
 
-                    <input hidden asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Id" />
+                    <input hidden asp-for="_QuotationTaskMaterialVM.QuotationModel.OrderDetails.Id" />
                     <input hidden asp-for="_QuotationTaskMaterialVM.QuotationModel.Id" />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
@@ -273,7 +273,7 @@
                         <span asp-validation-for="_QuotationTaskMaterialVM.QuotationModel.Description" class="text-danger"></span>
 
                     </div>
-                    @if (Model._QuotationTaskMaterialVM.QuotationModel.OrderDetailsModel.Status == "Cotizando")
+                    @if (Model._QuotationTaskMaterialVM.QuotationModel.OrderDetails.Status == "Cotizando")
                     {
                         <div class="form-group">
                             <input type="submit" value="Crear Cotizacion" class="btn btn-primary" />

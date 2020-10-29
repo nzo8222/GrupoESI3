@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GrupoESIDataAccess;
 using GrupoESIDataAccess.Queries;
 using GrupoESIDataAccess.Repository.IRepository;
 using GrupoESIModels.Models;
@@ -13,7 +12,7 @@ namespace GrupoESINuevo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ManageOrdersController : ControllerBase
+    public class ManageOrdersController : Controller
     {
         private readonly IQuotationRepository _quoationRepository;
         private readonly IOrderDetailsRepository _orderDetailsRepository;
@@ -25,6 +24,24 @@ namespace GrupoESINuevo.Controllers
             _orderDetailsRepository = orderDetailsRepository;
             _quoationRepository = quotationRepository;
             _queries = queries;
+        }
+        [HttpGet]
+        [Route("GetOrderList")]
+        public IActionResult GetOrderList()
+        {
+            var orderList = _queries.GetAllLstOrderIncludeLstOrderDetailsServiceServiceTypeToList();
+            var orderVM = new List<OrderAdminIndexVM>();
+            for (int i = 0; i < orderList.Count; i++)
+            {
+                var orderLocal = new OrderAdminIndexVM();
+                orderLocal.orderId = orderList[i].Id.ToString();
+                orderLocal.Concept = orderList[i].Concepto;
+                orderLocal.Address = orderList[i].Direccion;
+                orderLocal.Date = orderList[i].OrderDate.ToString();
+                orderLocal.StateOfTheOrder = orderList[i].EstadoDelPedido;
+                orderVM.Add(orderLocal);
+            }
+            return Json(new { data = orderVM });
         }
         [HttpPost]
         [Route("PostManageOrders")]
@@ -79,7 +96,7 @@ namespace GrupoESINuevo.Controllers
 
                 quotationLocal.Description = quotation.Description;
 
-                quotationLocal.OrderDetailsModel = _OrderDetailsNueva;
+                quotationLocal.OrderDetails = _OrderDetailsNueva;
                 quotationLocal.ProviderArrivalDate = DateTime.Now;
                 _OrderDetailsNueva.Status = SD.EstadoCotizando;
                 _quoationRepository.Add(quotationLocal);
@@ -123,7 +140,7 @@ namespace GrupoESINuevo.Controllers
                 //se declara una cotizacion
                 var quotationLocal = new Quotation();
                 //se le asigna el modelo de order details a esta nueva cotizacion
-                quotationLocal.OrderDetailsModel = od;
+                quotationLocal.OrderDetails = od;
                 //se inicializa la lista de taras
                 quotationLocal.Tasks = new List<TaskModel>();
                 //Se le asigna el estado sin cotizar al detalle de orden

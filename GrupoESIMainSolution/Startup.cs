@@ -33,11 +33,13 @@ namespace GrupoESINuevo
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddSingleton<IEmailSender, EmailSender>();
             services.Configure<EmailOptions>(Configuration);
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddOptions();
+
         }
         public void ConfigureContainer(ContainerBuilder builder)
         {
