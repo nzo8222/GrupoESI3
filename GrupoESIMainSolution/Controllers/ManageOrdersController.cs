@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GrupoESIDataAccess.Queries;
 using GrupoESIDataAccess.Repository.IRepository;
+using GrupoESIModels.Enums;
 using GrupoESIModels.Models;
 using GrupoESIModels.ViewModels;
 using GrupoESIUtility;
@@ -86,6 +87,7 @@ namespace GrupoESINuevo.Controllers
                     {
                         var picLocal = new Picture();
                         picLocal.PictureBytes = pics.Tasks[i].Pictures[e].PictureBytes;
+                        picLocal.Tipo = PictureTypeEnum.Quotation;
                         _taskLocal.Pictures.Add(picLocal);
                     }
                     _taskLocal.Name = quotation.Tasks[i].Name;

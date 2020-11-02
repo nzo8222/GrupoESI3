@@ -19,41 +19,16 @@
             <div class="row">
                 <div class="col">
                     <div class="table-responsive">
-                        <table class="table table-striped border">
-                            <thead>
-                                <tr class="table-secondary">
-                                    <th scope="col">
-                                        @Html.DisplayNameFor(model => model._ManageEmployeesVM.EmployeeUsrLst[0].Email)
-                                    </th>
-                                    <th scope="col">
-                                        @Html.DisplayNameFor(model => model._ManageEmployeesVM.EmployeeUsrLst[0].Name)
-                                    </th>
-                                    <th scope="col">
-                                        Servicios
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model._ManageEmployeesVM.EmployeeUsrLst)
-                                {
+                        <div>
+                            <table id="tblData" class="display">
+                                <thead>
                                     <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Email)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Name)
-                                        </td>
-                                        <td>
-                                            @foreach (var item2 in item.ServiceLst)
-                                            {
-                                                @Html.DisplayFor(modelItem => item2.Name)
-                                            }
-                                        </td>
+                                        <th>Name</th>
+                                        <th>Email</th>
                                     </tr>
-                                }
-
-                            </tbody>
-                        </table>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
 
                 </div>
@@ -61,26 +36,7 @@
         </div>
     </div>
 </div>
-<div>
-    <table id="tblData" class="display">
-        @*<thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Row 1 Data 1</td>
-                    <td>Row 1 Data 2</td>
-                </tr>
-                <tr>
-                    <td>Row 2 Data 1</td>
-                    <td>Row 2 Data 2</td>
-                </tr>
-            </tbody>*@
-    </table>
-</div>
+
 @section Scripts
 {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

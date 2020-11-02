@@ -288,8 +288,6 @@ C:\GrupoESI\GrupoESIMainSolution\bin\Debug\netcoreapp3.1\Properties\launchSettin
 C:\GrupoESI\GrupoESIMainSolution\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.GrupoESI - Web Deploy.json
 C:\GrupoESI\GrupoESIMainSolution\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.json
 C:\GrupoESI\GrupoESIMainSolution\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.local.json
-C:\GrupoESI\GrupoESIMainSolution\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\GrupoESI - Web Deploy\mssql1.arm.json
-C:\GrupoESI\GrupoESIMainSolution\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\GrupoESI - Web Deploy\mssql2.arm.json
 C:\GrupoESI\GrupoESIMainSolution\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\GrupoESI - Web Deploy\profile.arm.json
 C:\GrupoESI\GrupoESIMainSolution\bin\Debug\netcoreapp3.1\GrupoESI.StaticWebAssets.xml
 C:\GrupoESI\GrupoESIMainSolution\bin\Debug\netcoreapp3.1\GrupoESI.exe
@@ -566,3 +564,5 @@ C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.genruntimeconf
 C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.csproj.CoreCompileInputs.cache
 C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.MvcApplicationPartsAssemblyInfo.cs
 C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.MvcApplicationPartsAssemblyInfo.cache
+C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\Razor\Pages\PredefinedTasks\CreatePredefinedTask.cshtml.g.cs
+C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\Razor\Pages\PredefinedTasks\PredefinedTaskIndex.cshtml.g.cs

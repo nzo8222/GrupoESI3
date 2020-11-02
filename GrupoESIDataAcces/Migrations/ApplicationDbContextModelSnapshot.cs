@@ -233,6 +233,62 @@ namespace GrupoESIDataAccess.Migrations
                     b.ToTable("Task");
                 });
 
+            modelBuilder.Entity("GrupoESIModels.PredefinedMaterial", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("PredefinedTaskId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PredefinedTaskId");
+
+                    b.ToTable("PredefinedMaterial");
+                });
+
+            modelBuilder.Entity("GrupoESIModels.PredefinedTask", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Cost")
+                        .HasColumnType("float");
+
+                    b.Property<double>("CostHandLabor")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
+
+                    b.ToTable("PredefinedTask");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -547,6 +603,24 @@ namespace GrupoESIDataAccess.Migrations
                     b.HasOne("GrupoESIModels.Models.Quotation", "QuotationModel")
                         .WithMany("Tasks")
                         .HasForeignKey("QuotationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GrupoESIModels.PredefinedMaterial", b =>
+                {
+                    b.HasOne("GrupoESIModels.PredefinedTask", "PredefinedTask")
+                        .WithMany("ListMaterial")
+                        .HasForeignKey("PredefinedTaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("GrupoESIModels.PredefinedTask", b =>
+                {
+                    b.HasOne("GrupoESIModels.Models.Service", "Service")
+                        .WithMany()
+                        .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

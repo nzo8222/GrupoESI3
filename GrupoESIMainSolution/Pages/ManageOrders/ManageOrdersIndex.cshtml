@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </div>
-
+            <h2 class="text-info">Cotizaciones Actuales</h2>
             <label hidden id="labelOrderId">@Model._manageOrdersVM.OrderModel.Id</label>
             <div class="row">
                 <div class="col">
@@ -70,6 +70,12 @@
                                     </th>
                                     <th scope="col">
                                         Estado del pedido
+                                    </th>
+                                    <th scope="col">
+                                        Servicio
+                                    </th>
+                                    <th scope="col">
+                                        Tipo de Servicio
                                     </th>
 
                                     <th scope="col">
@@ -97,6 +103,12 @@
                                             @Html.DisplayFor(modelItem => item.OrderDetails.Status)
                                         </td>
                                         <td>
+                                            @Html.DisplayFor(modelItem => item.OrderDetails.Service.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.OrderDetails.Service.serviceType.Category)
+                                        </td>
+                                        <td>
                                             <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@item.OrderDetails.Id" class="btn btn-primary">Ver cotizacion</a>
                                         </td>
                                         <th>
@@ -113,9 +125,10 @@
                             </tbody>
                         </table>
                     </div>
-                    
+
                 </div>
             </div>
+            <h2 class="text-info">Servicios del mismo tipo</h2>
             <div class="row">
                 <div class="col">
                     @if (Model._manageOrdersVM.ListServices.Count > 0)

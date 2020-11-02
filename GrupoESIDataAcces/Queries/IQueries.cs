@@ -1,4 +1,5 @@
 ﻿
+using GrupoESIModels;
 using GrupoESIModels.Models;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,9 @@ namespace GrupoESIDataAccess.Queries
         Picture GetPictureFirstOrDefaultWherePictureIdEquals(Guid pictureId);
         TaskModel GetTaskIncludePicturesFirstOrDefaultWhereTaskIdEquals(Guid taskId);
         Quotation GetQuotationIncludeOrderDetailsOrderTaskPicturesFirstOrDefaultWhereOrderIdEquals(Guid orderId);
+        List<OrderDetails> GetAllOrderDetailsIncludeOrderQuotationServiceServiceTypeApplicationUserWhereUserIdEquialsUserId(string provideerId);
         OrderDetails GetOrderDetailsIncludeOrderFirstOrDefaultWhereOrderDetailsIdEquals(Guid orderDetailsId);
+        List<PredefinedTask> GetAllPredefinedTaskWhereServiceIdEquals(string serviceId);
         ApplicationUser GetAppicationUserFirstOrDefault(string userId);
         TaskModel GetTaskIncludeQuotationOrderDetailsOrderFirstOrDefaultWhereTaskIdEquals(Guid taskId);
         IList<TaskModel> GetAllTaskLstIncludeQuotationOrderDetailsOrder();

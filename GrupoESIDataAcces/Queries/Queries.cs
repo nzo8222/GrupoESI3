@@ -1,4 +1,5 @@
 ﻿using GrupoESIDataAccess.Repository.IRepository;
+using GrupoESIModels;
 using GrupoESIModels.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -318,12 +319,14 @@ namespace GrupoESIDataAccess.Queries
 
         public Quotation GetQuotationIncludeOrderDetailsOrderTaskPicturesFirstOrDefaultWhereOrderIdEquals(Guid orderId)
         {
-            return _context.Quotation
+            
+                var quotation = _context.Quotation
                                                 .Include(q => q.OrderDetails)
                                                     .ThenInclude(q => q.Order)
                                                  .Include(q => q.Tasks)
                                                     .ThenInclude(t => t.Pictures)
                                                  .FirstOrDefault(q => q.OrderDetails.Order.Id == orderId);
+            return quotation;
         }
 
         public TaskModel GetTaskIncludePicturesFirstOrDefaultWhereTaskIdEquals(Guid taskId)
@@ -416,6 +419,7 @@ namespace GrupoESIDataAccess.Queries
         public ApplicationUser GetAppicationUserFirstOrDefault(string userId)
         {
             return _context.ApplicationUser.FirstOrDefault(a => a.Id == userId);
+
         }
 
         public List<Service> GetServiceLstIncludeApplicationUserWhereUserIdEquals(string userId)
@@ -428,11 +432,12 @@ namespace GrupoESIDataAccess.Queries
 
         public List<OrderDetails> GetAllOrderDetailsIncludeOrderServiceApplicationUserWhereServiceIdEquals(Guid serviceId)
         {
-            return _context.OrderDetails
+            List<OrderDetails> orderDetailsLst = _context.OrderDetails
                                                             .Include(od => od.Order)
                                                             .Include(od => od.Service)
                                                                 .ThenInclude(s => s.ApplicationUser)
                                                             .Where(od => od.Service.ID == serviceId).ToList();
+            return orderDetailsLst;
         }
 
         public Quotation GetQuotationIncludeOrderDetailsTaskListMaterialPicturesFirstOrDefaultWhereOrderDetailsIdEquals(Guid orderDetailsId)
@@ -489,6 +494,27 @@ namespace GrupoESIDataAccess.Queries
         public OrderDetails GetOrderDetailsIncludeOrderFirstOrDefaultWhereOrderDetailsIdEquals(Guid orderDetailsId)
         {
             return _context.OrderDetails.Include(od => od.Order).FirstOrDefault(od => od.Id == orderDetailsId);
+        }
+
+        public List<OrderDetails> GetAllOrderDetailsIncludeOrderQuotationServiceServiceTypeApplicationUserWhereUserIdEquialsUserId(string provideerId)
+        {
+       
+            List<OrderDetails> orderDetailsLst =  _context.OrderDetails.Include(od => od.Order)
+                                        .Include(od => od.Service)
+                                            .ThenInclude(s => s.ApplicationUser)
+                                        .Where(od => od.Service.ApplicationUser.Id == provideerId)
+                                        .ToList();
+            foreach (var orderDetail in orderDetailsLst)
+            {
+                orderDetail.Service.serviceType = _context.ServiceType.FirstOrDefault(st => st.Id == orderDetail.Service.ServiceTypeId);
+            }
+            return orderDetailsLst;
+        }
+
+        public List<PredefinedTask> GetAllPredefinedTaskWhereServiceIdEquals(string serviceId)
+        {
+            Guid id = Guid.Parse(serviceId);
+            return _context.PredefinedTask.Where(pt => pt.ServiceId == id).ToList();
         }
     }
 }

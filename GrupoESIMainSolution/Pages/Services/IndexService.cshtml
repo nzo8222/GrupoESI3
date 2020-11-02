@@ -34,6 +34,7 @@
                         <a asp-page="/Employees/ManageEmployee" asp-route-employersId="@Model.ServiceAndProviderVM.UserLocalId" class="btn btn-info form-control">
                             <i class="fas fa-plus"></i> &nbsp; Manejar empleados
                         </a>
+
                     </p>
                 </div>
                 <div class="col-md-6 offset-md-3">
@@ -93,44 +94,56 @@
                                     {
                                         <th></th>
                                     }*
-                                    <th></th>
+                                    <th>
+
+                                    </th>
+                                    <th>
+
+                                    </th>
                                 </tr>
                                 @foreach (var item in Model.ServiceAndProviderVM.Services)
                                 {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(m => item.Name)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(m => item.Description)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(m => item.serviceType.Category)
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-secondary" asp-page="../Orders/IndexOrder" asp-route-ServiceId="@item.ID">
-                                                <i class="fas fa-wrench"></i> &nbsp; Historial de pedidos
-                                            </a>
-                                        </td>
-                                        *@if (User.IsInRole("Admin"))
-                                        {
-                                            <td>
-                                                <a class="btn btn-success" asp-page="../Orders/CreateOrder" asp-route-ServiceId="@item.ID">
-                                                    <i class="fas fa-plus"></i> &nbsp; Nuevo pedido
-                                                </a>
-                                            </td>
-                                        }*
-                                        <td>
-                                            <div class="btn-group" role="group">
-                                                <a class="btn btn-primary text-white" asp-page="EditService" asp-route-serviceId="@item.ID">
-                                                    <i class="fas fa-edit"></i>
-                                                </a> &nbsp;&nbsp;
-                                                <a class="btn btn-danger text-white" asp-page="DeleteService" asp-route-serviceId="@item.ID">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(m => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => item.serviceType.Category)
+                                </td>
+                                <td>
+                                    <a class="btn btn-secondary" asp-page="../Orders/IndexOrder" asp-route-ServiceId="@item.ID">
+                                        <i class="fas fa-wrench"></i> &nbsp; Historial de pedidos
+                                    </a>
+                                </td>
+                                *@if (User.IsInRole("Admin"))
+                                {
+                                    <td>
+                                        <a class="btn btn-success" asp-page="../Orders/CreateOrder" asp-route-ServiceId="@item.ID">
+                                            <i class="fas fa-plus"></i> &nbsp; Nuevo pedido
+                                        </a>
+                                    </td>
+                                }*
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a class="btn btn-primary text-white" asp-page="EditService" asp-route-serviceId="@item.ID">
+                                            <i class="fas fa-edit"></i>
+                                        </a> &nbsp;&nbsp;
+                                        <a class="btn btn-danger text-white" asp-page="DeleteService" asp-route-serviceId="@item.ID">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a asp-page="/PredefinedTasks/PredefinedTaskIndex" asp-route-serviceId="@item.ID" class="btn btn-info form-control">
+                                            <i class="fas fa-plus"></i> &nbsp; Manejar Tareas Predefinidas
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
                                 }
                             </table>
                         </div>

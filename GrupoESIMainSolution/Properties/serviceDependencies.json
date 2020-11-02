@@ -1,10 +1,10 @@
 {
   "dependencies": {
-    "mssql2": {
+    "mssql1": {
       "type": "mssql",
       "connectionId": "DefaultConnection"
     },
-    "mssql1": {
+    "mssql2": {
       "type": "mssql",
       "connectionId": "GrupoESINuevoContext"
     }

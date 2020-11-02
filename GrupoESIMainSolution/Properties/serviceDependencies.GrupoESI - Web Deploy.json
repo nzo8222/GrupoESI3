@@ -1,14 +1,12 @@
 {
   "dependencies": {
-    "mssql2": {
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/grupoesidbserver/databases/GrupoESINuevo_db",
-      "type": "mssql.azure",
+    "mssql1": {
+      "type": "mssql.onprem",
       "connectionId": "DefaultConnection",
       "secretStore": "AzureAppSettings"
     },
-    "mssql1": {
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/grupoesidbserver/databases/GrupoESINuevo_db",
-      "type": "mssql.azure",
+    "mssql2": {
+      "type": "mssql.onprem",
       "connectionId": "GrupoESINuevoContext",
       "secretStore": "AzureAppSettings"
     }

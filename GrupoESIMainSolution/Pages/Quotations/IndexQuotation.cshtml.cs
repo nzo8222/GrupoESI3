@@ -31,6 +31,7 @@ namespace GrupoESINuevo
             {
                 OrderDetails = _queries.GetOrderDetailsIncludeOrderQuotationServiceThenIncludeApplicationUserWhereUserIdEquialsUserId(userId)
             };
+            _indexQuotationVM.ProvideerId = userId;
             StringBuilder param = SetParameter(searchConcepto, searchNombre, searchDescripcion);
             filterQuotationList(searchConcepto, searchNombre, searchDescripcion);
             SetPagination(productPage, param);

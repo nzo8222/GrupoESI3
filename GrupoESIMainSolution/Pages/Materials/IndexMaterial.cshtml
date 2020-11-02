@@ -57,8 +57,8 @@
             </p>
             <div class="row">
                 <div class="col">
-                    <div class="table-responsive">
-                        <table class="table-responsive-sm table-striped">
+                    <div class="border">
+                        <table class="table-responsive table-striped">
                             <thead>
                                 <tr class="table-secondary">
                                     <th scope="col">
@@ -73,30 +73,42 @@
                                     <th scope="col">
 
                                     </th>
+                                    <th scope="col">
+
+                                    </th>
+                                    <th scope="col">
+
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model._materialVM.Material)
                                 {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Name)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Description)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Price)
-                                        </td>
-                                        <td>
-                                            @if (Model._materialVM.OrderDetailsStatus == "Cotizando" || User.IsInRole("Admin"))
-                                            {
-                                                <a class="btn btn-success" asp-page="./EditMaterial" asp-route-materialId="@item.Id">Editar</a> <p></p>
-                                            }
-                                            <a class="btn btn-danger" asp-page="./DeleteMaterial" asp-route-materialId="@item.Id">Borrar</a>
-                                            <a class="btn btn-info" asp-page="./DetailsMaterial" asp-route-materialId="@item.Id">Detalles</a>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Price)
+                                    </td>
+                                    <td>
+                                        @if (Model._materialVM.OrderDetailsStatus == "Cotizando" || User.IsInRole("Admin"))
+                                        {
+                                            <a class="btn btn-success" asp-page="./EditMaterial" asp-route-materialId="@item.Id">Editar</a> <p></p>
+                                        }
+                                        
+                                        
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger" asp-page="./DeleteMaterial" asp-route-materialId="@item.Id">Borrar</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-info" asp-page="./DetailsMaterial" asp-route-materialId="@item.Id">Detalles</a>
+                                    </td>
+                                </tr>
                                 }
                             </tbody>
                         </table>

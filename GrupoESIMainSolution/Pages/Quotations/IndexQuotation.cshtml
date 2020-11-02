@@ -4,111 +4,185 @@
 @{
     ViewData["Title"] = "Index";
 }
-    <div class="container backgroundWhite">
-        <h2 class="text-info">Indice de cotizaciones</h2>
-        <div class="card">
-            <div class="card-header bg-dark text-light ml-0 row container">
-                <div class="col-6">
-                    <i class="fa fa-user-o"></i>
-                </div>
+<div class="container backgroundWhite">
+    <h2 class="text-info">Indice de cotizaciones</h2>
+    <div class="card">
+        <div class="card-header bg-dark text-light ml-0 row container">
+            <div class="col-6">
+                <i class="fa fa-user-o"></i>
             </div>
-            <div class="card-body container">
-                <form method="get" asp-page="IndexQuotation">
-                    <br />
-
-                    <div class="border backgroundWhite">
-                        <div style="height:60px;" class="container border border-secondary">
-                            <div class="row">
-                                <div class="col-11">
-                                    <div class="row" style="padding-top:10px">
-                                        <div class="col-4">
-                                            @Html.Editor("searchConcepto", new { htmlAttributes = new { @class = "form-control", placeholder = "Concepto..." } })
-                                        </div>
-                                        <div class="col-4">
-                                            @Html.Editor("searchNombre", new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre del servicio..." } })
-                                        </div>
-                                        <div class="col-4">
-                                            @Html.Editor("searchDescripcion", new { htmlAttributes = new { @class = "form-control", placeholder = "Descripcion de la cotizacion..." } })
-                                        </div>
+        </div>
+        <div class="card-body container">
+            <form method="get" asp-page="IndexQuotation">
+                <br />
+                <label id="_provideerId" hidden>@Model._indexQuotationVM.ProvideerId</label>
+                <div class="border backgroundWhite">
+                    <div style="height:60px;" class="container border border-secondary">
+                        <div class="row">
+                            <div class="col-11">
+                                <div class="row" style="padding-top:10px">
+                                    <div class="col-4">
+                                        @Html.Editor("searchConcepto", new { htmlAttributes = new { @class = "form-control", placeholder = "Concepto..." } })
+                                    </div>
+                                    <div class="col-4">
+                                        @Html.Editor("searchNombre", new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre del servicio..." } })
+                                    </div>
+                                    <div class="col-4">
+                                        @Html.Editor("searchDescripcion", new { htmlAttributes = new { @class = "form-control", placeholder = "Descripcion de la cotizacion..." } })
                                     </div>
                                 </div>
-                                <div class="col-1">
-                                    <div class="row" style="padding-top:10px; padding-right:15px;">
-                                        <button type="submit" name="submit" value="Search" class="btn btn-info form-control">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
+                            </div>
+                            <div class="col-1">
+                                <div class="row" style="padding-top:10px; padding-right:15px;">
+                                    <button type="submit" name="submit" value="Search" class="btn btn-info form-control">
+                                        <i class="fas fa-search"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
-                <div class="table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr class="table-secondary">
-                                <th scope="col">
-                                    @Html.DisplayNameFor(model => model._indexQuotationVM.OrderDetails[0].Order.Concepto)
-                                </th>
-                                <th scope="col">
-                                    @Html.DisplayNameFor(model => model._indexQuotationVM.OrderDetails[0].Service.Name)
-                                </th>
-                                <th scope="col">
-                                    @Html.DisplayNameFor(model => model._indexQuotationVM.OrderDetails[0].Cost)
-                                </th>
-                                <th scope="col">
-                                    @*@Html.DisplayNameFor(model => model._indexQuotationVM.OrderDetails[0].Quotation.Description)*@
-                                </th>
-                                <th scope="col">
-                                    @Html.DisplayNameFor(model => model._indexQuotationVM.OrderDetails[0].Status)
-                                </th>
-                                <th scope="col">
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr class="table-secondary">
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model._indexQuotationVM.OrderDetails[0].Order.Concepto)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model._indexQuotationVM.OrderDetails[0].Service.Name)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model._indexQuotationVM.OrderDetails[0].Cost)
+                            </th>
+                            <th scope="col">
+                                @*@Html.DisplayNameFor(model => model._indexQuotationVM.OrderDetails[0].Quotation.Description)*@
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model._indexQuotationVM.OrderDetails[0].Status)
+                            </th>
+                            <th scope="col">
 
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model._indexQuotationVM.OrderDetails)
-                            {
-                                <tr>
-
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Order.Concepto)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Service.Name)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Cost)
-                                    </td>
-                                    <td>
-                                        @*@Html.DisplayFor(modelItem => item.Quotation.Description)*@
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Status)
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-primary" asp-page="./CreateQuotation" asp-route-orderDetailsId="@item.Id">Ver cotizacion</a> |
-
-                                        <a class="btn btn-danger" asp-page="./DeleteQuotation" asp-route-orderDetailsId="@item.Id">Borrar cotizacion</a>
-                                    </td>
-                                </tr>
-                            }
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model._indexQuotationVM.OrderDetails)
+                        {
                             <tr>
-                                <td colspan="5" class="text-right">
-                                    <div page-model="@Model._indexQuotationVM.pagingInfo" asp-action="IndexQuotation" page-class="btn border"
-                                         page-class-normal="btn btn-light" page-class-selected="btn btn-info active" class="btn-group">
-                                    </div>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Order.Concepto)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Service.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cost)
+                                </td>
+                                <td>
+                                    @*@Html.DisplayFor(modelItem => item.Quotation.Description)*@
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" asp-page="./CreateQuotation" asp-route-orderDetailsId="@item.Id">Ver cotizacion</a> |
+
+                                    <a class="btn btn-danger" asp-page="./DeleteQuotation" asp-route-orderDetailsId="@item.Id">Borrar cotizacion</a>
                                 </td>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
+                        }
+                        <tr>
+                            <td colspan="5" class="text-right">
+                                <div page-model="@Model._indexQuotationVM.pagingInfo" asp-action="IndexQuotation" page-class="btn border"
+                                     page-class-normal="btn btn-light" page-class-selected="btn btn-info active" class="btn-group">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+
         </div>
     </div>
+</div>
+<div class="table-responsive">
+    <table id="tblData" class="display">
+        <thead>
+            <tr>
+                <th>
 
+                    Fecha
+                </th>
+                <th>
+                    Dirección
+                </th>
+                <th>
+                    Servicio
+                </th>
+                <th>
+                    Tipo de servicio
+                </th>
+                <th>
+                    Estado del pedido
+                </th>
+                <th>
+                    Concepto
+                </th>
+                <th>
 
+                </th>
+
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            provideerId = document.getElementById('_provideerId');
+            console.log(provideerId.innerText);
+
+            loadDataTable(provideerId.innerText);
+        });
+        function loadDataTable(provideerId) {
+            $("#tblData").DataTable(
+                {
+                    "ajax":
+                    {
+                        "type": "GET",
+                        "url": "/api/Provideer/GetProvideerOrderList?provideerId=" + provideerId
+                    },
+                    "columns": [
+                        { "data": "date", "width": "10%" },
+                        { "data": "address", "width": "10%" },
+                        { "data": "serviceName", "width": "10%" },
+                        { "data": "serviceType", "width": "10%" },
+                        { "data": "orderStatus", "width": "10%" },
+                        { "data": "concept", "width": "10%" },
+                        {
+                            "data": "orderDetailsId",
+                            "render": function (data) {
+                                return `
+                                    <div class="text-center">
+                                        <a href="/Quotations/CreateQuotation?orderDetailsId=${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                           Ver Cotizacione
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        }
+                    ]
+                })
+        }
+    </script>
+}
 
 

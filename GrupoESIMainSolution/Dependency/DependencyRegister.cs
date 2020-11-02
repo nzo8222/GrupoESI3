@@ -24,6 +24,7 @@ namespace GrupoESINuevo.DependencyInjection
             builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ApplicationUserRepository>().As<IApplicationUserRepository>().InstancePerLifetimeScope();
             builder.RegisterType<PictureRepository>().As<IPictureRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<PredefinedTaskRepository>().As<IPredefinedTaskRepository>().InstancePerLifetimeScope();
         }
     }
 }

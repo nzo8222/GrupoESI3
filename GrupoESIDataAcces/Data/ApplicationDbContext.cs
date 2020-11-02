@@ -1,4 +1,5 @@
-﻿using GrupoESIModels.Models;
+﻿using GrupoESIModels;
+using GrupoESIModels.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +22,8 @@ namespace GrupoESIDataAccess
         public DbSet<Material> Material { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<EmployeeUser> Employee { get; set; }
+        public DbSet<PredefinedTask> PredefinedTask { get; set; }
+        public DbSet<PredefinedMaterial> PredefinedMaterial { get; set; }
 
-        
     }
 }

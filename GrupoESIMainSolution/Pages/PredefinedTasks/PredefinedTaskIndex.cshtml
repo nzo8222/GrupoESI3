@@ -1,0 +1,107 @@
+﻿@page
+@model GrupoESI.Pages.PredefinedTasks.PredefinedTaskIndexModel
+@{
+}
+<label id="_serviceId" asp-for="_serviceId" hidden></label>
+<a asp-page="CreatePredefinedTask" asp-route-serviceId="@Model._serviceId" class="btn btn-info form-control">
+    <i class="fas fa-plus"></i> &nbsp; Agregar nueva tarea predefinida
+</a>
+<div>
+    <table id="tblData" class="display">
+        <thead>
+            <tr>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Duracion
+                </th>
+                <th>
+                    Costo mano de obra
+                </th>
+                <th>
+                    Costo
+                </th>
+            </tr>
+        </thead>
+    </table>
+</div>
+@section Scripts
+{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            serviceId = document.getElementById('_serviceId');
+            //console.log(employerId.innerText);employerId.innerTextemployerId + employerId
+            console.log(serviceId.innerText);
+            loadDataTable(serviceId.innerText);
+        });
+        function loadDataTable(serviceId) {
+            $("#tblData").DataTable(
+                {
+                    "ajax":
+                    {
+                        "type": "GET",
+                        "url": "/api/PredefinedTask/GetPredefinedTaskLst?serviceId=" + serviceId; 
+                    },
+                    "columns": [
+                        { "data": "predefinedTaskDescription", "width": "10%" },
+                        { "data": "predefinedTaskDuration", "width": "10%" },
+                        { "data": "predefinedTaskCostHandLabor", "width": "10%" },
+                        { "data": "predefinedTaskCost", "width": "10%" },
+                        {
+                            "data": "predefinedTaskId",
+                            "render": function (data) {
+                                return `
+                                    <div class="text-center">
+                                        <a href="/ManageOrders/ManageOrdersIndex?orderId=${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                           Manejar Cotizaciones
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        },
+                        {
+                            "data": "orderId",
+                            "render": function (data) {
+                                return `
+                                    <div class="text-center">
+                                        <a href="/Orders/EditOrder?orderId=${data}" class="btn btn-primary text-white" style="cursor:pointer">
+                                          <i class="fas fa-edit"></i> Editar
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        },
+                        {
+                            "data": "orderId",
+                            "render": function (data) {
+                                return `
+                                    <div class="text-center">
+                                        <a href="/Orders/DetailsOrder?orderId=${data}" class="btn btn-info text-white" style="cursor:pointer">
+                                          <i class="fas fa-info-circle"></i> Detalles
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        },
+                         {
+                            "data": "orderId",
+                            "render": function (data) {
+                                return `
+                                    <div class="text-center">
+                                        <a href="/Orders/DeleteOrder?orderId=${data}" class="btn btn-danger text-white" style="cursor:pointer">
+                                          <i class="fas fa-trash"></i> Borrar
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        }
+
+                    ]
+                })
+        }
+    </script>
+}

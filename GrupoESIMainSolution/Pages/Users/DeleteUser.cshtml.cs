@@ -56,6 +56,7 @@ namespace GrupoESINuevo
             }
 
             _ApplicationUser = _queries.GetAppicationUserFirstOrDefault(_ApplicationUser.Id);
+            
             if (_ApplicationUser != null)
             {
 
@@ -78,15 +79,19 @@ namespace GrupoESINuevo
                             _quotationRepository.Remove(quotationLocal);
                         }
                         var _order = _queries.GetOrderFirstOrDefaultWhereOrderIdEquals(orderDetails.Order.Id);
-                        var orderDetailsConEstaOrden = _queries.GetOrderDetailsIncludeOrderWhereOrderIdEquals(_order.Id);
-                        if(orderDetailsConEstaOrden.Count > 0)
+                        if(_order != null)
                         {
+                            var orderDetailsConEstaOrden = _queries.GetOrderDetailsIncludeOrderWhereOrderIdEquals(_order.Id);
+                            if (orderDetailsConEstaOrden.Count > 0)
+                            {
 
+                            }
+                            else
+                            {
+                                _orderRepository.Remove(_order);
+                            }
                         }
-                        else
-                        {
-                            _orderRepository.Remove(_order);
-                        }
+                        
                     }
                     _serviceRepository.Remove(service);
                 }

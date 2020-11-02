@@ -1,0 +1,9 @@
+C:\GrupoESI\GrupoESIModels\bin\Release\netcoreapp3.1\GrupoESIModels.deps.json
+C:\GrupoESI\GrupoESIModels\bin\Release\netcoreapp3.1\GrupoESIModels.dll
+C:\GrupoESI\GrupoESIModels\bin\Release\netcoreapp3.1\GrupoESIModels.pdb
+C:\GrupoESI\GrupoESIModels\obj\Release\netcoreapp3.1\GrupoESIModels.csprojAssemblyReference.cache
+C:\GrupoESI\GrupoESIModels\obj\Release\netcoreapp3.1\GrupoESIModels.AssemblyInfoInputs.cache
+C:\GrupoESI\GrupoESIModels\obj\Release\netcoreapp3.1\GrupoESIModels.AssemblyInfo.cs
+C:\GrupoESI\GrupoESIModels\obj\Release\netcoreapp3.1\GrupoESIModels.csproj.CoreCompileInputs.cache
+C:\GrupoESI\GrupoESIModels\obj\Release\netcoreapp3.1\GrupoESIModels.dll
+C:\GrupoESI\GrupoESIModels\obj\Release\netcoreapp3.1\GrupoESIModels.pdb

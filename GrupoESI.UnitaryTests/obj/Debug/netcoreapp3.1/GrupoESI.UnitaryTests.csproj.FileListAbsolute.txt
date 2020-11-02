@@ -270,8 +270,6 @@ C:\GrupoESI\GrupoESI.UnitaryTests\bin\Debug\netcoreapp3.1\Properties\launchSetti
 C:\GrupoESI\GrupoESI.UnitaryTests\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.GrupoESI - Web Deploy.json
 C:\GrupoESI\GrupoESI.UnitaryTests\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.json
 C:\GrupoESI\GrupoESI.UnitaryTests\bin\Debug\netcoreapp3.1\Properties\serviceDependencies.local.json
-C:\GrupoESI\GrupoESI.UnitaryTests\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\GrupoESI - Web Deploy\mssql1.arm.json
-C:\GrupoESI\GrupoESI.UnitaryTests\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\GrupoESI - Web Deploy\mssql2.arm.json
 C:\GrupoESI\GrupoESI.UnitaryTests\bin\Debug\netcoreapp3.1\Properties\ServiceDependencies\GrupoESI - Web Deploy\profile.arm.json
 C:\GrupoESI\GrupoESI.UnitaryTests\bin\Debug\netcoreapp3.1\GrupoESI.StaticWebAssets.xml
 C:\GrupoESI\GrupoESI.UnitaryTests\bin\Debug\netcoreapp3.1\xunit.runner.visualstudio.dotnetcore.testadapter.dll

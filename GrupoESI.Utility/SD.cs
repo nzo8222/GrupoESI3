@@ -4,7 +4,7 @@ namespace GrupoESIUtility
 {
     public class SD
     {
-        public const string AdminEmail = "elgonzo292@gmail.com";
+        public const string AdminEmail = "Grupoesi.mex@gmail.com";
         public const string AdminEndUser = "Admin";
         public const string ProviderEndUser = "Provider";
         public const string EmployeeEndUser = "Employee";

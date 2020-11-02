@@ -1,0 +1,14 @@
+C:\GrupoESI\GrupoESIDataAcces\bin\Release\netcoreapp3.1\GrupoESIDataAccess.deps.json
+C:\GrupoESI\GrupoESIDataAcces\bin\Release\netcoreapp3.1\GrupoESIDataAccess.dll
+C:\GrupoESI\GrupoESIDataAcces\bin\Release\netcoreapp3.1\GrupoESIDataAccess.pdb
+C:\GrupoESI\GrupoESIDataAcces\bin\Release\netcoreapp3.1\GrupoESIModels.dll
+C:\GrupoESI\GrupoESIDataAcces\bin\Release\netcoreapp3.1\GrupoESIUtility.dll
+C:\GrupoESI\GrupoESIDataAcces\bin\Release\netcoreapp3.1\GrupoESIUtility.pdb
+C:\GrupoESI\GrupoESIDataAcces\bin\Release\netcoreapp3.1\GrupoESIModels.pdb
+C:\GrupoESI\GrupoESIDataAcces\obj\Release\netcoreapp3.1\GrupoESIDataAccess.csprojAssemblyReference.cache
+C:\GrupoESI\GrupoESIDataAcces\obj\Release\netcoreapp3.1\GrupoESIDataAccess.AssemblyInfoInputs.cache
+C:\GrupoESI\GrupoESIDataAcces\obj\Release\netcoreapp3.1\GrupoESIDataAccess.AssemblyInfo.cs
+C:\GrupoESI\GrupoESIDataAcces\obj\Release\netcoreapp3.1\GrupoESIDataAccess.csproj.CoreCompileInputs.cache
+C:\GrupoESI\GrupoESIDataAcces\obj\Release\netcoreapp3.1\GrupoESIDataAccess.csproj.CopyComplete
+C:\GrupoESI\GrupoESIDataAcces\obj\Release\netcoreapp3.1\GrupoESIDataAccess.dll
+C:\GrupoESI\GrupoESIDataAcces\obj\Release\netcoreapp3.1\GrupoESIDataAccess.pdb
