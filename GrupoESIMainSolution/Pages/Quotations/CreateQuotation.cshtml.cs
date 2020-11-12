@@ -9,7 +9,7 @@ using GrupoESIModels.Models;
 using GrupoESIUtility;
 using GrupoESIDataAccess.Queries;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     public class CreateQuotationModel : PageModel
     {

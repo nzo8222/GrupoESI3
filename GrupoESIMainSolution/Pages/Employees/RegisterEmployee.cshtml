@@ -1,5 +1,5 @@
 ﻿@page
-@model GrupoESINuevo.Pages.Employees.RegisterEmployeeModel
+@model GrupoESI.Pages.Employees.RegisterEmployeeModel
 @{
     ViewData["Title"] = "RegisterEmployee";
 }
@@ -34,7 +34,7 @@
             {
                 <div class="form-group">
                     <label>@item.Name</label>
-                    <input hidden asp-for="@item.ID" class="_idServicio" />
+                    <input hidden asp-for="@item.serviceId" class="_idServicio" />
                     <input type="checkbox" class="_checkbox" />
                 </div>
             }

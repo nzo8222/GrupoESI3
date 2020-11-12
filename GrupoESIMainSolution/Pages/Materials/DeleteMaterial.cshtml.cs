@@ -6,7 +6,7 @@ using GrupoESIModels.ViewModels;
 using GrupoESIDataAccess.Queries;
 using GrupoESIDataAccess.Repository.IRepository;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     public class DeleteMaterialModel : PageModel
     {

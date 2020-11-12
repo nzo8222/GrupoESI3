@@ -21,20 +21,20 @@ using Microsoft.AspNetCore.Identity;
 #nullable disable
 #nullable restore
 #line 2 "C:\GrupoESI\GrupoESIMainSolution\Areas\Identity\Pages\_ViewImports.cshtml"
-using GrupoESINuevo.Areas.Identity;
+using GrupoESI.Areas.Identity;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 3 "C:\GrupoESI\GrupoESIMainSolution\Areas\Identity\Pages\_ViewImports.cshtml"
-using GrupoESINuevo.Areas.Identity.Pages;
+using GrupoESI.Areas.Identity.Pages;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"acfba29d0bb675ecb22581fc46452ab8c0178ccb", @"/Areas/Identity/Pages/_ViewStart.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"62114179c2f3f71cfaa0e756494cf06ea63e26f2", @"/Areas/Identity/Pages/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ad7c97e26ab96cc3bcbd3f5317237fb2915dac4c", @"/Areas/Identity/Pages/_ViewImports.cshtml")]
     public class Areas_Identity_Pages__ViewStart : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

@@ -5,14 +5,14 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using GrupoESIDataAccess;
-using GrupoESINuevo.Data;
+using GrupoESI.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace GrupoESINuevo.Areas.Identity.Pages.Account
+namespace GrupoESI.Areas.Identity.Pages.Account
 {
     public class VerifyEmailModel : PageModel
     {

@@ -1,5 +1,5 @@
 ﻿@page
-@model GrupoESINuevo.AddServiceToOrderModel
+@model GrupoESI.AddServiceToOrderModel
 
 @{
     ViewData["Title"] = "AddServiceToOrder";
@@ -87,7 +87,7 @@
                                         </td>
                                         <td>
                                             <label class="orderId" hidden>@Model._AddServiceVM.orderDetailsId</label>
-                                            <label class="serviceId" hidden>@item.ID</label>
+                                            <label class="serviceId" hidden>@item.serviceId</label>
                                             <input type="checkbox" class="checkboxService" />
                                         </td>
                                     </tr>

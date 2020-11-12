@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using GrupoESINuevo.Data;
+using GrupoESI.Data;
 using GrupoESIModels.Models;
 using GrupoESIDataAccess;
 using GrupoESIDataAccess.Repository.IRepository;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     public class EditeServiceModel : PageModel
     {
@@ -32,7 +32,7 @@ namespace GrupoESINuevo
                 return NotFound();
             }
 
-            ServiceModel = _serviceRepository.FirstOrDefault(m => m.ID == serviceId, includeProperties: "serviceType, ApplicationUser");
+            ServiceModel = _serviceRepository.FirstOrDefault(m => m.serviceId == serviceId, includeProperties: "serviceType, ApplicationUser");
                 
 
             if (ServiceModel == null)
@@ -51,7 +51,7 @@ namespace GrupoESINuevo
             {
                 return Page();
             }
-            var service = _serviceRepository.FirstOrDefault(s => s.ID == ServiceModel.ID);
+            var service = _serviceRepository.FirstOrDefault(s => s.serviceId == ServiceModel.serviceId);
             service.Name = ServiceModel.Name;
             service.Description = ServiceModel.Description;
             try

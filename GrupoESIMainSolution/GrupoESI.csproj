@@ -2,12 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>aspnet-GrupoESINuevo-73BBA943-0BF4-41B4-A132-F42C88E6AE27</UserSecretsId>
+    <UserSecretsId>aspnet-GrupoESI-73BBA943-0BF4-41B4-A132-F42C88E6AE27</UserSecretsId>
     <AssemblyName>GrupoESI</AssemblyName>
     <RootNamespace>GrupoESI</RootNamespace>
   </PropertyGroup>
-
-
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="5.2.0" />

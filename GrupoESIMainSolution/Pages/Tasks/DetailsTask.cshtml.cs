@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using GrupoESINuevo.Data;
+using GrupoESI.Data;
 
 using System.IO;
 using GrupoESIModels.ViewModels;
@@ -14,7 +14,7 @@ using GrupoESIModels.Enums;
 using GrupoESIDataAccess;
 using GrupoESIDataAccess.Queries;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     public class DetailsTaskModel : PageModel
     {

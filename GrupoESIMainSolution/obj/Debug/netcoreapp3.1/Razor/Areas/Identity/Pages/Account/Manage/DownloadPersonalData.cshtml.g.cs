@@ -21,36 +21,36 @@ using Microsoft.AspNetCore.Identity;
 #nullable disable
 #nullable restore
 #line 2 "C:\GrupoESI\GrupoESIMainSolution\Areas\Identity\Pages\_ViewImports.cshtml"
-using GrupoESINuevo.Areas.Identity;
+using GrupoESI.Areas.Identity;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 3 "C:\GrupoESI\GrupoESIMainSolution\Areas\Identity\Pages\_ViewImports.cshtml"
-using GrupoESINuevo.Areas.Identity.Pages;
+using GrupoESI.Areas.Identity.Pages;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 1 "C:\GrupoESI\GrupoESIMainSolution\Areas\Identity\Pages\Account\_ViewImports.cshtml"
-using GrupoESINuevo.Areas.Identity.Pages.Account;
+using GrupoESI.Areas.Identity.Pages.Account;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 1 "C:\GrupoESI\GrupoESIMainSolution\Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml"
-using GrupoESINuevo.Areas.Identity.Pages.Account.Manage;
+using GrupoESI.Areas.Identity.Pages.Account.Manage;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"1221592829143e1143c12669de891290a2e97032", @"/Areas/Identity/Pages/Account/Manage/DownloadPersonalData.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"62114179c2f3f71cfaa0e756494cf06ea63e26f2", @"/Areas/Identity/Pages/_ViewImports.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"b877e0b1272768e1ec0009cf1bc5d2a8b772913b", @"/Areas/Identity/Pages/Account/_ViewImports.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a8acc787ca6de98ddade4889e8d9291fd3ce6a72", @"/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ad7c97e26ab96cc3bcbd3f5317237fb2915dac4c", @"/Areas/Identity/Pages/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"0ce4ca2b1db4f3a908bc0f2ff583db518c31b13f", @"/Areas/Identity/Pages/Account/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"87dacab358ef4d03e37d50c27a482ac97d4ec75c", @"/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml")]
     public class Areas_Identity_Pages_Account_Manage_DownloadPersonalData : global::Microsoft.AspNetCore.Mvc.RazorPages.Page
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("name", "_ValidationScriptsPartial", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -98,7 +98,7 @@ Write(ViewData["Title"]);
             WriteLiteral("</h4>\r\n\r\n");
             DefineSection("Scripts", async() => {
                 WriteLiteral("\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "1221592829143e1143c12669de891290a2e970325241", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("partial", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "1221592829143e1143c12669de891290a2e970325221", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_PartialTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.PartialTagHelper>();

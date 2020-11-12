@@ -2,17 +2,17 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using GrupoESINuevo.Data;
+using GrupoESI.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using GrupoESINuevo.Email;
+using GrupoESI.Email;
 using Autofac;
-using GrupoESINuevo.DependencyInjection;
+using GrupoESI.DependencyInjection;
 using GrupoESIDataAccess;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     public class Startup
     {

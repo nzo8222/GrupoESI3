@@ -15,7 +15,7 @@ namespace GrupoESIDataAccess.Repository.IRepository
         }
         public void Update(Service obj)
         {
-            var objFromDb = _db.ServiceModel.FirstOrDefault(o => o.ID == obj.ID);
+            var objFromDb = _db.ServiceModel.FirstOrDefault(o => o.serviceId == obj.serviceId);
             if (objFromDb != null)
             {
                 objFromDb.Name = obj.Name;

@@ -12,7 +12,7 @@ using GrupoESIUtility;
 using GrupoESIDataAccess.Repository.IRepository;
 using GrupoESIModels.GrupoESIModels;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     [Authorize(Roles = SD.AdminEndUser)]
     public class IndexServiceTypeModel : PageModel

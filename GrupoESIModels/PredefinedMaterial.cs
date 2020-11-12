@@ -9,9 +9,8 @@ namespace GrupoESIModels
     public class PredefinedMaterial
     {
         [Key]
-        public Guid Id { get; set; }
+        public Guid PredefinedMaterialId { get; set; }
         public Guid PredefinedTaskId { get; set; }
-        [ForeignKey("PredefinedTaskId")]
         public PredefinedTask PredefinedTask { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

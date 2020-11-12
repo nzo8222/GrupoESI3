@@ -1,7 +1,7 @@
 ﻿using GrupoESIDataAccess;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GrupoESINuevo.Controllers
+namespace GrupoESI.Controllers
 {
     public class ControllerBaseLocal : ControllerBase
     {

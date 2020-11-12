@@ -1,5 +1,5 @@
 ﻿@page
-@model GrupoESINuevo.DetailsServiceModel
+@model GrupoESI.DetailsServiceModel
 
 @{
     ViewData["Title"] = "Details";
@@ -42,7 +42,7 @@
                     </dl>
                 </div>
                 <div>
-                    <a asp-page="./EditService" asp-route-serviceId="@Model.ServiceModel.ID">Editar</a> |
+                    <a asp-page="./EditService" asp-route-serviceId="@Model.ServiceModel.serviceId">Editar</a> |
                     <a asp-page="./IndexService">Regresar a la lista</a>
                 </div>
             </div>

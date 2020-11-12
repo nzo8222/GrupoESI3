@@ -8,7 +8,7 @@ using GrupoESIModels.Models;
 using GrupoESIUtility;
 using GrupoESIDataAccess.Queries;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     [Authorize(Roles = SD.AdminEndUser)]
     public class EditOrderModel : PageModel

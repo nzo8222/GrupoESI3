@@ -8,7 +8,7 @@ using GrupoESIModels.Models;
 using GrupoESIUtility;
 using GrupoESIDataAccess.Repository.IRepository;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     [Authorize(Roles = SD.AdminEndUser)]
     public class DeleteServiceTypeModel : PageModel
@@ -95,7 +95,7 @@ namespace GrupoESINuevo
 
         private void LoadAllOrderDetailsRelatedToThisService(Service service)
         {
-            var orderDetailsLocal = _OrderDetailsRepository.GetAll(s => s.ServiceId == service.ID, includeProperties: "Order,Service");
+            var orderDetailsLocal = _OrderDetailsRepository.GetAll(s => s.ServiceId == service.serviceId, includeProperties: "Order,Service");
             foreach (var orderDetails in orderDetailsLocal)
             {
                 LoadAndRemoveAllQuotationsRelatedToThisOrderDetails(orderDetails);

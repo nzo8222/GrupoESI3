@@ -11,8 +11,7 @@ namespace GrupoESIModels
     public class PredefinedTask
     {
         [Key]
-        public Guid Id { get; set; }
-        [ForeignKey("ServiceId")]
+        public Guid PredefinedTaskId { get; set; }
         public virtual Service Service { get; set; }
         public Guid ServiceId { get; set; }
         public string Name { get; set; }
@@ -20,6 +19,6 @@ namespace GrupoESIModels
         public int Duration { get; set; }
         public double Cost { get; set; }
         public double CostHandLabor { get; set; }
-        public virtual List<PredefinedMaterial> ListMaterial { get; set; }
+        public virtual List<PredefinedMaterial> ListPredefinedMaterial { get; set; }
     }
 }

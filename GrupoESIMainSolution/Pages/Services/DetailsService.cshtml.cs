@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using GrupoESIModels.Models;
 using GrupoESIDataAccess.Repository.IRepository;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     public class DetailsServiceModel : PageModel
     {
@@ -24,7 +24,7 @@ namespace GrupoESINuevo
                 return NotFound();
             }
 
-            ServiceModel = _serviceRepository.FirstOrDefault(m => m.ID == serviceId, includeProperties: "serviceType,ApplicationUser");
+            ServiceModel = _serviceRepository.FirstOrDefault(m => m.serviceId == serviceId, includeProperties: "serviceType,ApplicationUser");
                 
 
             if (ServiceModel == null)

@@ -9,7 +9,7 @@ using System;
 using System.Linq;
 
 
-namespace GrupoESINuevo.Data
+namespace GrupoESI.Data
 {
     public class DbInitializer : IDbInitializer
     {

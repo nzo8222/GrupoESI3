@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using GrupoESINuevo.Data;
+using GrupoESI.Data;
 
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
@@ -14,7 +14,7 @@ using GrupoESIModels.Models;
 using GrupoESIDataAccess;
 using GrupoESIDataAccess.Repository.IRepository;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     [Authorize]
     public class CreateServoceModel : PageModel

@@ -9,7 +9,7 @@ using GrupoESIModels.ViewModels;
 using GrupoESIUtility;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GrupoESINuevo.Controllers
+namespace GrupoESI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

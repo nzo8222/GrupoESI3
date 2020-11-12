@@ -1,5 +1,5 @@
 ﻿@page
-@model GrupoESINuevo.ManageOrdersIndexModel
+@model GrupoESI.ManageOrdersIndexModel
 @Html.AntiForgeryToken()
 @{
     ViewData["Title"] = "ManageOrdersIndex";
@@ -168,7 +168,7 @@
                                         </td>
                                         <td>
 
-                                            <label class="IdService" hidden>@Model._manageOrdersVM.ListServices[i].ServiceModel.ID</label>
+                                            <label class="IdService" hidden>@Model._manageOrdersVM.ListServices[i].ServiceModel.serviceId</label>
                                             <input asp-for="_manageOrdersVM.ListServices[i].sendQuotation" class="form-control _checkbox" />
 
                                         </td>

@@ -10,7 +10,7 @@ using GrupoESIModels.Models;
 using GrupoESIDataAccess.Repository.IRepository;
 using GrupoESIUtility;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     [Authorize(Roles = SD.AdminEndUser)]
     public class CreateServiceTypeModel : PageModel

@@ -1,4 +1,4 @@
-﻿namespace GrupoESINuevo.Data
+﻿namespace GrupoESI.Data
 {
     public interface IDbInitializer
     {

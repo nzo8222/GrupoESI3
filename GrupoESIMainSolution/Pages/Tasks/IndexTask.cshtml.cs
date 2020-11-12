@@ -5,7 +5,7 @@ using GrupoESIModels.Models;
 using GrupoESIModels.ViewModels;
 using GrupoESIDataAccess.Queries;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     public class IndexModel : PageModel
     {

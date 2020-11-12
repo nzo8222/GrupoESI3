@@ -10,7 +10,7 @@ using GrupoESIModels.ViewModels;
 using GrupoESIUtility;
 using GrupoESIDataAccess.Queries;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     [Authorize(Roles = SD.AdminEndUser)]
     public class ManageOrdersIndexModel : PageModel
@@ -44,7 +44,7 @@ namespace GrupoESINuevo
             List<Guid> lstServiceWithQuotation = new List<Guid>();
             foreach (var item in _manageOrdersVM.OrderDetailsList)
             {
-                lstServiceWithQuotation.Add(item.Service.ID);
+                lstServiceWithQuotation.Add(item.Service.serviceId);
             }
             lstServiceWithSameServiceTypeIdFromOrder = lstServiceWithSameServiceTypeIdFromOrder.FindAll(x => !lstServiceWithQuotation.Contains(x));
             foreach (var serviceGuid in lstServiceWithSameServiceTypeIdFromOrder)

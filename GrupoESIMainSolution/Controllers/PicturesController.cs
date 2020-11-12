@@ -4,7 +4,7 @@ using GrupoESIDataAccess;
 using GrupoESIDataAccess.Queries;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GrupoESINuevo.Controllers
+namespace GrupoESI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

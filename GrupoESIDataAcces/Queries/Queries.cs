@@ -73,7 +73,7 @@ namespace GrupoESIDataAccess.Queries
         {
             Quotation q = new Quotation();
             q = _quotationRepository.FirstOrDefault(q => q.Id == QuotationId, includeProperties: "OrderDetails");
-            q.OrderDetails.Service = _serviceRepository.FirstOrDefault(s => s.ID == q.OrderDetails.ServiceId);
+            q.OrderDetails.Service = _serviceRepository.FirstOrDefault(s => s.serviceId == q.OrderDetails.ServiceId);
             q.OrderDetails.Service.ApplicationUser = _applicationUserRepository.FirstOrDefault(a => a.Id == q.OrderDetails.Service.UserId);
             return q;
         }
@@ -127,7 +127,7 @@ namespace GrupoESIDataAccess.Queries
             List<OrderDetails> odLst = new List<OrderDetails>();
             foreach (var service in a.ServiceLst)
             {
-                List<OrderDetails> lstOrderDetailsLocal = (List<OrderDetails>)_orderDetailsRepository.GetAll(od => od.ServiceId == service.ID, includeProperties: "Order,Quotation,Service");
+                List<OrderDetails> lstOrderDetailsLocal = (List<OrderDetails>)_orderDetailsRepository.GetAll(od => od.ServiceId == service.serviceId, includeProperties: "Order,Quotation,Service");
                 foreach (var orderDetail in lstOrderDetailsLocal)
                 {
                     odLst.Add(orderDetail);
@@ -147,12 +147,12 @@ namespace GrupoESIDataAccess.Queries
 
         public Service GetServiceIncludeApplicationUserFirstOrDefault(Guid serviceId)
         {
-            return _serviceRepository.FirstOrDefault(s => s.ID == serviceId, includeProperties: "ApplicationUser");
+            return _serviceRepository.FirstOrDefault(s => s.serviceId == serviceId, includeProperties: "ApplicationUser");
         }
 
         public Service GetServiceIncludeApplicationUserServiceTypeFirstOrDefault(Guid serviceId)
         {
-            return _serviceRepository.FirstOrDefault(s => s.ID == serviceId, includeProperties: "ApplicationUser,serviceType");
+            return _serviceRepository.FirstOrDefault(s => s.serviceId == serviceId, includeProperties: "ApplicationUser,serviceType");
         }
 
         public Order GetOrderIncludeOrderDetailsServiceApplicationUserFirstOrDefault(Guid orderId)
@@ -160,7 +160,7 @@ namespace GrupoESIDataAccess.Queries
             Order orderLocal = _orderRepository.FirstOrDefault(o => o.Id == orderId, includeProperties: "LstOrderDetails");
             foreach (var orderDetails in orderLocal.LstOrderDetails)
             {
-                orderDetails.Service = _serviceRepository.FirstOrDefault(s => s.ID == orderDetails.ServiceId, includeProperties: "ApplicationUser");
+                orderDetails.Service = _serviceRepository.FirstOrDefault(s => s.serviceId == orderDetails.ServiceId, includeProperties: "ApplicationUser");
             }
             return orderLocal;
         }
@@ -175,7 +175,7 @@ namespace GrupoESIDataAccess.Queries
             return _context.OrderDetails.Include(od => od.Order)
                                         .Include(od => od.Service)
                                           .ThenInclude(s => s.serviceType)
-                                        .Where(od => od.Service.ID == serviceId)
+                                        .Where(od => od.Service.serviceId == serviceId)
                                         .ToList();
             
         }
@@ -255,7 +255,7 @@ namespace GrupoESIDataAccess.Queries
             return _context.ServiceModel
                                                                     .Include(c => c.serviceType)
                                                                     .Where(c => c.ServiceTypeId == serviceTypeId)
-                                                                    .Select(c => c.ID)
+                                                                    .Select(c => c.serviceId)
                                                                     .ToList();
         }
 
@@ -281,7 +281,7 @@ namespace GrupoESIDataAccess.Queries
             return _context.ServiceModel
                                                                     .Include(c => c.ApplicationUser)
                                                                     .Where(c => c.UserId == userId)
-                                                                    .Select(c => c.ID)
+                                                                    .Select(c => c.serviceId)
                                                                     .ToList();
         }
 
@@ -304,7 +304,7 @@ namespace GrupoESIDataAccess.Queries
 
         public Service GetServiceFirstOrDefault(Guid serviceId)
         {
-            return _serviceRepository.FirstOrDefault(s => s.ID == serviceId);
+            return _serviceRepository.FirstOrDefault(s => s.serviceId == serviceId);
         }
 
         public Quotation GetQuotationIncludeOrderTaskListMaterialWhereOrderIdEqualsOrderId(Guid orderId)
@@ -342,7 +342,7 @@ namespace GrupoESIDataAccess.Queries
         public Quotation GetQuoationIncludeOrderDetailsServiceApplicationUserFirstOrDefaultWhereQuotationIdEquals(Guid quotationId)
         {
             Quotation quotation = _quotationRepository.FirstOrDefault(q => q.Id == quotationId, includeProperties: "OrderDetails");
-            quotation.OrderDetails.Service = _serviceRepository.FirstOrDefault(s => s.ID == quotation.OrderDetails.ServiceId, includeProperties: "ApplicationUser");
+            quotation.OrderDetails.Service = _serviceRepository.FirstOrDefault(s => s.serviceId == quotation.OrderDetails.ServiceId, includeProperties: "ApplicationUser");
             return quotation;
         }
 
@@ -436,7 +436,7 @@ namespace GrupoESIDataAccess.Queries
                                                             .Include(od => od.Order)
                                                             .Include(od => od.Service)
                                                                 .ThenInclude(s => s.ApplicationUser)
-                                                            .Where(od => od.Service.ID == serviceId).ToList();
+                                                            .Where(od => od.Service.serviceId == serviceId).ToList();
             return orderDetailsLst;
         }
 

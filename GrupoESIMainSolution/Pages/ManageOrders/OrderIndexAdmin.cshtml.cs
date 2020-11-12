@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 
-namespace GrupoESINuevo.Pages.ManageOrders
+namespace GrupoESI.Pages.ManageOrders
 {
     [Authorize(Roles = SD.AdminEndUser)]
     public class OrderIndexAdminModel : PageModel

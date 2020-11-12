@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using GrupoESIModels.Models;
 using GrupoESIDataAccess.Queries;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     public class EditQuotationModel : PageModel
     {

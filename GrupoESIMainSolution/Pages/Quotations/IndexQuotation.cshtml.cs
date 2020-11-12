@@ -11,7 +11,7 @@ using GrupoESIUtility;
 using GrupoESIDataAccess.Queries;
 using GrupoESIModels.GrupoESIModels;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     [Authorize]
     public class IndexQuotationModel : PageModel

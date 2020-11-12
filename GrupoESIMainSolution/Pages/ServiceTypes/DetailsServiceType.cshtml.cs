@@ -7,7 +7,7 @@ using GrupoESIModels.Models;
 using GrupoESIUtility;
 using GrupoESIDataAccess.Repository.IRepository;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     [Authorize(Roles = SD.AdminEndUser)]
     public class DetailsServiceTypeModel : PageModel

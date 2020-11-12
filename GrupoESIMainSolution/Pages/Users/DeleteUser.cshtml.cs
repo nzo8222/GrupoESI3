@@ -4,7 +4,7 @@ using GrupoESIModels.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     public class DeleteUserModel : PageModel
     {
@@ -65,7 +65,7 @@ namespace GrupoESINuevo
                 foreach (var service in serviciosListLocal)
                 {
 
-                    var orderDetailsLocal = _queries.GetAllOrderDetailsIncludeOrderServiceApplicationUserWhereServiceIdEquals(service.ID);
+                    var orderDetailsLocal = _queries.GetAllOrderDetailsIncludeOrderServiceApplicationUserWhereServiceIdEquals(service.serviceId);
  
                     foreach (var orderDetails in orderDetailsLocal)
                     {

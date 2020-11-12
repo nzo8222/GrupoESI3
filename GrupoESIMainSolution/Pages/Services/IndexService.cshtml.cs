@@ -7,7 +7,7 @@ using System.Security.Claims;
 using GrupoESIModels.ViewModels;
 using GrupoESIDataAccess.Repository.IRepository;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     [Authorize]
     public class IndexServiceModel : PageModel

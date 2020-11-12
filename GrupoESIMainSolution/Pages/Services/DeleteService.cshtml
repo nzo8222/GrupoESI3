@@ -1,5 +1,5 @@
 ﻿@page
-@model GrupoESINuevo.DeleteServiceModel
+@model GrupoESI.DeleteServiceModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -42,7 +42,7 @@
                     </dl>
 
                     <form method="post">
-                        <input type="hidden" asp-for="ServiceModel.ID" />
+                        <input type="hidden" asp-for="ServiceModel.serviceId" />
                         <input type="submit" value="Borrar" class="btn btn-danger" /> |
                         <a asp-page="./IndexService">Regresar a la lista</a>
                     </form>

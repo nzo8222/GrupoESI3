@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
-namespace GrupoESINuevo.Controllers
+namespace GrupoESI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

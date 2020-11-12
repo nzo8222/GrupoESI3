@@ -3,11 +3,9 @@ using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace GrupoESINuevo.Email
+namespace GrupoESI.Email
 {
     public class EmailSender : IEmailSender
     {
@@ -39,5 +37,6 @@ namespace GrupoESINuevo.Email
             }
             return null;
         }
+       
     }
 }

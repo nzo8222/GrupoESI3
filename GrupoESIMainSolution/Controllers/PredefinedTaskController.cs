@@ -34,7 +34,8 @@ namespace GrupoESI.Controllers
             for (int i = 0; i < predefinedTask.Count; i++)
             {
                 var predefinedTaskLocal = new PredefinedTaskIndexVM();
-                predefinedTaskLocal.predefinedTaskId = predefinedTask[i].Id.ToString();
+                predefinedTaskLocal.predefinedTaskId = predefinedTask[i].PredefinedTaskId.ToString();
+                predefinedTaskLocal.predefinedTaskName = predefinedTask[i].Name;
                 predefinedTaskLocal.serviceId = predefinedTask[i].ServiceId.ToString();
                 predefinedTaskLocal.predefinedTaskCost = predefinedTask[i].Cost.ToString();
                 predefinedTaskLocal.predefinedTaskCostHandLabor = predefinedTask[i].CostHandLabor.ToString();

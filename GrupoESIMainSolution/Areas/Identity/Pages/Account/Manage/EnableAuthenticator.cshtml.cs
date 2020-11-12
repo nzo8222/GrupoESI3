@@ -1,7 +1,6 @@
-﻿using System;
-using System.ComponentModel;
+﻿
 using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
+
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Linq;
@@ -11,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
-namespace GrupoESINuevo.Areas.Identity.Pages.Account.Manage
+namespace GrupoESI.Areas.Identity.Pages.Account.Manage
 {
     public class EnableAuthenticatorModel : PageModel
     {
@@ -148,7 +147,7 @@ namespace GrupoESINuevo.Areas.Identity.Pages.Account.Manage
         {
             return string.Format(
                 AuthenticatorUriFormat,
-                _urlEncoder.Encode("GrupoESINuevo"),
+                _urlEncoder.Encode("GrupoESI"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }

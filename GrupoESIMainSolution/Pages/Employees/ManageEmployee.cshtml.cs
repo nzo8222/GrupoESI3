@@ -4,7 +4,7 @@ using GrupoESIModels.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using GrupoESIModels.ViewModels;
-namespace GrupoESINuevo.Pages.Employees
+namespace GrupoESI.Pages.Employees
 {
     public class ManageEmployeeModel : PageModel
     {

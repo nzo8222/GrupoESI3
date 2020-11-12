@@ -1,7 +1,7 @@
 
 using GrupoESIDataAccess.Queries;
 using GrupoESIModels.Models;
-using GrupoESINuevo;
+using GrupoESI;
 
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;

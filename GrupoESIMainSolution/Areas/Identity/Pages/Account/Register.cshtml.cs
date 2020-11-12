@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
-namespace GrupoESINuevo.Areas.Identity.Pages.Account
+namespace GrupoESI.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
@@ -72,13 +72,33 @@ namespace GrupoESINuevo.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-
+            [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
+            [StringLength(30, MinimumLength = 3)]
+            [Required]
             public string Name { get; set; }
+            [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
+            [StringLength(30, MinimumLength = 3)]
+            [Required]
             public string CompanyName { get; set; }
+            [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
+            [StringLength(30, MinimumLength = 3)]
+            [Required]
             public string RFC { get; set; }
+            [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
+            [StringLength(30, MinimumLength = 3)]
+            [Required]
             public string State { get; set; }
+            [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
+            [StringLength(30, MinimumLength = 3)]
+            [Required]
             public string City { get; set; }
+            [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
+            [StringLength(30, MinimumLength = 3)]
+            [Required]
             public string SocialReason { get; set; }
+            [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
+            [StringLength(30, MinimumLength = 3)]
+            [Required]
             public string Bank { get; set; }
             public bool IsAdmin { get; set; }
         }
@@ -95,34 +115,7 @@ namespace GrupoESINuevo.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                if (Input.Name == null)
-                {
-                    return Page();
-                }
-                if (Input.CompanyName == null)
-                {
-                    return Page();
-                }
-                if(Input.RFC == null)
-                {
-                    return Page();
-                }
-                if (Input.State == null)
-                {
-                    return Page();
-                }
-                if (Input.City == null)
-                {
-                    return Page();
-                }
-                if (Input.SocialReason == null)
-                {
-                    return Page();
-                }
-                if(Input.Bank == null)
-                {
-                    return Page();
-                }
+                
                 var user = new ApplicationUser
                 {
                     UserName = Input.Email,

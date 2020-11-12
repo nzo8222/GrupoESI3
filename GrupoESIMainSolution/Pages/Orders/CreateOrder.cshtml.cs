@@ -11,7 +11,7 @@ using GrupoESIUtility;
 using GrupoESIDataAccess.Queries;
 using GrupoESIDataAccess.Repository.IRepository;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     [Authorize(Roles = SD.AdminEndUser)]
     public class CreateOrderModel : PageModel

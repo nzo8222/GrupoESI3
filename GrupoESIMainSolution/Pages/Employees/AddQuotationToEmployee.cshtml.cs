@@ -4,7 +4,7 @@ using GrupoESIModels.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace GrupoESINuevo.Pages.Employees
+namespace GrupoESI.Pages.Employees
 {
     public class AddQuotationToEmployeeModel : PageModel
     {

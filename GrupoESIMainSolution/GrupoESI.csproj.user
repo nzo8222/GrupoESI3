@@ -18,5 +18,9 @@
     <WebStackScaffolding_DbContextDialogWidth>600</WebStackScaffolding_DbContextDialogWidth>
     <NameOfLastUsedPublishProfile>GrupoESI - Web Deploy</NameOfLastUsedPublishProfile>
     <ShowAllFiles>true</ShowAllFiles>
+    <ActiveDebugProfile>GrupoESINuevo</ActiveDebugProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

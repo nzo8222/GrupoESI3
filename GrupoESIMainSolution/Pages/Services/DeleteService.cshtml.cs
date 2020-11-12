@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using GrupoESINuevo.Data;
+using GrupoESI.Data;
 using GrupoESIModels.Models;
 using GrupoESIDataAccess;
 using GrupoESIDataAccess.Repository.IRepository;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     public class DeleteServiceModel : PageModel
     {
@@ -42,7 +42,7 @@ namespace GrupoESINuevo
                 return NotFound();
             }
 
-            ServiceModel = _serviceRepository.FirstOrDefault(m => m.ID == serviceId, includeProperties: "serviceType,ApplicationUser");
+            ServiceModel = _serviceRepository.FirstOrDefault(m => m.serviceId == serviceId, includeProperties: "serviceType,ApplicationUser");
 
             if (ServiceModel == null)
             {
@@ -53,7 +53,7 @@ namespace GrupoESINuevo
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ServiceModel.ID == null)
+            if (ServiceModel.serviceId == null)
             {
                 return NotFound();
             }
@@ -69,8 +69,8 @@ namespace GrupoESINuevo
 
         private void LoadServiceModelAndItsDependantModels()
         {
-            ServiceModel = _serviceRepository.FirstOrDefault(s => s.ID == ServiceModel.ID);
-            var orderDetailsLocal = _orderDetailsRepository.GetAll(od => od.Service.ID == ServiceModel.ID, includeProperties: "Order,Service");
+            ServiceModel = _serviceRepository.FirstOrDefault(s => s.serviceId == ServiceModel.serviceId);
+            var orderDetailsLocal = _orderDetailsRepository.GetAll(od => od.Service.serviceId == ServiceModel.serviceId, includeProperties: "Order,Service");
             RemoveDependantModels(orderDetailsLocal);
         }
 

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using GrupoESIModels.ViewModels;
 using GrupoESIDataAccess.Queries;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     public class AddServiceToOrderModel : PageModel
     {
@@ -37,7 +37,7 @@ namespace GrupoESINuevo
             //por cada orderDetails se agrega el id del servicio a la lista de servicios con cotizacion
             foreach (var orderDetail in _AddServiceVM.OrderDetailsList)
             {
-                lstGuidServicesWithQuotation.Add(orderDetail.Service.ID);
+                lstGuidServicesWithQuotation.Add(orderDetail.Service.serviceId);
             }
             //de la lista de servicios del mismo usuario se excluyen aquellos registros que ya tengan un OrderDetails 
             lstGuidServicesFromSameUser = lstGuidServicesFromSameUser.FindAll(x => !lstGuidServicesWithQuotation.Contains(x));

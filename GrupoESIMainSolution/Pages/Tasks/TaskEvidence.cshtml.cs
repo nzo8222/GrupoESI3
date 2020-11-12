@@ -9,7 +9,7 @@ using GrupoESIModels.Models;
 using GrupoESIModels.Enums;
 using GrupoESIDataAccess.Queries;
 
-namespace GrupoESINuevo.Pages.Tasks
+namespace GrupoESI.Pages.Tasks
 {
     public class TaskEvidenceModel : PageModel
     {

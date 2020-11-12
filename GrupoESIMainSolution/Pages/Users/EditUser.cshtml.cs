@@ -4,7 +4,7 @@ using GrupoESIModels.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     public class EditUserModel : PageModel
     {

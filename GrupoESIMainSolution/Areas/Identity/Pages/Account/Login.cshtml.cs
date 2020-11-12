@@ -11,10 +11,10 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using GrupoESINuevo.Data;
+using GrupoESI.Data;
 using GrupoESIDataAccess;
 
-namespace GrupoESINuevo.Areas.Identity.Pages.Account
+namespace GrupoESI.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LoginModel : PageModel

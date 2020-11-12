@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
 
-namespace GrupoESINuevo
+namespace GrupoESI
 {
     public class Program
     {

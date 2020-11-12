@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace GrupoESINuevo.Pages.Employees
+namespace GrupoESI.Pages.Employees
 {
     [Authorize]
     public class EmployeeOrderIndexModel : PageModel
