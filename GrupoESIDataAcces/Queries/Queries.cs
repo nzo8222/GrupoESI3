@@ -1,6 +1,7 @@
 ﻿using GrupoESIDataAccess.Repository.IRepository;
 using GrupoESIModels;
 using GrupoESIModels.Models;
+using GrupoESIModels.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -491,9 +492,12 @@ namespace GrupoESIDataAccess.Queries
             return _context.Employee.Include(e => e.EmployedBy).Where(e => e.EmployedBy.Id == employerId).ToList();
         }
 
-        public OrderDetails GetOrderDetailsIncludeOrderFirstOrDefaultWhereOrderDetailsIdEquals(Guid orderDetailsId)
+        public OrderDetails GetOrderDetailsIncludeOrderQuotationFirstOrDefaultWhereOrderDetailsIdEquals(Guid orderDetailsId)
         {
-            return _context.OrderDetails.Include(od => od.Order).FirstOrDefault(od => od.Id == orderDetailsId);
+            return _context.OrderDetails
+                                        .Include(od => od.Quotation)
+                                        .Include(od => od.Order)
+                                        .FirstOrDefault(od => od.Id == orderDetailsId);
         }
 
         public List<OrderDetails> GetAllOrderDetailsIncludeOrderQuotationServiceServiceTypeApplicationUserWhereUserIdEquialsUserId(string provideerId)
@@ -515,6 +519,34 @@ namespace GrupoESIDataAccess.Queries
         {
             Guid id = Guid.Parse(serviceId);
             return _context.PredefinedTask.Where(pt => pt.ServiceId == id).ToList();
+        }
+
+        public List<PredefinedMaterial> GetAllPredefinedTaskMaterialWherePredefinedTaskIdEquals(Guid id)
+        {
+            return _context.PredefinedMaterial.Where(p => p.PredefinedTaskId == id).ToList();
+        }
+
+        public PredefinedTask GetPredefinedTaskIncludeServiceLstPredefinedMaterialWherePredefinedTaskIdEquals(Guid? predefinedTaskId)
+        {
+            return _context.PredefinedTask
+                                          .Include(pt => pt.Service)
+                                          .Include(pt => pt.ListPredefinedMaterial)
+                                          .FirstOrDefault(pt => pt.PredefinedTaskId == predefinedTaskId);
+        }
+
+        public PredefinedMaterial GetPredefinedMaterialIncludePredefinedTaskServiceWherePredefinedMaterialIdEquals(Guid id)
+        {
+            return _context.PredefinedMaterial
+                                              .Include(m => m.PredefinedTask)
+                                                .ThenInclude(pt => pt.Service)
+                                                .FirstOrDefault(pm => pm.PredefinedMaterialId == id);
+        }
+
+        public Quotation GetQuotationIncludeTaskMaterialWhereQuotationIdEquals(Guid quotationId)
+        {
+            return _context.Quotation.Include(q => q.Tasks)
+                                        .ThenInclude(t => t.ListMaterial)
+                                     .FirstOrDefault(q => q.Id == quotationId);
         }
     }
 }

@@ -1,0 +1,151 @@
+﻿@page
+@model GrupoESI.Pages.PredefinedMaterials.ManagePredefinedTaskMaterialModel
+@{
+}
+<div class="container backgroundWhite">
+    <h2 class="text-info">Lista</h2>
+    <div class="card container">
+        <div class="card-header bg-dark text-light ml-0 row container">
+            <div class="col-6">
+                <i class="fa fa-user-o"></i>
+            </div>
+        </div>
+        <div class="card-body container">
+
+            <div class="col-md-6 offset-md-3">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_predefinedTaskMaterialIndexVM.serviceName"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_predefinedTaskMaterialIndexVM.serviceName" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_predefinedTaskMaterialIndexVM.serviceDescription"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_predefinedTaskMaterialIndexVM.serviceDescription" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_predefinedTaskMaterialIndexVM.predefinedTaskName"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_predefinedTaskMaterialIndexVM.predefinedTaskName" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_predefinedTaskMaterialIndexVM.predefinedTaskDescription"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_predefinedTaskMaterialIndexVM.predefinedTaskDescription" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_predefinedTaskMaterialIndexVM.predefinedTaskCost"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_predefinedTaskMaterialIndexVM.predefinedTaskCost" disabled class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label id="_predefinedTaskId" hidden>@Model._predefinedTaskMaterialIndexVM.predefinedTaskId</label>
+                    <a asp-page="CreatePredefinedTaskMaterial" asp-route-predefinedTaskId="@Model._predefinedTaskMaterialIndexVM.predefinedTaskId" class="btn btn-info form-control">
+                      <i class="fas fa-plus"></i> &nbsp; Agregar nuevo material
+                      </a>
+                    <div>
+                        <table id="tblData" class="display">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Nombre
+                                    </th>
+                                    <th>
+                                        Descripción
+                                    </th>
+                                    <th>
+                                        Precio
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a asp-page="../PredefinedTasks/PredefinedTaskIndex" asp-route-serviceId="@Model._predefinedTaskMaterialIndexVM.serviceId">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            predefinedTaskId = document.getElementById('_predefinedTaskId');
+            //console.log(employerId.innerText);employerId.innerTextemployerId + employerId
+            console.log("q show");
+            //console.log(serviceId);
+            loadDataTable(predefinedTaskId.innerText);
+        });
+        function loadDataTable(predefinedTaskId) {
+            $("#tblData").DataTable(
+                {
+                    "ajax":
+                    {
+                        "type": "GET",
+                        "url": "/api/PredefinedTask/GetPredefinedTaskMaterialLst?predefinedTaskId=" + predefinedTaskId
+                    },
+                    "columns": [
+                        { "data": "materialName", "width": "10%" },
+                        { "data": "materialDescription", "width": "10%" },
+                        { "data": "materialCost", "width": "10%" },
+                        {
+                            "data": "predefinedMaterialId",
+                            "render": function (data) {
+                                return `
+                                            <div class="text-center">
+                                                <a href="/PredefinedMaterials/EditPredefinedMaterial?predefinedMaterialId=${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                                   Editar Material
+                                                </a>
+                                            </div>
+                                        `;
+                            }
+                        },
+                        {
+                            "data": "predefinedMaterialId",
+                            "render": function (data) {
+                                return `
+                                            <div class="text-center">
+                                                <a href="/PredefinedMaterials/DeletePredefinedMaterial?predefinedMaterialId=${data}" class="btn btn-danger text-white" style="cursor:pointer">
+                                                   Borrar Material
+                                                </a>
+                                            </div>
+                                        `;
+                            }
+                        }
+                        
+                    ]
+                })
+        }
+
+    </script>
+}
+

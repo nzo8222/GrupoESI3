@@ -28,6 +28,15 @@
                         <th>
                             Costo
                         </th>
+                        <th>
+
+                        </th>
+                        <th>
+
+                        </th>
+                        <th>
+
+                        </th>
                     </tr>
                 </thead>
             </table>
@@ -57,23 +66,47 @@
                         "url": "/api/PredefinedTask/GetPredefinedTaskLst?serviceId=" + serviceId 
                     },
                     "columns": [
+                        { "data": "predefinedTaskName", "width": "10%" },
                         { "data": "predefinedTaskDescription", "width": "10%" },
                         { "data": "predefinedTaskDuration", "width": "10%" },
                         { "data": "predefinedTaskCostHandLabor", "width": "10%" },
-                        { "data": "predefinedTaskCost", "width": "10%" }
-                        //{
-                        //    "data": "predefinedTaskId",
-                        //    "render": function (data) {
-                        //        return `
-                        //            <div class="text-center">
-                        //                <a href="/ManageOrders/ManageOrdersIndex?orderId=${data}" class="btn btn-success text-white" style="cursor:pointer">
-                        //                   Manejar Cotizaciones
-                        //                </a>
-                        //            </div>
-                        //        `;
-                        //    }
-                        //}
-
+                        { "data": "predefinedTaskCost", "width": "10%" },
+                        {
+                            "data": "predefinedTaskId",
+                            "render": function (data) {
+                                return `
+                                    <div class="text-center">
+                                        <a href="/PredefinedMaterials/ManagePredefinedTaskMaterial?predefinedTaskId=${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                           Manejar materiales
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        },
+                        {
+                            "data": "predefinedTaskId",
+                            "render": function (data) {
+                                return `
+                                    <div class="text-center">
+                                        <a href="/PredefinedTasks/EditPredefinedTask?predefinedTaskId=${data}" class="btn btn-info text-white" style="cursor:pointer">
+                                           Editar Tarea
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        },
+                        {
+                            "data": "predefinedTaskId",
+                            "render": function (data) {
+                                return `
+                                    <div class="text-center">
+                                        <a href="/PredefinedTasks/DeletePredefinedTask?predefinedTaskId=${data}" class="btn btn-danger text-white" style="cursor:pointer">
+                                           Borrar Tarea
+                                        </a>
+                                    </div>
+                                `;
+                            }
+                        }
                     ]
                 })
         }

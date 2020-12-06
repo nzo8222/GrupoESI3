@@ -1,0 +1,76 @@
+﻿@page
+@model GrupoESI.Pages.PredefinedTasks.DeletePredefinedTaskModel
+@{
+}
+<div class="container backgroundWhite">
+    <h2 class="text-info">Crear tarea</h2>
+    <div class="card container">
+        <div class="card-header bg-dark text-light ml-0 row container">
+            <div class="col-6">
+                <i class="fa fa-user-o"></i>
+            </div>
+        </div>
+        <div class="card-body container">
+
+            <div class="col-md-6 offset-md-3">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_createPredefinedTaskMaterialDescriptionVM.serviceName"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_createPredefinedTaskMaterialDescriptionVM.serviceName" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_createPredefinedTaskMaterialDescriptionVM.serviceDescription"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_createPredefinedTaskMaterialDescriptionVM.serviceDescription" disabled class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <form method="post">
+                        <input type="hidden" asp-for="_createPredefinedTaskMaterialDescriptionVM.predefinedTaskId" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="_createPredefinedTaskMaterialDescriptionVM.predefinedTaskName" class="control-label"></label>
+                            <input disabled asp-for="_createPredefinedTaskMaterialDescriptionVM.predefinedTaskName" class="form-control" />
+                            <span asp-validation-for="_createPredefinedTaskMaterialDescriptionVM.predefinedTaskName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="_createPredefinedTaskMaterialDescriptionVM.predefinedTaskDescription" class="control-label"></label>
+                            <input disabled asp-for="_createPredefinedTaskMaterialDescriptionVM.predefinedTaskDescription" class="form-control" />
+                            <span asp-validation-for="_createPredefinedTaskMaterialDescriptionVM.predefinedTaskDescription" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="_createPredefinedTaskMaterialDescriptionVM.predefinedTaskCost" class="control-label"></label>
+                            <input disabled asp-for="_createPredefinedTaskMaterialDescriptionVM.predefinedTaskCost" class="form-control" />
+                            <span asp-validation-for="_createPredefinedTaskMaterialDescriptionVM.predefinedTaskCost" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="_createPredefinedTaskMaterialDescriptionVM.predefinedTaskDuration" class="control-label"></label>
+                            <input disabled asp-for="_createPredefinedTaskMaterialDescriptionVM.predefinedTaskDuration" class="form-control" />
+                            <span asp-validation-for="_createPredefinedTaskMaterialDescriptionVM.predefinedTaskDuration" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Delete" class="btn btn-danger" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div>
+                <a asp-page="../PredefinedTasks/PredefinedTaskIndex" asp-route-serviceId="@Model._createPredefinedTaskMaterialDescriptionVM.serviceId">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

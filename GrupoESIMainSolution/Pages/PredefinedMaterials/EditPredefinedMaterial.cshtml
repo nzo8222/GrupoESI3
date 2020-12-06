@@ -1,0 +1,90 @@
+﻿@page
+@model GrupoESI.Pages.PredefinedMaterials.EditPredefinedMaterialModel
+@{
+}
+<div class="container backgroundWhite">
+    <h2 class="text-info">Lista</h2>
+    <div class="card container">
+        <div class="card-header bg-dark text-light ml-0 row container">
+            <div class="col-6">
+                <i class="fa fa-user-o"></i>
+            </div>
+        </div>
+        <div class="card-body container">
+
+            <div class="col-md-6 offset-md-3">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_PredefinedTaskDescription.serviceName"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_PredefinedTaskDescription.serviceName" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_PredefinedTaskDescription.serviceDescription"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_PredefinedTaskDescription.serviceDescription" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_PredefinedTaskDescription.predefinedTaskName"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_PredefinedTaskDescription.predefinedTaskName" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_PredefinedTaskDescription.predefinedTaskDescription"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_PredefinedTaskDescription.predefinedTaskDescription" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_PredefinedTaskDescription.predefinedTaskCost"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_PredefinedTaskDescription.predefinedTaskCost" disabled class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <form method="post">
+                        <input type="hidden" asp-for="_CreatePredefinedTaskMaterialVM.predefinedMaterialId" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="_CreatePredefinedTaskMaterialVM.predefinedTaskMaterialName" class="control-label"></label>
+                            <input asp-for="_CreatePredefinedTaskMaterialVM.predefinedTaskMaterialName" class="form-control" />
+                            <span asp-validation-for="_CreatePredefinedTaskMaterialVM.predefinedTaskMaterialName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="_CreatePredefinedTaskMaterialVM.predefinedTaskMaterialDescription" class="control-label"></label>
+                            <input asp-for="_CreatePredefinedTaskMaterialVM.predefinedTaskMaterialDescription" class="form-control" />
+                            <span asp-validation-for="_CreatePredefinedTaskMaterialVM.predefinedTaskMaterialDescription" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="_CreatePredefinedTaskMaterialVM.predefinedTaskMaterialCost" class="control-label"></label>
+                            <input asp-for="_CreatePredefinedTaskMaterialVM.predefinedTaskMaterialCost" class="form-control" />
+                            <span asp-validation-for="_CreatePredefinedTaskMaterialVM.predefinedTaskMaterialCost" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div>
+                <a asp-page="../PredefinedTasks/ManagePredefinedTaskMaterial" asp-route-predefinedTaskId="@Model._CreatePredefinedTaskMaterialVM.predefinedTaskId">Regresar a la lista</a>
+            </div>
+        </div>
+    </div>
+</div>

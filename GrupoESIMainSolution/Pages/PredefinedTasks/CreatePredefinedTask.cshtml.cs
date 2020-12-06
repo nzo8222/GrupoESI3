@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using GrupoESIDataAccess.Queries;
 using GrupoESIDataAccess.Repository.IRepository;
 using GrupoESIModels;
@@ -52,6 +49,7 @@ namespace GrupoESI
                 predefinedTaskslocal.ServiceId = _predefinedTaskVM.serviceId;
 
                 predefinedTaskslocal.CostHandLabor = _predefinedTaskVM.CostHandLabor;
+                predefinedTaskslocal.Cost = _predefinedTaskVM.CostHandLabor;
                 predefinedTaskslocal.Description = _predefinedTaskVM.PredefinedTaskDescription;
                 predefinedTaskslocal.Duration = _predefinedTaskVM.PredefinedTaskDuration;
                 predefinedTaskslocal.Name = _predefinedTaskVM.PredefinedTaskName;

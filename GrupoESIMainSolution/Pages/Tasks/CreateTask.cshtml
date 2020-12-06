@@ -6,93 +6,244 @@
 }
 
 
-    <div class="container backgroundWhite">
-        <h2 class="text-info">Crear tarea</h2>
-        <div class="card container">
-            <div class="card-header bg-dark text-light ml-0 row container">
-                <div class="col-6">
-                    <i class="fa fa-user-o"></i>
+<div class="container backgroundWhite">
+    <h2 class="text-info">Crear tarea</h2>
+    <div class="card container">
+        <div class="card-header bg-dark text-light ml-0 row container">
+            <div class="col-6">
+                <i class="fa fa-user-o"></i>
+            </div>
+        </div>
+        <div class="card-body container">
+
+            <div class="col-md-6 offset-md-3">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label hidden id="_quotationId">@Model._TaskQuotationVM.OrderDetailsInfo.Quotation.Id</label>
+                        <label hidden id="_orderDetailsId">@Model._TaskQuotationVM.orderDetailsId</label>
+                        <label asp-for="_TaskQuotationVM.OrderDetailsInfo.Order.Concepto"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_TaskQuotationVM.OrderDetailsInfo.Order.Concepto" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_TaskQuotationVM.OrderDetailsInfo.Order.Direccion"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_TaskQuotationVM.OrderDetailsInfo.Order.Direccion" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_TaskQuotationVM.OrderDetailsInfo.Status"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_TaskQuotationVM.OrderDetailsInfo.Status" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label asp-for="_TaskQuotationVM.OrderDetailsInfo.Cost"></label>
+                    </div>
+                    <div class="col-sm-8" style="padding-bottom:5px;">
+                        <input asp-for="_TaskQuotationVM.OrderDetailsInfo.Cost" disabled class="form-control" />
+                    </div>
                 </div>
             </div>
-            <div class="card-body container">
+            <div class="row">
+                <div class="col">
+                    <label id="_serviceId" hidden>@Model._TaskQuotationVM.OrderDetailsInfo.ServiceId</label>
+                   
+                    <div class="table-responsive">
+                        <table id="tblData" class="display">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        
+                                    </th>
+                                    <th>
+                                        
+                                    </th>
+                                    <th>
+                                        
+                                    </th>
+                                    
+                                    <th>
+                                        
+                                    </th>
+                                    <th>
 
-                <div class="col-md-6 offset-md-3">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <label asp-for="_TaskQuotationVM.OrderDetailsInfo.Order.Concepto"></label>
-                        </div>
-                        <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="_TaskQuotationVM.OrderDetailsInfo.Order.Concepto" disabled class="form-control" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <label asp-for="_TaskQuotationVM.OrderDetailsInfo.Order.Direccion"></label>
-                        </div>
-                        <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="_TaskQuotationVM.OrderDetailsInfo.Order.Direccion" disabled class="form-control" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <label asp-for="_TaskQuotationVM.OrderDetailsInfo.Status"></label>
-                        </div>
-                        <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="_TaskQuotationVM.OrderDetailsInfo.Status" disabled class="form-control" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <label asp-for="_TaskQuotationVM.OrderDetailsInfo.Cost"></label>
-                        </div>
-                        <div class="col-sm-8" style="padding-bottom:5px;">
-                            <input asp-for="_TaskQuotationVM.OrderDetailsInfo.Cost" disabled class="form-control" />
-                        </div>
-                    </div>
-                </div>
+                                    </th>
+                                    <th>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <form method="post">
-                            <input hidden asp-for="_TaskQuotationVM.orderDetailsId" />
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div class="form-group">
-                                <label asp-for="_TaskQuotationVM.TaskLocal.Name" class="control-label"></label>
-                                <input asp-for="_TaskQuotationVM.TaskLocal.Name" class="form-control" />
-                                <span asp-validation-for="_TaskQuotationVM.TaskLocal.Name" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="_TaskQuotationVM.TaskLocal.Description" class="control-label"></label>
-                                <input asp-for="_TaskQuotationVM.TaskLocal.Description" class="form-control" />
-                                <span asp-validation-for="_TaskQuotationVM.TaskLocal.Description" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="_TaskQuotationVM.TaskLocal.Duration" class="control-label"></label>
-                                <input asp-for="_TaskQuotationVM.TaskLocal.Duration" class="form-control" />
-                                <span asp-validation-for="_TaskQuotationVM.TaskLocal.Duration" class="text-danger"></span>
-                            </div>
-                            @if (User.IsInRole("Admin") || User.IsInRole("Provider"))
-                            {
-                                <div class="form-group">
-                                    <label asp-for="_TaskQuotationVM.TaskLocal.CostHandLabor" class="control-label"></label>
-                                    <input asp-for="_TaskQuotationVM.TaskLocal.CostHandLabor" class="form-control" />
-                                    <span asp-validation-for="_TaskQuotationVM.TaskLocal.CostHandLabor" class="text-danger"></span>
-                                </div>
-                            }
-                            <div class="form-group">
-                                <input type="submit" value="Create" class="btn btn-primary" />
-                            </div>
-                        </form>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
-                <div>
-                    <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@Model._TaskQuotationVM.orderDetailsId">Back to List</a>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <form method="post">
+                        <input hidden asp-for="_TaskQuotationVM.orderDetailsId" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="_TaskQuotationVM.TaskLocal.Name" class="control-label"></label>
+                            <input asp-for="_TaskQuotationVM.TaskLocal.Name" class="form-control" />
+                            <span asp-validation-for="_TaskQuotationVM.TaskLocal.Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="_TaskQuotationVM.TaskLocal.Description" class="control-label"></label>
+                            <input asp-for="_TaskQuotationVM.TaskLocal.Description" class="form-control" />
+                            <span asp-validation-for="_TaskQuotationVM.TaskLocal.Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="_TaskQuotationVM.TaskLocal.Duration" class="control-label"></label>
+                            <input asp-for="_TaskQuotationVM.TaskLocal.Duration" class="form-control" />
+                            <span asp-validation-for="_TaskQuotationVM.TaskLocal.Duration" class="text-danger"></span>
+                        </div>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Provider"))
+                        {
+                            <div class="form-group">
+                                <label asp-for="_TaskQuotationVM.TaskLocal.CostHandLabor" class="control-label"></label>
+                                <input asp-for="_TaskQuotationVM.TaskLocal.CostHandLabor" class="form-control" />
+                                <span asp-validation-for="_TaskQuotationVM.TaskLocal.CostHandLabor" class="text-danger"></span>
+                            </div>
+                        }
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form>
                 </div>
+            </div>
+            <div>
+                <a asp-page="../Quotations/CreateQuotation" asp-route-orderDetailsId="@Model._TaskQuotationVM.orderDetailsId">Back to List</a>
             </div>
         </div>
     </div>
+</div>
 
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            serviceId = document.getElementById('_serviceId').innerText;
+            quotationId = document.getElementById('_quotationId').innerText;
+            orderDetailsId = document.getElementById('_orderDetailsId').innerText;
+            
+            var json = {
+                serviceId: serviceId,
+                quotationId: quotationId
+            }
+            getTableData(json);
+            var table;
+            var resoponse = [];
+            var quotationId = "";
+            function getTableData(json) {
+                $.ajax({
+                    type: "POST",
+                    url: "/api/PredefinedTask/GetPredefinedTaskLstForQuotation",
+                    contentType: "application/json",
+                    datatype: "json",
+                    data: JSON.stringify(json)
+                }).then((data) => {
+                    console.log(data);
+                    resoponse = data.data;
+                    quotationId = data.data[0].quotationId;
+                    console.log(resoponse);
+                    loadDataTable();
+                    table = $('#tblData').DataTable();
+                })
+            }
+            
+            function loadDataTable() {
+                $("#tblData").DataTable(
+                    {
+                        data: resoponse,
+                        columns: [
+                            { data: "predefinedTaskName", width: "10%", title: "Nombre" },
+                            { data: "predefinedTaskDescription", width: "10%", title:"Descripción" },
+                            { data: "predefinedTaskDuration", width: "10%", title:"Duracion" },
+                            { data: "predefinedTaskCost", width: "10%", title:"Costo" },
+                            {
+                                data: "predefinedTaskId",
+                                render: function (data) {
+                                    return `
+                                    <div class="text-center">
+                                        <a href="/PredefinedMaterials/PredefinedMaterialEmployeeIndex?predefinedTaskId=${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                           ver materiales
+                                        </a>
+                                    </div>
+                                `;
+                                }
+                            },
+                            {
+                                data: "predefinedTaskId",
+                                render: function () {
+                                    return `
+                                    <div class="text-center">
+                                        <a class="btnAddPredefinedTaskToQuotation btn btn-info text-white" style="cursor:pointer">
+                                           Agregar Tarea
+                                        </a>
+                                    </div>
+                                `;
+                                }
+                            }
+
+                        ],
+                        initComplete: (settings, resoponse) => {
+                            $('#tblData tbody').on('click', '.btnAddPredefinedTaskToQuotation', function () {
+                                var data = table.row($(this).parents('tr')).data();
+                                // data es el objeto de ese row.
+                                alert(data.predefinedTaskId);
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/api/PredefinedTask/GetPredefinedTaskLstForQuotation",
+                                    contentType: "application/json",
+                                    datatype: "json",
+                                    data: JSON.stringify(json)
+                                }).then(() => {
+                                    window.location.href = "/Quotations/CreateQuotation?OrderDetailsId=" + orderDetailsId
+                                })
+                            });
+                        }
+                    }
+
+                )
+
+
+
+            }
+            
+
+
+
+        });
+        
+        function AddPredefinedTaskToQuotation(quotationId, predefinedTaskId) {
+            var json = {
+                predefinedTaskId: predefinedTaskId,
+                quotationId: quotationId
+            }
+            console.log(json);
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/api/PredefinedTask/AddPredefinedTaskToQuotation",
+            //    contentType: "application/json",
+            //    datatype: "json",
+            //    data: JSON.stringify(json)
+            //}).then((data) => {
+            //    //console.log(data);
+            //    //resoponse = data.data;
+            //    //serviceId = data.data[0].serviceId;
+            //    //console.log(resoponse);
+            //    //loadDataTable();
+            //})
+        }
+    </script>
 }

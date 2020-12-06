@@ -21,7 +21,7 @@ namespace GrupoESI
         public IActionResult OnGet(Guid orderDetailsId)
         {
             _TaskQuotationVM = new TaskQuotationVM(orderDetailsId);
-            _TaskQuotationVM.OrderDetailsInfo = _queries.GetOrderDetailsIncludeOrderFirstOrDefaultWhereOrderDetailsIdEquals(orderDetailsId);
+            _TaskQuotationVM.OrderDetailsInfo = _queries.GetOrderDetailsIncludeOrderQuotationFirstOrDefaultWhereOrderDetailsIdEquals(orderDetailsId);
             return Page();
         }
 

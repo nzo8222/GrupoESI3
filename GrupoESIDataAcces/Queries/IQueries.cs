@@ -1,6 +1,7 @@
 ﻿
 using GrupoESIModels;
 using GrupoESIModels.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,8 +18,12 @@ namespace GrupoESIDataAccess.Queries
         TaskModel GetTaskIncludePicturesFirstOrDefaultWhereTaskIdEquals(Guid taskId);
         Quotation GetQuotationIncludeOrderDetailsOrderTaskPicturesFirstOrDefaultWhereOrderIdEquals(Guid orderId);
         List<OrderDetails> GetAllOrderDetailsIncludeOrderQuotationServiceServiceTypeApplicationUserWhereUserIdEquialsUserId(string provideerId);
-        OrderDetails GetOrderDetailsIncludeOrderFirstOrDefaultWhereOrderDetailsIdEquals(Guid orderDetailsId);
+        PredefinedMaterial GetPredefinedMaterialIncludePredefinedTaskServiceWherePredefinedMaterialIdEquals(Guid id);
+        List<PredefinedMaterial> GetAllPredefinedTaskMaterialWherePredefinedTaskIdEquals(Guid predefinedTaskId);
+        PredefinedTask GetPredefinedTaskIncludeServiceLstPredefinedMaterialWherePredefinedTaskIdEquals(Guid? predefinedTaskId);
+        OrderDetails GetOrderDetailsIncludeOrderQuotationFirstOrDefaultWhereOrderDetailsIdEquals(Guid orderDetailsId);
         List<PredefinedTask> GetAllPredefinedTaskWhereServiceIdEquals(string serviceId);
+        Quotation GetQuotationIncludeTaskMaterialWhereQuotationIdEquals(Guid quotationId);
         ApplicationUser GetAppicationUserFirstOrDefault(string userId);
         TaskModel GetTaskIncludeQuotationOrderDetailsOrderFirstOrDefaultWhereTaskIdEquals(Guid taskId);
         IList<TaskModel> GetAllTaskLstIncludeQuotationOrderDetailsOrder();

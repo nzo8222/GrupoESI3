@@ -282,3 +282,10 @@ C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.csproj.CopyCom
 C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\staticwebassets\GrupoESI.StaticWebAssets.Manifest.cache
 C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\staticwebassets\GrupoESI.StaticWebAssets.xml
 C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\GrupoESI.genruntimeconfig.cache
+C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\Razor\Pages\PredefinedMaterials\CreatePredefinedTaskMaterial.cshtml.g.cs
+C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\Razor\Pages\PredefinedMaterials\ManagePredefinedTaskMaterial.cshtml.g.cs
+C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\Razor\Pages\PredefinedTasks\EditPredefinedTask.cshtml.g.cs
+C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\Razor\Pages\PredefinedTasks\DeletePredefinedTask.cshtml.g.cs
+C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\Razor\Pages\PredefinedMaterials\EditPredefinedMaterial.cshtml.g.cs
+C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\Razor\Pages\PredefinedMaterials\DeletePredefinedMaterial.cshtml.g.cs
+C:\GrupoESI\GrupoESIMainSolution\obj\Debug\netcoreapp3.1\Razor\Pages\PredefinedMaterials\PredefinedMaterialEmployeeIndex.cshtml.g.cs
