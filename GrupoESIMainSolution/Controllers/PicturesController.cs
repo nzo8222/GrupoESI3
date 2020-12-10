@@ -26,7 +26,7 @@ namespace GrupoESI.Controllers
             }
             Guid id = Guid.Parse(pictureId);
             var picture = _queries.GetPictureFirstOrDefaultWherePictureIdEquals(id);
-                //_context.Pictures.FirstOrDefault(p => p.PictureId.ToString() == pictureId);
+              
             
             return Ok(new { imgLocal = picture.PictureBytes });
             

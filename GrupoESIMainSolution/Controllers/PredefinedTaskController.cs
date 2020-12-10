@@ -24,7 +24,7 @@ namespace GrupoESI.Controllers
         [Route("AddPredefinedTaskToQuotation")]
         public IActionResult AddPredefinedTaskToQuotation([FromBody] AddPredefinedTaskToQuotation postPredefinedTaskToQuotationVM)
         {
-            if (postPredefinedTaskToQuotationVM.predefinedTaskId == "" || postPredefinedTaskToQuotationVM.quotationId == "")
+            if (postPredefinedTaskToQuotationVM.predefinedTaskId == "" || postPredefinedTaskToQuotationVM.quotationId == "" || postPredefinedTaskToQuotationVM.orderDetailsId == "")
             {
                 return NotFound();
             }
@@ -50,13 +50,13 @@ namespace GrupoESI.Controllers
             
             quotation.Tasks.Add(taskModel);
             _queries.SaveChanges();
-            return Ok();
+            return Ok(new { data = postPredefinedTaskToQuotationVM.orderDetailsId });
         }
         [HttpPost]
         [Route("GetPredefinedTaskLstForQuotation")]
         public IActionResult PostAssignPredefinedTaskToQuotation([FromBody] PostPredefinedTaskToQuotationVM postPredefinedTaskToQuotationVM)
         {
-            if (postPredefinedTaskToQuotationVM.serviceId == "" || postPredefinedTaskToQuotationVM.quotationId == "")
+            if (postPredefinedTaskToQuotationVM.serviceId == "" || postPredefinedTaskToQuotationVM.quotationId == "" || postPredefinedTaskToQuotationVM.orderDetailsId == "")
             {
                 return NotFound();
             }
@@ -72,6 +72,7 @@ namespace GrupoESI.Controllers
                 PredefinedTaskWithQuotationIdLocal.predefinedTaskId = predefinedTaskVMLst[i].predefinedTaskId;
                 PredefinedTaskWithQuotationIdLocal.predefinedTaskName = predefinedTaskVMLst[i].predefinedTaskName;
                 PredefinedTaskWithQuotationIdLocal.quotationId = postPredefinedTaskToQuotationVM.quotationId;
+                PredefinedTaskWithQuotationIdLocal.orderDetailsId = postPredefinedTaskToQuotationVM.orderDetailsId;
                 LstPredefinedTaskWithQuotationId.Add(PredefinedTaskWithQuotationIdLocal);
             }
             return Ok(new { data = LstPredefinedTaskWithQuotationId });

@@ -8,5 +8,6 @@ namespace GrupoESIModels.ViewModels.PredefinedTaskWithQuotationId
     {
         public string predefinedTaskId { get; set; }
         public string quotationId { get; set; }
+        public string orderDetailsId { get; set; }
     }
 }

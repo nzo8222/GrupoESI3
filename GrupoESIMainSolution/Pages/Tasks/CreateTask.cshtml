@@ -138,12 +138,12 @@
             
             var json = {
                 serviceId: serviceId,
-                quotationId: quotationId
+                quotationId: quotationId,
+                orderDetailsId: orderDetailsId
             }
             getTableData(json);
             var table;
             var resoponse = [];
-            var quotationId = "";
             function getTableData(json) {
                 $.ajax({
                     type: "POST",
@@ -154,7 +154,6 @@
                 }).then((data) => {
                     console.log(data);
                     resoponse = data.data;
-                    quotationId = data.data[0].quotationId;
                     console.log(resoponse);
                     loadDataTable();
                     table = $('#tblData').DataTable();
@@ -200,15 +199,20 @@
                             $('#tblData tbody').on('click', '.btnAddPredefinedTaskToQuotation', function () {
                                 var data = table.row($(this).parents('tr')).data();
                                 // data es el objeto de ese row.
+                                var json = {
+                                    predefinedTaskId: data.predefinedTaskId,
+                                    quotationId: data.quotationId,
+                                    orderDetailsId: data.orderDetailsId
+                                }
                                 alert(data.predefinedTaskId);
                                 $.ajax({
                                     type: "POST",
-                                    url: "/api/PredefinedTask/GetPredefinedTaskLstForQuotation",
+                                    url: "/api/PredefinedTask/AddPredefinedTaskToQuotation",
                                     contentType: "application/json",
                                     datatype: "json",
                                     data: JSON.stringify(json)
-                                }).then(() => {
-                                    window.location.href = "/Quotations/CreateQuotation?OrderDetailsId=" + orderDetailsId
+                                }).then((data) => {
+                                    window.location.href = "/Quotations/CreateQuotation?OrderDetailsId=" + data.data
                                 })
                             });
                         }

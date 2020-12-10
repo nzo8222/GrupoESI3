@@ -8,5 +8,6 @@ namespace GrupoESIModels.ViewModels
     {
         public string serviceId { get; set; }
         public string quotationId { get; set; }
+        public string orderDetailsId { get; set; }
     }
 }

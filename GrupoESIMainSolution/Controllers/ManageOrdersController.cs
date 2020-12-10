@@ -119,35 +119,34 @@ namespace GrupoESI.Controllers
         [Route("PostServiceToOrder")]
         public IActionResult PostServiceToOrder([FromBody] PostServiceToOrderVM serviceToOrderVM)
         {
-            //separar los id de los servicios en diferentes elementos dentro de una lista
+
             List<string> serviceIdList = serviceToOrderVM.serviceId.Split(',').ToList();
 
-            //iterar la lista de ids de servicios
+
             foreach (var serviceId in serviceIdList)
             {
-                //declarar un nuevo OrderDetails
+
                 var od = new OrderDetails();
                 od.Order = new Order();
-                //declarar una orden local igual a la orden con el id que biene desde la peticion
+
                 var orderLocal = _queries.GetOrderByOrderId(serviceToOrderVM.OrderId);
 
-                //se asigna al nuevo orderDetails la orden 
-                //orderLocal.LstOrderDetails.Add(od);
+
                 od.Order = orderLocal;
-                //se asigna el servicio con el id del servicio que se esta iterando actualmente
+
                 Guid id = Guid.Parse(serviceId);
                 od.Service = _queries.GetServiceFirstOrDefault(id);
-                //se le signa un costo en  0
+
                 od.Cost = 0;
-                //se declara una cotizacion
+
                 var quotationLocal = new Quotation();
-                //se le asigna el modelo de order details a esta nueva cotizacion
+
                 quotationLocal.OrderDetails = od;
-                //se inicializa la lista de taras
+
                 quotationLocal.Tasks = new List<TaskModel>();
-                //Se le asigna el estado sin cotizar al detalle de orden
+
                 od.Status = SD.EstadoSinCotizar;
-                //Se agrega la entidad al contexto
+
                 _orderDetailsRepository.Add(od);
                 _quoationRepository.Add(quotationLocal);
                 try
@@ -192,9 +191,7 @@ namespace GrupoESI.Controllers
             var orderDetails = _queries.GetOrderDetailsIncludeOrderServiceApplicationUserFirstOrDefaultOrderDetailsIdEqualsOrderDetailsId(_PostAssignQuotationVM.idOrderDetails);
             var orders = _queries.GetLstOrderDetailsIncludeOrderServiceServiceTypeWhereOrderIdEqualsOrderId(orderDetails.Order.Id);
                 
-                //_context.OrderDetails
-                //                              .Include(od => od.Order)
-                //                              .Where(od => od.Order.Id == orderDetails.Order.Id).ToList();
+
             foreach (var item in orders)
             {
                 if(item != orderDetails)
